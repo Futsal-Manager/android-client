@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">FutsalManager</string>
 
+    <!-- app develop strings -->
+    <string name="videoRecordManagerLogCatTag">VideoRecord</string>
+
     <!-- record_video_surface -->
     <string name="toggleRecordOff">Stop Recording</string>
     <string name="toggleRecordOn">Start Recording</string>
