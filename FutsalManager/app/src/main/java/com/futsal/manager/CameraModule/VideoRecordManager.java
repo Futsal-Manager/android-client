@@ -3,6 +3,8 @@ package com.futsal.manager.CameraModule;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
@@ -12,9 +14,10 @@ import com.futsal.manager.R;
  * Created by stories2 on 2017. 2. 9..
  */
 
-public class VideoRecordManager extends Activity {
+public class VideoRecordManager extends Activity implements SurfaceHolder.Callback{
     String videoRecordManagerLogCatTag;
     ToggleButton toggleRecordVideo;
+    SurfaceView surfaceRecordVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +27,7 @@ public class VideoRecordManager extends Activity {
         Log.d(videoRecordManagerLogCatTag, "onCreate");
 
         toggleRecordVideo = (ToggleButton)findViewById(R.id.toggleRecordVideo);
+        surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
 
         toggleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -72,5 +76,20 @@ public class VideoRecordManager extends Activity {
     protected void onDestroy() {
         super.onDestroy();
         Log.d(videoRecordManagerLogCatTag, "onDestroy");
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Log.d(videoRecordManagerLogCatTag, "surfaceCreated");
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
+        Log.d(videoRecordManagerLogCatTag, "surfaceChanged");
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+        Log.d(videoRecordManagerLogCatTag, "surfaceDestroyed");
     }
 }
