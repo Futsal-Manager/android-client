@@ -17,7 +17,6 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
-
 /**
  * Created by stories2 on 2017. 2. 9..
  */
@@ -63,7 +62,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
                         deviceMediaRecorderManager.reset();
                     }
                     try {
-                        InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+                        //InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
                     }
                     catch (Exception err) {
                         Log.d(videoRecordManagerLogCatTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
@@ -113,7 +112,8 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.d(videoRecordManagerLogCatTag, "surfaceCreated");
         try {
-            InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+            //InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+            InitDeviceCamera();
         }
         catch (Exception err) {
             Log.d(videoRecordManagerLogCatTag, "Error in surfaceCreated: " + err.getMessage());
@@ -123,6 +123,25 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int format, int width, int height) {
         Log.d(videoRecordManagerLogCatTag, "surfaceChanged");
+        if(surfaceHolderRecordVideo.getSurface() == null) {
+            return;
+        }
+
+        try {
+            phoneDeviceCamera.stopPreview();
+
+            // 프리뷰 변경, 처리 등을 여기서 해준다.
+            Camera.Parameters parameters = phoneDeviceCamera.getParameters();
+            Camera.Size size = GetBestPreviewSize(width, height);
+            parameters.setPreviewSize(size.width, size.height);
+            phoneDeviceCamera.setParameters(parameters);
+
+            phoneDeviceCamera.setPreviewDisplay(surfaceHolderRecordVideo);
+            phoneDeviceCamera.startPreview();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordManagerLogCatTag, "Error in surfaceChanged: " + err.getMessage());
+        }
     }
 
     @Override
@@ -144,14 +163,14 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     public boolean InitRecordVideo(Surface cameraViewSurface, Camera phoneCamera, MediaRecorder mediaRecorderManager, String pathOfStoreVideoFile) {
         try {
             if(phoneCamera == null) {
-                if(IsCameraPermissionAvailable() && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()) {
-                    phoneCamera = Camera.open();
+                if(IsCameraPermissionAvailable()) {// && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()
+                    phoneCamera = Camera.open(0);
                     phoneCamera.unlock();
                 }
                 else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
-                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                    //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                    //ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
                 }
             }
 
@@ -191,5 +210,47 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     public boolean IsStorageWritePermissionAvailable() {
         int permissionStatusResult = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
         return permissionStatusResult == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void InitDeviceCamera() {
+        try {
+            if(IsCameraPermissionAvailable()) {
+                Log.d(videoRecordManagerLogCatTag, "how many camera can i use?: " + Camera.getNumberOfCameras());
+                phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            }
+
+            Camera.Parameters deviceCamerParameters = phoneDeviceCamera.getParameters();
+            deviceCamerParameters.set("orientation", "landscape");
+            phoneDeviceCamera.setDisplayOrientation(0);
+            deviceCamerParameters.setRotation(0);
+
+            phoneDeviceCamera.setParameters(deviceCamerParameters);
+            phoneDeviceCamera.setPreviewDisplay(surfaceHolderRecordVideo);
+            phoneDeviceCamera.startPreview();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordManagerLogCatTag, "Error in InitDeviceCamera: " + err.getMessage());
+        }
+    }
+
+    private Camera.Size GetBestPreviewSize(int width, int height)
+    {
+        Camera.Size result=null;
+        Camera.Parameters p = phoneDeviceCamera.getParameters();
+        for (Camera.Size size : p.getSupportedPreviewSizes()) {
+            if (size.width<=width && size.height<=height) {
+                if (result==null) {
+                    result=size;
+                } else {
+                    int resultArea=result.width*result.height;
+                    int newArea=size.width*size.height;
+
+                    if (newArea>resultArea) {
+                        result=size;
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
