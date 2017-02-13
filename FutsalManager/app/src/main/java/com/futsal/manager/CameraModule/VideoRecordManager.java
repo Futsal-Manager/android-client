@@ -1,10 +1,14 @@
 package com.futsal.manager.CameraModule;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Surface;
 import android.view.SurfaceHolder;
@@ -20,6 +24,8 @@ import com.futsal.manager.R;
 
 public class VideoRecordManager extends Activity implements SurfaceHolder.Callback{
     final String videoSavePath = "/storage/emulated/DCIM/test.mp4";
+    final int CAMERA_PERMISSION_REQUEST_CODE = 1, READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 2,
+            WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 3;
 
     String videoRecordManagerLogCatTag;
     ToggleButton toggleRecordVideo;
@@ -106,6 +112,12 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.d(videoRecordManagerLogCatTag, "surfaceCreated");
+        try {
+            InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+        }
+        catch (Exception err) {
+            Log.d(videoRecordManagerLogCatTag, "Error in surfaceCreated: " + err.getMessage());
+        }
     }
 
     @Override
@@ -132,8 +144,15 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     public boolean InitRecordVideo(Surface cameraViewSurface, Camera phoneCamera, MediaRecorder mediaRecorderManager, String pathOfStoreVideoFile) {
         try {
             if(phoneCamera == null) {
-                phoneCamera = Camera.open();
-                phoneCamera.unlock();
+                if(IsCameraPermissionAvailable() && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()) {
+                    phoneCamera = Camera.open();
+                    phoneCamera.unlock();
+                }
+                else {
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                    ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE);
+                }
             }
 
             if(mediaRecorderManager == null) {
@@ -157,5 +176,20 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
             Log.d(videoRecordManagerLogCatTag, "Error in InitRecordVideo: " + err.getMessage());
         }
         return false;
+    }
+
+    public boolean IsCameraPermissionAvailable() {
+        int permissionStatusResult = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA);
+        return permissionStatusResult == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public boolean IsStorageReadPermissionAvailable() {
+        int permissionStatusResult = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        return permissionStatusResult == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public boolean IsStorageWritePermissionAvailable() {
+        int permissionStatusResult = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        return permissionStatusResult == PackageManager.PERMISSION_GRANTED;
     }
 }
