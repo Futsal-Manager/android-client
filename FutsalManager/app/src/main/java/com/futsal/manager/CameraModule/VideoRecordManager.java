@@ -72,7 +72,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
                         deviceMediaRecorderManager.reset();
                     }
                     try {
-                        InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+                        InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, videoSavePath);
                     }
                     catch (Exception err) {
                         Log.d(videoRecordManagerLogCatTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
@@ -123,7 +123,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
         Log.d(videoRecordManagerLogCatTag, "surfaceCreated");
         try {
             InitDeviceCamera();
-            InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+            InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, videoSavePath);
         }
         catch (Exception err) {
             Log.d(videoRecordManagerLogCatTag, "Error in surfaceCreated: " + err.getMessage());
@@ -157,6 +157,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         Log.d(videoRecordManagerLogCatTag, "surfaceDestroyed");
+        ShutdownProcess();
     }
 
     public void RotateScreenLANDSCAPE() {
@@ -170,12 +171,12 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
         return targetSurfaceHolder;
     }
 
-    public boolean InitRecordVideo(Surface cameraViewSurface, Camera phoneCamera, MediaRecorder mediaRecorderManager, String pathOfStoreVideoFile) {
+    public boolean InitRecordVideo(Surface cameraViewSurface, Camera phoneCamera, String pathOfStoreVideoFile) {
         try {
             if(phoneCamera == null) {
                 if(IsCameraPermissionAvailable()) {// && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()
                     //phoneCamera = Camera.open(0);
-                    //phoneCamera.unlock();
+                    phoneCamera.unlock();
                 }
                 else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
@@ -184,21 +185,21 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
                 }
             }
 
-            if(mediaRecorderManager == null) {
-                mediaRecorderManager = new MediaRecorder();
+            if(deviceMediaRecorderManager == null) {
+                deviceMediaRecorderManager = new MediaRecorder();
             }
-            mediaRecorderManager.setPreviewDisplay(cameraViewSurface);
-            mediaRecorderManager.setCamera(phoneCamera);
+            deviceMediaRecorderManager.setPreviewDisplay(cameraViewSurface);
+            deviceMediaRecorderManager.setCamera(phoneCamera);
 
-            mediaRecorderManager.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-            mediaRecorderManager.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            mediaRecorderManager.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-            mediaRecorderManager.setVideoEncodingBitRate(512 * 1000);
-            mediaRecorderManager.setVideoFrameRate(24);
-            mediaRecorderManager.setVideoSize(1280, 720);
-            mediaRecorderManager.setOutputFile(pathOfStoreVideoFile);
+            deviceMediaRecorderManager.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+            deviceMediaRecorderManager.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            deviceMediaRecorderManager.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            deviceMediaRecorderManager.setVideoEncodingBitRate(512 * 1000);
+            deviceMediaRecorderManager.setVideoFrameRate(24);
+            deviceMediaRecorderManager.setVideoSize(1280, 720);
+            deviceMediaRecorderManager.setOutputFile(pathOfStoreVideoFile);
 
-            mediaRecorderManager.prepare();
+            deviceMediaRecorderManager.prepare();
             return true;
         }
         catch (Exception err) {
@@ -262,5 +263,16 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
             }
         }
         return result;
+    }
+
+    public void ShutdownProcess() {
+        try {
+            deviceMediaRecorderManager.reset();
+            deviceMediaRecorderManager.release();
+            phoneDeviceCamera.release();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordManagerLogCatTag, "Error in ShutdownProcess: " + err.getMessage());
+        }
     }
 }
