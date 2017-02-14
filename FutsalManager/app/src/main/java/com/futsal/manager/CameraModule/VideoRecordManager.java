@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
@@ -17,12 +18,15 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
+
+import java.io.File;
+
 /**
  * Created by stories2 on 2017. 2. 9..
  */
 
 public class VideoRecordManager extends Activity implements SurfaceHolder.Callback{
-    final String videoSavePath = "/storage/emulated/DCIM/test.mp4";
+    String videoSavePath;
     final int CAMERA_PERMISSION_REQUEST_CODE = 1, READ_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 2,
             WRITE_EXTERNAL_STORAGE_PERMISSION_REQUEST_CODE = 3;
 
@@ -32,6 +36,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     SurfaceHolder surfaceHolderRecordVideo;
     Camera phoneDeviceCamera;
     MediaRecorder deviceMediaRecorderManager;
+    File mediaSaveFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,11 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
 
         toggleRecordVideo = (ToggleButton)findViewById(R.id.toggleRecordVideo);
         surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
+
+        mediaSaveFile = getExternalFilesDir(Environment.DIRECTORY_DCIM);
+        videoSavePath = mediaSaveFile.getPath() + "/test.mp4";
+        //videoSavePath = getExternalFilesDir(Environment.DIRECTORY_DCIM) + "test.mp4";
+        Log.d(videoRecordManagerLogCatTag, "video save path: " + videoSavePath);
 
         RotateScreenLANDSCAPE();
         surfaceHolderRecordVideo = InitSurfaceView(surfaceRecordVideo, surfaceHolderRecordVideo);
@@ -62,7 +72,7 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
                         deviceMediaRecorderManager.reset();
                     }
                     try {
-                        //InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
+                        InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
                     }
                     catch (Exception err) {
                         Log.d(videoRecordManagerLogCatTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
@@ -112,8 +122,8 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         Log.d(videoRecordManagerLogCatTag, "surfaceCreated");
         try {
-            //InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
             InitDeviceCamera();
+            InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, deviceMediaRecorderManager, videoSavePath);
         }
         catch (Exception err) {
             Log.d(videoRecordManagerLogCatTag, "Error in surfaceCreated: " + err.getMessage());
@@ -164,8 +174,8 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
         try {
             if(phoneCamera == null) {
                 if(IsCameraPermissionAvailable()) {// && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()
-                    phoneCamera = Camera.open(0);
-                    phoneCamera.unlock();
+                    //phoneCamera = Camera.open(0);
+                    //phoneCamera.unlock();
                 }
                 else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
