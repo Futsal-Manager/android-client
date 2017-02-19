@@ -2,9 +2,12 @@ package com.futsal.manager.CameraModule;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
 
@@ -14,6 +17,7 @@ import org.opencv.android.InstallCallbackInterface;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.LoaderCallbackInterface;
 import org.opencv.android.OpenCVLoader;
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
@@ -28,6 +32,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     JavaCameraView opencvCameraView;
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
+    ToggleButton toogleRecordVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,19 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
+        toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
+
+        toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean isRecording) {
+                if(isRecording) {
+                    Log.d(videoRecordBasedOnOpencvTag, "Start");
+                }
+                else {
+                    Log.d(videoRecordBasedOnOpencvTag, "Stopped");
+                }
+            }
+        });
 
         opencvBaseLoaderCallback = new BaseLoaderCallback(getApplicationContext()) {
             @Override
@@ -114,5 +132,17 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         eachCameraFrameImage = inputFrame.rgba();
         return eachCameraFrameImage;
+    }
+
+    public Bitmap MatToBitmap(Mat targetMatImage) {
+        Bitmap eachImageFrameBitmap = null;
+        try {
+            eachImageFrameBitmap = Bitmap.createBitmap(targetMatImage.cols(), targetMatImage.rows(), Bitmap.Config.ARGB_8888);
+            Utils.matToBitmap(targetMatImage, eachImageFrameBitmap);
+        }
+        catch (Exception err) {
+            Log.d(videoRecordBasedOnOpencvTag, "Error in MatToBitmap: " + err.getMessage());
+        }
+        return eachImageFrameBitmap;
     }
 }
