@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import com.futsal.manager.CameraModule.VideoRecordManager;
+import com.futsal.manager.CameraModule.VideoRecordBasedOnOpenCV;
 
 import org.opencv.android.OpenCVLoader;
 
@@ -27,7 +27,7 @@ public class FutsalManagerMain extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.futsal_manager_main);
 
-        Intent recordVideoLayout = new Intent(FutsalManagerMain.this, VideoRecordManager.class);
+        Intent recordVideoLayout = new Intent(FutsalManagerMain.this, VideoRecordBasedOnOpenCV.class);
         startActivity(recordVideoLayout);
     }
 }

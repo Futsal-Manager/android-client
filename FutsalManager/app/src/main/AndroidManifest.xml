@@ -25,6 +25,9 @@
         <activity android:name=".CameraModule.VideoRecordManager">
 
         </activity>
+        <activity android:name=".CameraModule.VideoRecordBasedOnOpenCV">
+
+        </activity>
     </application>
 
 </manifest>
