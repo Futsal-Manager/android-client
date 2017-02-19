@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
@@ -39,7 +40,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
     ToggleButton toogleRecordVideo;
-
     FFmpegFrameRecorder fFmpegFrameRecorder;
 
     @Override
@@ -47,6 +47,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_video_surface_based_on_opencv);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
