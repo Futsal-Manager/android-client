@@ -62,14 +62,25 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
                 if(checkStatus) {
                     Log.d(videoRecordManagerLogCatTag, "true");
                     if(deviceMediaRecorderManager != null) {
-                        deviceMediaRecorderManager.start();
+                        try {
+                            deviceMediaRecorderManager.start();
+                        }
+                        catch (Exception err) {
+                            Log.d(videoRecordManagerLogCatTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
+                        }
                     }
                 }
                 else {
                     Log.d(videoRecordManagerLogCatTag, "false");
                     if(deviceMediaRecorderManager != null) {
-                        deviceMediaRecorderManager.stop();
-                        deviceMediaRecorderManager.reset();
+                        try {
+                            deviceMediaRecorderManager.stop();
+                            deviceMediaRecorderManager.reset();
+                            finish();
+                        }
+                        catch (Exception err) {
+                            Log.d(videoRecordManagerLogCatTag, "Err in setOnCheckedChangeListener: " + err.getMessage());
+                        }
                     }
                     try {
                         InitRecordVideo(surfaceHolderRecordVideo.getSurface(), phoneDeviceCamera, videoSavePath);
@@ -176,7 +187,9 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
             if(phoneCamera == null) {
                 if(IsCameraPermissionAvailable()) {// && IsStorageReadPermissionAvailable() && IsStorageWritePermissionAvailable()
                     //phoneCamera = Camera.open(0);
-                    phoneCamera.unlock();
+                    //phoneCamera.unlock();
+                    phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+                    phoneDeviceCamera.unlock();
                 }
                 else {
                     ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
@@ -188,22 +201,33 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
             if(deviceMediaRecorderManager == null) {
                 deviceMediaRecorderManager = new MediaRecorder();
             }
+
             deviceMediaRecorderManager.setPreviewDisplay(cameraViewSurface);
             deviceMediaRecorderManager.setCamera(phoneCamera);
 
-            deviceMediaRecorderManager.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
-            deviceMediaRecorderManager.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            deviceMediaRecorderManager.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
-            deviceMediaRecorderManager.setVideoEncodingBitRate(512 * 1000);
-            deviceMediaRecorderManager.setVideoFrameRate(24);
-            deviceMediaRecorderManager.setVideoSize(1280, 720);
-            deviceMediaRecorderManager.setOutputFile(pathOfStoreVideoFile);
+            //deviceMediaRecorderManager.setVideoSize(1280, 720);
+            deviceMediaRecorderManager.setAudioSource(MediaRecorder.AudioSource.MIC);
+            deviceMediaRecorderManager.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+            deviceMediaRecorderManager.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
 
-            deviceMediaRecorderManager.prepare();
+            /*deviceMediaRecorderManager.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            deviceMediaRecorderManager.setAudioSource(MediaRecorder.AudioSource.MIC);
+            deviceMediaRecorderManager.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            deviceMediaRecorderManager.setVideoSource(MediaRecorder.VideoSource.DEFAULT);
+            deviceMediaRecorderManager.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
+            deviceMediaRecorderManager.setVideoEncodingBitRate(512 * 1000);*/
+            //deviceMediaRecorderManager.setVideoFrameRate(24);
+            deviceMediaRecorderManager.setOutputFile(pathOfStoreVideoFile);
             return true;
         }
         catch (Exception err) {
             Log.d(videoRecordManagerLogCatTag, "Error in InitRecordVideo: " + err.getMessage());
+        }
+        try {
+            deviceMediaRecorderManager.prepare();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordManagerLogCatTag, "Test: " + err.getMessage());
         }
         return false;
     }
@@ -267,7 +291,6 @@ public class VideoRecordManager extends Activity implements SurfaceHolder.Callba
 
     public void ShutdownProcess() {
         try {
-            deviceMediaRecorderManager.reset();
             deviceMediaRecorderManager.release();
             phoneDeviceCamera.release();
         }
