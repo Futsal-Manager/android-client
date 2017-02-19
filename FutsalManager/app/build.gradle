@@ -29,4 +29,5 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.1.0'
     compile project(':openCVLibrary320')
+    compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.3.1'
 }

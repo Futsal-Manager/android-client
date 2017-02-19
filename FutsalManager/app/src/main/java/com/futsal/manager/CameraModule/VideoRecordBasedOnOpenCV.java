@@ -12,6 +12,7 @@ import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
 
+import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.InstallCallbackInterface;
@@ -38,6 +39,8 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
     ToggleButton toogleRecordVideo;
+
+    FFmpegFrameRecorder fFmpegFrameRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
