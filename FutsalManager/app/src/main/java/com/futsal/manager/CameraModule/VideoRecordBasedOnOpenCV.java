@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.SurfaceView;
 import android.widget.CompoundButton;
@@ -20,6 +21,10 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * Created by stories2 on 2017. 2. 19..
@@ -48,6 +53,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             public void onCheckedChanged(CompoundButton compoundButton, boolean isRecording) {
                 if(isRecording) {
                     Log.d(videoRecordBasedOnOpencvTag, "Start");
+                    StorePictureToStorage(MatToBitmap(eachCameraFrameImage), "testImage");
                 }
                 else {
                     Log.d(videoRecordBasedOnOpencvTag, "Stopped");
@@ -144,5 +150,21 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             Log.d(videoRecordBasedOnOpencvTag, "Error in MatToBitmap: " + err.getMessage());
         }
         return eachImageFrameBitmap;
+    }
+
+    public void StorePictureToStorage(Bitmap bitmapImage, String saveImageName) {
+        String savePath = Environment.getExternalStorageDirectory().toString();
+        OutputStream fileOutputStream;
+        File imageFile = new File(savePath, saveImageName + ".jpg");
+        try {
+            Log.d(videoRecordBasedOnOpencvTag, "the image will save at : " + savePath + " name : " + saveImageName + ".jpg");
+            fileOutputStream = new FileOutputStream(imageFile);
+            bitmapImage.compress(Bitmap.CompressFormat.JPEG, 85, fileOutputStream);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordBasedOnOpencvTag, "Error in StorePictureToStorage: " + err.getMessage());
+        }
     }
 }
