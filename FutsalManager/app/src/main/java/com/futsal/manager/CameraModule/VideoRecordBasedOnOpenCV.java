@@ -28,6 +28,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
+import static org.bytedeco.javacpp.avcodec.AV_CODEC_ID_MPEG4;
+import static org.bytedeco.javacpp.avutil.AV_PIX_FMT_RGB24;
+
 /**
  * Created by stories2 on 2017. 2. 19..
  */
@@ -40,7 +43,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
     ToggleButton toogleRecordVideo;
-    FFmpegFrameRecorder fFmpegFrameRecorder;
+    FFmpegFrameRecorder deviceVideoFrameRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
+
+        InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -170,5 +175,22 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         catch (Exception err) {
             Log.d(videoRecordBasedOnOpencvTag, "Error in StorePictureToStorage: " + err.getMessage());
         }
+    }
+
+    public FFmpegFrameRecorder InitVideoRecorder(FFmpegFrameRecorder videoFrameRecorder, String saveVideoName) {
+        try {
+            String savePath = Environment.getExternalStorageDirectory().toString();
+            savePath = savePath + "/" + saveVideoName + ".mp4";
+            Log.d(videoRecordBasedOnOpencvTag, "video save path: " + savePath);
+            videoFrameRecorder = new FFmpegFrameRecorder(savePath, 200, 150);
+            videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
+            videoFrameRecorder.setFrameRate(24);
+            videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);
+
+        }
+        catch (Exception err) {
+            Log.d(videoRecordBasedOnOpencvTag, "Error in InitVideoRecorder: " + err.getMessage());
+        }
+        return videoFrameRecorder;
     }
 }
