@@ -2,6 +2,8 @@ package com.futsal.manager.CameraModule;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -12,6 +14,7 @@ import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
+import com.getkeepsafe.relinker.ReLinker;
 
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.opencv.android.BaseLoaderCallback;
@@ -28,9 +31,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import static org.bytedeco.javacpp.avcodec.AV_CODEC_ID_MPEG4;
-import static org.bytedeco.javacpp.avutil.AV_PIX_FMT_RGB24;
-
 /**
  * Created by stories2 on 2017. 2. 19..
  */
@@ -38,6 +38,22 @@ import static org.bytedeco.javacpp.avutil.AV_PIX_FMT_RGB24;
 public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeViewBase.CvCameraViewListener2{
 
     static final String videoRecordBasedOnOpencvTag = "video with opencv";
+    /*static {
+        if(OpenCVLoader.initDebug()) {
+            System.loadLibrary("avcore");
+            System.loadLibrary("avformat");
+            System.loadLibrary("avcodec");
+            System.loadLibrary("avdevice");
+            System.loadLibrary("avfilter");
+            System.loadLibrary("avutil");
+            System.loadLibrary("swscale");
+            //System.loadLibrary("test_jni");
+            Log.d(videoRecordBasedOnOpencvTag, "opencv module loaded");
+        }
+        else {
+            Log.d(videoRecordBasedOnOpencvTag, "opencv module not loaded");
+        }
+    }*/
 
     JavaCameraView opencvCameraView;
     BaseLoaderCallback opencvBaseLoaderCallback;
@@ -124,12 +140,36 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
     public boolean IsOpencvModuleLoaded() {
         if(OpenCVLoader.initDebug()) {
+            /*System.loadLibrary("avcore");
+            System.loadLibrary("avformat");
+            System.loadLibrary("avcodec");
+            System.loadLibrary("avdevice");
+            System.loadLibrary("avfilter");
+            System.loadLibrary("avutil");
+            System.loadLibrary("swscale");*/
+            ReLinker.loadLibrary(getApplicationContext(), "avutil");
+            //ReLinker.loadLibrary(getApplicationContext(), "avformat");
+            //ReLinker.loadLibrary(getApplicationContext(), "avcodec");
+            //ReLinker.loadLibrary(getApplicationContext(), "swresample");
+            //System.loadLibrary("test_jni");
             Log.d(videoRecordBasedOnOpencvTag, "opencv module loaded");
+            test();
             return true;
         }
         else {
             Log.d(videoRecordBasedOnOpencvTag, "opencv module not loaded");
             return false;
+        }
+    }
+
+    public void test() {
+        PackageManager pm = getPackageManager();
+        try {
+            ApplicationInfo info = pm.getApplicationInfo(getPackageName(),0);
+            Log.i(videoRecordBasedOnOpencvTag, "app info sourceDir: " + info.sourceDir);
+            Log.i(videoRecordBasedOnOpencvTag, "app info dataDir: " + info.dataDir);
+            Log.i(videoRecordBasedOnOpencvTag, "app info nativeLibraryDir: " + info.nativeLibraryDir);
+        } catch (Exception e){
         }
     }
 
@@ -183,9 +223,9 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             savePath = savePath + "/" + saveVideoName + ".mp4";
             Log.d(videoRecordBasedOnOpencvTag, "video save path: " + savePath);
             videoFrameRecorder = new FFmpegFrameRecorder(savePath, 200, 150);
-            videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
+            /*videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
             videoFrameRecorder.setFrameRate(24);
-            videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);
+            videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);*/
 
         }
         catch (Exception err) {

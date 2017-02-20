@@ -9,7 +9,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        //testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk { abiFilters "armeabi", "armeabi-v7a", "x86", "mips" }
     }
     buildTypes {
         release {
@@ -17,21 +18,44 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets { main { jni.srcDirs = ['src/main/jni', 'src/main/jniLibs/'] } }
+    sourceSets {
+        main {
+            jni.srcDirs = ['src/main/jni', 'src/main/jniLibs', 'app/src/main/jniLibs']
+            jniLibs.srcDir 'src/main/jniLibs'
+            //jniLibs.srcDirs = ['lib']
+            //jniLibs.srcDirs = ["src/main/jniLibs"]
+            //jni.srcDirs = [] //disable automatic ndk-build call
+            //jniLibs.srcDirs = [ 'libs' ] //no need to copy the .so files from /libs to /jniLibs folder
+        }
+    }
+    /*sourceSets.main {
+        jniLibs.srcDirs = ['libs']
+    }*/
+    /*sourceSets.main {
+        jniLibs.srcDir 'src/main/jniLibs'
+    }*/
     packagingOptions {
         exclude 'org/bytedeco/javacpp/macosx-x86_64/libusb-1.0.dylib'
     }
+    lintOptions { abortOnError false }
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.so', '*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile 'com.android.support:appcompat-v7:25.1.0'
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:design:25.1.0'
+    //compile files('libs/ffmpegLibs.jar')
+    //compile files('libs/javacpp.jar')
+    //compile files('libs/javacv-platform.jar')
+
     compile project(':openCVLibrary320')
+    //compile group: 'org.bytedeco', name: 'javacv', version: '0.11'
+    //compile group: 'org.bytedeco.javacpp-presets', name: 'opencv', version: '2.4.11-0.11', classifier: 'android-arm'
+    //compile group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: '2.6.1-0.11', classifier: 'android-arm'
     compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.3.1'
-    compile group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: '2.8.1-1.1', classifier: 'android-arm'
+    compile 'com.getkeepsafe.relinker:relinker:1.2.2'
 }
