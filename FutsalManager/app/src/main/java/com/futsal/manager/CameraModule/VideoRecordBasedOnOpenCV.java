@@ -37,7 +37,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_8U;
+import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_32F;
 
 /**
  * Created by stories2 on 2017. 2. 19..
@@ -73,7 +73,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     FFmpegFrameRecorder deviceVideoFrameRecorder;
     boolean isVideoRecording;
     opencv_core.IplImage eachVideoFrame;
-    int frames, imageFrameWidth = 320, imageFrameHeight = 240;
+    int frames, imageFrameWidth = 320, imageFrameHeight = 240, frameSpeed = 30;
     long startTime;
 
     @Override
@@ -86,6 +86,8 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
 
+
+        opencvCameraView.setMaxFrameSize(imageFrameWidth, imageFrameHeight);
         deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
         //deviceVideoFrameRecorder = InitMediaRecorder(deviceVideoFrameRecorder, "testVideo");
 
@@ -225,29 +227,34 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     }
     private void onFrame(byte[] data, Size eachFrameSize){
 
-        long videoTimestamp = 1000 * (System.currentTimeMillis() - startTime);
+        if(isVideoRecording) {
+            long videoTimestamp = (1000) * (System.currentTimeMillis() - startTime);
 
-        // Put the camera preview frame right into the yuvIplimage object
-        //eachVideoFrame.getByteBuffer().put(data);
+            // Put the camera preview frame right into the yuvIplimage object
+            //eachVideoFrame.getByteBuffer().put(data);
 
-        try {
+            try {
 
-            // Get the correct time
-            deviceVideoFrameRecorder.setTimestamp(videoTimestamp);
+                // Get the correct time
+                deviceVideoFrameRecorder.setTimestamp(videoTimestamp);
 
-            // Record the image into FFmpegFrameRecorder
-            //deviceVideoFrameRecorder.record(eachVideoFrame);
-            deviceVideoFrameRecorder.record(new AndroidFrameConverter().convert(data, (int) eachFrameSize.width, (int) eachFrameSize.height));
-            frames++;
+                // Record the image into FFmpegFrameRecorder
+                //deviceVideoFrameRecorder.record(eachVideoFrame);
+                deviceVideoFrameRecorder.record(new AndroidFrameConverter().convert(data, (int) eachFrameSize.width, (int) eachFrameSize.height));
+                frames++;
 
-            Log.i(videoRecordBasedOnOpencvTag, "Wrote Frame: " + frames);
+                Log.i(videoRecordBasedOnOpencvTag, "Wrote Frame: " + frames);
 
-        }
-        catch (Exception e) {
-            Log.v(videoRecordBasedOnOpencvTag,"Error in OnFrame: " + e.getMessage());
+            }
+            catch (Exception e) {
+                Log.v(videoRecordBasedOnOpencvTag,"Error in OnFrame: " + e.getMessage());
+            }
         }
     }
 
+    public void CheckCameraPerformance() {
+        opencvCameraView.setMaxFrameSize(1280, 720);
+    }
 
     public Bitmap MatToBitmap(Mat targetMatImage) {
         Bitmap eachImageFrameBitmap = null;
@@ -279,19 +286,21 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
     public FFmpegFrameRecorder InitVideoRecorder(FFmpegFrameRecorder videoFrameRecorder, String saveVideoName) {
         try {
-            int depth = IPL_DEPTH_8U;
-            int channels = 4;
+            int depth = IPL_DEPTH_32F;
+            int channels = 3;
             String savePath = Environment.getExternalStorageDirectory().toString();
             File videoFile = new File(savePath, saveVideoName + ".mp4");
             savePath = savePath + "/" + saveVideoName + ".mp4";
             Log.d(videoRecordBasedOnOpencvTag, "video save path: " + savePath);
             //FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(savePath);
-            videoFrameRecorder = new FFmpegFrameRecorder(savePath, imageFrameWidth, imageFrameHeight, 1);
-            videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+            videoFrameRecorder = new FFmpegFrameRecorder(savePath, imageFrameWidth, imageFrameHeight, 3);
+            videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4);//AV_CODEC_ID_H264
             videoFrameRecorder.setFormat("mp4");
-            videoFrameRecorder.setFrameRate(24);
+            videoFrameRecorder.setFrameRate(frameSpeed);
             videoFrameRecorder.setVideoBitrate(16384);
-            videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P);
+            videoFrameRecorder.setVideoOption("preset", "veryfast");
+            videoFrameRecorder.setVideoOption("tune", "zerolatency");
+            videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P);//AV_PIX_FMT_YUV420P
             /*videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_HUFFYUV);
             videoFrameRecorder.setAudioCodec(avcodec.AV_CODEC_ID_NONE);
             videoFrameRecorder.setFormat("avi");

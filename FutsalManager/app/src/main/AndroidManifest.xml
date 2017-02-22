@@ -29,7 +29,8 @@
         <activity android:name=".CameraModule.VideoRecordManager">
 
         </activity>
-        <activity android:name=".CameraModule.VideoRecordBasedOnOpenCV">
+        <activity android:name=".CameraModule.VideoRecordBasedOnOpenCV"
+            android:hardwareAccelerated="true">
 
         </activity>
         <activity android:name=".BluetoothModule.BluetoothManager">
