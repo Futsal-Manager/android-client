@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.so', '*.jar'], dir: 'libs')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
@@ -51,11 +51,22 @@ dependencies {
     //compile files('libs/ffmpegLibs.jar')
     //compile files('libs/javacpp.jar')
     //compile files('libs/javacv-platform.jar')
-
     compile project(':openCVLibrary320')
-    compile group: 'org.bytedeco', name: 'javacpp', version: '1.3'
+    //compile 'org.bytedeco:javacpp:1.3'
     //compile group: 'org.bytedeco.javacpp-presets', name: 'opencv', version: '2.4.11-0.11', classifier: 'android-arm'
-    compile group: 'org.bytedeco.javacpp-presets', name: 'ffmpeg', version: '3.2.1-1.3', classifier: 'android-arm'
-    compile group: 'org.bytedeco', name: 'javacv-platform', version: '1.3.1'
+    //compile 'org.bytedeco.javacpp-presets:ffmpeg:3.2.1-1.3'
+    //compile 'org.bytedeco:javacv-platform:1.3.1'
     compile 'com.getkeepsafe.relinker:relinker:1.2.2'
+    compile files('libs/artoolkitplus.jar')
+    compile files('libs/ffmpeg.jar')
+    compile files('libs/flandmark.jar')
+    compile files('libs/flycapture.jar')
+    compile files('libs/javacpp.jar')
+    compile files('libs/javacv.jar')
+    compile files('libs/libdc1394.jar')
+    compile files('libs/libfreenect.jar')
+    compile files('libs/libfreenect2.jar')
+    compile files('libs/librealsense.jar')
+    compile files('libs/opencv.jar')
+    compile files('libs/videoinput.jar')
 }
