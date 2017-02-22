@@ -17,8 +17,11 @@ import android.widget.ToggleButton;
 
 import com.futsal.manager.R;
 
+import org.bytedeco.javacpp.avcodec;
+import org.bytedeco.javacpp.avutil;
+import org.bytedeco.javacpp.opencv_core;
+import org.bytedeco.javacv.AndroidFrameConverter;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
-import org.bytedeco.javacv.FrameRecorder;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.InstallCallbackInterface;
@@ -28,10 +31,13 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+
+import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_8U;
 
 /**
  * Created by stories2 on 2017. 2. 19..
@@ -65,6 +71,10 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     //MediaRecorder deviceVideoFrameRecorder;
     CameraBridgeViewBase opencvCameraViewBase;
     FFmpegFrameRecorder deviceVideoFrameRecorder;
+    boolean isVideoRecording;
+    opencv_core.IplImage eachVideoFrame;
+    int frames, imageFrameWidth = 320, imageFrameHeight = 240;
+    long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +86,22 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
 
-        InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
+        deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
         //deviceVideoFrameRecorder = InitMediaRecorder(deviceVideoFrameRecorder, "testVideo");
 
-
+        isVideoRecording = false;
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isRecording) {
+                isVideoRecording = !isVideoRecording;
                 if(isRecording) {
+                    StartRecordVideo();
                     Log.d(videoRecordBasedOnOpencvTag, "Start");
-                    StorePictureToStorage(MatToBitmap(eachCameraFrameImage), "testImage");
+                    //StorePictureToStorage(MatToBitmap(eachCameraFrameImage), "testImage");
                 }
                 else {
+                    StopRecordVideo();
                     Log.d(videoRecordBasedOnOpencvTag, "Stopped");
                 }
             }
@@ -196,8 +209,45 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         eachCameraFrameImage = inputFrame.rgba();
+        Size eachFrameSize = eachCameraFrameImage.size();
+        if(isVideoRecording) {
+            try {
+                byte[] byteFrame = new byte[(int) (eachCameraFrameImage.total() * eachCameraFrameImage.channels())];
+                eachCameraFrameImage.get(0, 0, byteFrame);
+                onFrame(byteFrame, eachFrameSize);
+                //deviceVideoFrameRecorder.record(new AndroidFrameConverter().convert(byteFrame, (int) eachFrameSize.width, (int) eachFrameSize.height));
+            }
+            catch (Exception err) {
+                Log.d(videoRecordBasedOnOpencvTag, "Error in onCameraFrame: " + err.getMessage());
+            }
+        }
         return eachCameraFrameImage;
     }
+    private void onFrame(byte[] data, Size eachFrameSize){
+
+        long videoTimestamp = 1000 * (System.currentTimeMillis() - startTime);
+
+        // Put the camera preview frame right into the yuvIplimage object
+        //eachVideoFrame.getByteBuffer().put(data);
+
+        try {
+
+            // Get the correct time
+            deviceVideoFrameRecorder.setTimestamp(videoTimestamp);
+
+            // Record the image into FFmpegFrameRecorder
+            //deviceVideoFrameRecorder.record(eachVideoFrame);
+            deviceVideoFrameRecorder.record(new AndroidFrameConverter().convert(data, (int) eachFrameSize.width, (int) eachFrameSize.height));
+            frames++;
+
+            Log.i(videoRecordBasedOnOpencvTag, "Wrote Frame: " + frames);
+
+        }
+        catch (Exception e) {
+            Log.v(videoRecordBasedOnOpencvTag,"Error in OnFrame: " + e.getMessage());
+        }
+    }
+
 
     public Bitmap MatToBitmap(Mat targetMatImage) {
         Bitmap eachImageFrameBitmap = null;
@@ -227,17 +277,29 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         }
     }
 
-    public FrameRecorder InitVideoRecorder(FrameRecorder videoFrameRecorder, String saveVideoName) {
+    public FFmpegFrameRecorder InitVideoRecorder(FFmpegFrameRecorder videoFrameRecorder, String saveVideoName) {
         try {
+            int depth = IPL_DEPTH_8U;
+            int channels = 4;
             String savePath = Environment.getExternalStorageDirectory().toString();
             File videoFile = new File(savePath, saveVideoName + ".mp4");
             savePath = savePath + "/" + saveVideoName + ".mp4";
             Log.d(videoRecordBasedOnOpencvTag, "video save path: " + savePath);
             //FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(savePath);
-            videoFrameRecorder = new FFmpegFrameRecorder(savePath, 200, 150);
-            /*videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
+            videoFrameRecorder = new FFmpegFrameRecorder(savePath, imageFrameWidth, imageFrameHeight, 1);
+            videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+            videoFrameRecorder.setFormat("mp4");
             videoFrameRecorder.setFrameRate(24);
-            videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);*/
+            videoFrameRecorder.setVideoBitrate(16384);
+            videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P);
+            /*videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_HUFFYUV);
+            videoFrameRecorder.setAudioCodec(avcodec.AV_CODEC_ID_NONE);
+            videoFrameRecorder.setFormat("avi");
+            //videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
+            videoFrameRecorder.setFrameRate(24);
+            //videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);
+            videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_RGB32);*/
+            eachVideoFrame = opencv_core.IplImage.create(imageFrameWidth, imageFrameHeight, depth, channels);
 
         }
         catch (Exception err) {
@@ -271,5 +333,26 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public void onError(MediaRecorder mediaRecorder, int i, int i1) {
 
+    }
+
+    public void StartRecordVideo() {
+        try {
+            frames = 0;
+            startTime = System.currentTimeMillis();
+            deviceVideoFrameRecorder.start();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordBasedOnOpencvTag, "Error in StartRecordVideo: " + err.getMessage());
+        }
+    }
+
+    public void StopRecordVideo() {
+        try {
+            deviceVideoFrameRecorder.stop();
+            deviceVideoFrameRecorder.release();
+        }
+        catch (Exception err) {
+            Log.d(videoRecordBasedOnOpencvTag, "Error in StopRecordVideo: " + err.getMessage());
+        }
     }
 }
