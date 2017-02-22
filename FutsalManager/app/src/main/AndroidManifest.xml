@@ -32,6 +32,9 @@
         <activity android:name=".CameraModule.VideoRecordBasedOnOpenCV">
 
         </activity>
+        <activity android:name=".BluetoothModule.BluetoothManager">
+
+        </activity>
     </application>
 
 </manifest>
