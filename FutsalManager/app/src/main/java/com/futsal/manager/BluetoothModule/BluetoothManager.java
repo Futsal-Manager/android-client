@@ -33,6 +33,7 @@ public class BluetoothManager extends Activity{
     BluetoothAdapter deviceBluetoothAdapter;
     ArrayAdapter listViewArrayAdapter;
     Set<BluetoothDevice> pairedDevices;
+    BluetoothCommunication bluetoothCommunication;
 
     Handler bluetoothManagerHandler = new Handler() {
 
@@ -55,7 +56,11 @@ public class BluetoothManager extends Activity{
         listOfBluetoothDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int clickedItemPosition, long l) {
-                Log.d(bluetoothManagerLogCatTag, "item: " + adapterView.getItemAtPosition(clickedItemPosition).toString());
+                String selectedDeviceAddress = adapterView.getItemAtPosition(clickedItemPosition).toString().split("\n")[1];
+                Log.d(bluetoothManagerLogCatTag, "item: " + selectedDeviceAddress);
+                deviceBluetoothAdapter.cancelDiscovery();
+                bluetoothCommunication = new BluetoothCommunication();
+                bluetoothCommunication.ConnectToTargetBluetoothDevice(deviceBluetoothAdapter.getRemoteDevice(selectedDeviceAddress));
             }
         });
 
@@ -99,7 +104,7 @@ public class BluetoothManager extends Activity{
         pairedDevices = deviceBluetoothAdapter.getBondedDevices();
         if(pairedDevices.size() > 0) {
             for (BluetoothDevice eachDeviceInfo : pairedDevices) {
-                String deviceInfo = eachDeviceInfo.getName().toString() + " : " + eachDeviceInfo.getAddress().toString();
+                String deviceInfo = eachDeviceInfo.getName().toString() + "\n" + eachDeviceInfo.getAddress().toString();
                 Log.d(bluetoothManagerLogCatTag, deviceInfo);
                 listViewArrayAdapter.add(deviceInfo);
             }
