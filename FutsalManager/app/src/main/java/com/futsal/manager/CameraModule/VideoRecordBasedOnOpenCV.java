@@ -16,7 +16,8 @@ import android.widget.ToggleButton;
 import com.futsal.manager.R;
 import com.getkeepsafe.relinker.ReLinker;
 
-import org.bytedeco.javacv.FFmpegFrameRecorder;
+import org.bytedeco.javacv.FFmpegFrameGrabber;
+import org.bytedeco.javacv.FrameRecorder;
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.InstallCallbackInterface;
@@ -59,7 +60,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
     ToggleButton toogleRecordVideo;
-    FFmpegFrameRecorder deviceVideoFrameRecorder;
+    FrameRecorder deviceVideoFrameRecorder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +148,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             System.loadLibrary("avfilter");
             System.loadLibrary("avutil");
             System.loadLibrary("swscale");*/
+            //System.loadLibrary("avutil");
             ReLinker.loadLibrary(getApplicationContext(), "avutil");
             //ReLinker.loadLibrary(getApplicationContext(), "avformat");
             //ReLinker.loadLibrary(getApplicationContext(), "avcodec");
@@ -169,6 +171,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             Log.i(videoRecordBasedOnOpencvTag, "app info sourceDir: " + info.sourceDir);
             Log.i(videoRecordBasedOnOpencvTag, "app info dataDir: " + info.dataDir);
             Log.i(videoRecordBasedOnOpencvTag, "app info nativeLibraryDir: " + info.nativeLibraryDir);
+
         } catch (Exception e){
         }
     }
@@ -217,12 +220,13 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         }
     }
 
-    public FFmpegFrameRecorder InitVideoRecorder(FFmpegFrameRecorder videoFrameRecorder, String saveVideoName) {
+    public FrameRecorder InitVideoRecorder(FrameRecorder videoFrameRecorder, String saveVideoName) {
         try {
             String savePath = Environment.getExternalStorageDirectory().toString();
             savePath = savePath + "/" + saveVideoName + ".mp4";
             Log.d(videoRecordBasedOnOpencvTag, "video save path: " + savePath);
-            videoFrameRecorder = new FFmpegFrameRecorder(savePath, 200, 150);
+            FFmpegFrameGrabber frameGrabber = new FFmpegFrameGrabber(savePath);
+            //videoFrameRecorder = new FFmpegFrameRecorder(savePath, 200, 150);
             /*videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
             videoFrameRecorder.setFrameRate(24);
             videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);*/
