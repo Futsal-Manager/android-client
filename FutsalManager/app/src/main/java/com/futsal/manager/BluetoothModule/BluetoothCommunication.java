@@ -55,7 +55,7 @@ public class BluetoothCommunication extends Thread{
             try {
                 bluetoothSocket =(BluetoothSocket) targetBluetoothDevice.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(targetBluetoothDevice,1);
                 bluetoothSocket.connect();
-                Log.d(bluetoothCommunicationLogCatTag, "OK");
+                Log.d(bluetoothCommunicationLogCatTag, "ok");
             }
             catch (Exception err2) {
                 Log.d(bluetoothCommunicationLogCatTag, "Error in InitConnection2: " + err.getMessage());
