@@ -36,6 +36,11 @@
         <activity android:name=".BluetoothModule.BluetoothManager">
 
         </activity>
+        <activity android:name=".CameraModule.MediaRecordManager"
+            android:hardwareAccelerated="true"
+            >
+
+        </activity>
     </application>
 
 </manifest>

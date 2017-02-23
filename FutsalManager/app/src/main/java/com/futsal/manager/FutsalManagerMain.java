@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.futsal.manager.BluetoothModule.BluetoothManager;
-import com.futsal.manager.CameraModule.VideoRecordBasedOnOpenCV;
+import com.futsal.manager.CameraModule.MediaRecordManager;
 
 import org.opencv.android.OpenCVLoader;
 
@@ -37,7 +37,7 @@ public class FutsalManagerMain extends AppCompatActivity {
         btnGoToCamera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent recordVideoLayout = new Intent(FutsalManagerMain.this, VideoRecordBasedOnOpenCV.class);
+                Intent recordVideoLayout = new Intent(FutsalManagerMain.this, MediaRecordManager.class);
                 startActivity(recordVideoLayout);
             }
         });
