@@ -10,6 +10,7 @@ import android.media.MediaRecorder;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -44,7 +45,8 @@ import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_32F;
  */
 
 public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeViewBase.CvCameraViewListener2,
-                                                                    MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener{
+                                                                    MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener,
+                                                                    SurfaceHolder.Callback{
 
     static final String videoRecordBasedOnOpencvTag = "video with opencv";
     /*static {
@@ -68,13 +70,15 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
     ToggleButton toogleRecordVideo;
-    //MediaRecorder deviceVideoFrameRecorder;
+    MediaRecorder mediaRecording;
     CameraBridgeViewBase opencvCameraViewBase;
     FFmpegFrameRecorder deviceVideoFrameRecorder;
     boolean isVideoRecording;
     opencv_core.IplImage eachVideoFrame;
-    int frames, imageFrameWidth = 320, imageFrameHeight = 240, frameSpeed = 30;
+    int frames, imageFrameWidth = 1280, imageFrameHeight = 720, frameSpeed = 30;
     long startTime;
+    SurfaceView surfaceRecordVideo;
+    SurfaceHolder surfaceHolderRecordVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,11 +89,15 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
+        surfaceRecordVideo = (SurfaceView) findViewById(R.id.surfaceRecordVideo);
 
+        surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
+        surfaceHolderRecordVideo.addCallback(this);
+        surfaceHolderRecordVideo.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        opencvCameraView.setMaxFrameSize(imageFrameWidth, imageFrameHeight);
-        deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
-        //deviceVideoFrameRecorder = InitMediaRecorder(deviceVideoFrameRecorder, "testVideo");
+        //opencvCameraView.setMaxFrameSize(imageFrameWidth, imageFrameHeight);
+        //deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
+        //InitMediaRecorder(mediaRecording, "testVideo");
 
         isVideoRecording = false;
 
@@ -98,12 +106,14 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             public void onCheckedChanged(CompoundButton compoundButton, boolean isRecording) {
                 isVideoRecording = !isVideoRecording;
                 if(isRecording) {
-                    StartRecordVideo();
+                    //StartRecordVideo();
+                    StartRecordMedia();
                     Log.d(videoRecordBasedOnOpencvTag, "Start");
                     //StorePictureToStorage(MatToBitmap(eachCameraFrameImage), "testImage");
                 }
                 else {
-                    StopRecordVideo();
+                    //StopRecordVideo();
+                    StopRecordMedia();
                     Log.d(videoRecordBasedOnOpencvTag, "Stopped");
                 }
             }
@@ -211,7 +221,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         eachCameraFrameImage = inputFrame.rgba();
-        Size eachFrameSize = eachCameraFrameImage.size();
+        /*Size eachFrameSize = eachCameraFrameImage.size();
         if(isVideoRecording) {
             try {
                 byte[] byteFrame = new byte[(int) (eachCameraFrameImage.total() * eachCameraFrameImage.channels())];
@@ -222,7 +232,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             catch (Exception err) {
                 Log.d(videoRecordBasedOnOpencvTag, "Error in onCameraFrame: " + err.getMessage());
             }
-        }
+        }*/
         return eachCameraFrameImage;
     }
     private void onFrame(byte[] data, Size eachFrameSize){
@@ -363,5 +373,61 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         catch (Exception err) {
             Log.d(videoRecordBasedOnOpencvTag, "Error in StopRecordVideo: " + err.getMessage());
         }
+    }
+
+    public void StartRecordMedia() {
+
+        if(mediaRecording == null) {
+            String savePath = Environment.getExternalStorageDirectory().toString();
+            opencvCameraView.disableView();
+            mediaRecording = new MediaRecorder();
+            mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
+            mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+            mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+            mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+            mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+
+            mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
+            mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
+
+            try {
+                mediaRecording.prepare();
+                Thread.sleep(1000);
+                mediaRecording.start();
+            }
+            catch (Exception err) {
+                Log.d(videoRecordBasedOnOpencvTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
+                mediaRecording.release();
+                mediaRecording = null;
+            }
+        }
+    }
+
+    public void StopRecordMedia() {
+
+        if(mediaRecording == null) {
+            opencvCameraView.enableView();
+            return;
+        }
+        mediaRecording.stop();
+        mediaRecording.reset();
+        mediaRecording.release();
+        mediaRecording = null;
+        opencvCameraView.enableView();
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
     }
 }
