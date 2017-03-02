@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/stories2/Desktop/FutsalManager/openCVLibrary320/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/Users/stories2/Desktop/FutsalManager/openCVLibrary320/src/release/jniLibs"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/home/ubuntu/android-client/openCVLibrary320/src/main/jniLibs"/></dataSet><dataSet config="release"><source path="/home/ubuntu/android-client/openCVLibrary320/src/release/jniLibs"/></dataSet></merger>
