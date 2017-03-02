@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.2/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.getkeepsafe.relinker-relinker-1.2.2_72ed674b907db37ba30506da1cd403f44cc26fb8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/artoolkitplus.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="543bf47572afc2f02c30f125d77019b1306e82d1">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/artoolkitplus_070c2f96872985206f770a93904e8cd77b1f0bce.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b266c8faa5af72e579b9da36ef35053ffed6ac64">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.1.0_12c3f91334c823693793a641bac64dbd926111d0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/libfreenect2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="afd5363d196de86fece4e138ced9d624e0eab5b2">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/libfreenect2_d0e009068f7ac9e82d583536396849aad58bd510.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.1.0_bde2c915441701da4cf0243139491034aab40efe.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/libdc1394.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e702de628164ba633e77f3b4a4a16a0c402ce364">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/libdc1394_0d22b8f280eae23c59862dd1772cb72336849149.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/librealsense.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a38afba003c895652db9f29f7e014e451a73a0b4">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/librealsense_163e4259b77c19dd4754690eb12dc3f4aafe1ee4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/ffmpeg.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2b506fefac100e50800bb1b5908d7588ab21fb45">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/ffmpeg_152a2d969e9fa3b48e2548c66659563e64f7e12a.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/libfreenect.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ea7981fbc3eba3cf3d8c1b8492d1952b85d20068">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/libfreenect_0a9f7f0b64b17c793323162daeaae6ed49251a73.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ca3c7aa31e2726a400a6e552b93cb9f63c9a1e6d">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.1.0_f7b9c3226f838a27810da44ce45cf0e47784e92c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_47890bf683fdcec06f67a2ca5438556c2e676f9d.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/flycapture.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="bb48ed01be621b6b38b91d45a96e68e7ad7bf25e">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/flycapture_185424b17156c8321207b8df0b4af9c34db091d7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/opencv.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="ae19e668754f80bc451d28d07c916d55f5d05fd8">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/opencv_95443d47a0cabc95dcf8eee4d3c946eb69c534d5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.1.0/support-annotations-25.1.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="64cb6b229a8bdfd907bc8dd46839a0053e4c018d">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/support-annotations-25.1.0_f3fca1ada264eb51d75022f63adc615528839146.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_24b1e41c57fa26b3e0ccee3dbbbac6a208963ba2.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.1.0_a3c00c092b60cfce95467af8aca95fcd6fb97c40.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/videoinput.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f30b2cba25b56af3a60a679775016537fda37c41">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/videoinput_56c66833229efa4cf6052a961ec6e15395ea8179.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="aee64634871d88a419d59eb743c1258a60f19700">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.1.0_edce63079d10e19f6f2fc9bd937bbca29c61bcf7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/design/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="30103d98fa5ed824b54af839c85e2111f9bde8ec">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-design-25.1.0_5b55701cba62399a57f7106f994e1a4626a0f1a8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d38084015027549951cbaea5d5f6fb795cc81151">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-transition-25.1.0_d4c346565701b87db96895c73649888ac85ff563.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_3e5f61f1ac156bfbd1e646394ad866b0ee928388.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/flandmark.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e5cd132c846b296edc8eee43c596583adfd151de">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/flandmark_284dfbd62e7f50947954957a3f5e8510527f2426.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/javacv.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f395969ebaee0a161444acb90f11c0132a87389f">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/javacv_0eb9c479e168f4a1b66925ed6671b6f0e96141ea.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_6cc425c15d0e5bd7dae58e4ef5bc6f562c0483fb.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_8b117972924cfbfe03f77d5088d4165e5ada3ea4.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/exploded-aar/FutsalManager/openCVLibrary320/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="038e8806866760ccd8568b401b8052e937e4be1a">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/FutsalManager-openCVLibrary320-unspecified_dccd7565e98f9927909f54f253972782d0680ae7.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Desktop/FutsalManager/app/libs/javacpp.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="565d9ff1660f5fe2b406c97ba2894b446ae26a97">
+        <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/javacpp_2b18c7ee5bb48b3d1921932c74a48640d8612984.jar" />
+    </item>
+
+</items>
