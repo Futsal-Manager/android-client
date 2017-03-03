@@ -1,10 +1,14 @@
 [
     {
-        "outputFile": "C:\\Users\\stori\\Desktop\\android-client\\FutsalManager\\openCVLibrary320\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/stories2/android-client/C:\\Users\\stori\\Desktop\\android-client\\FutsalManager\\openCVLibrary320\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
         "map": []
     },
     {
-        "outputFile": "C:\\Users\\stories2\\Desktop\\FutsalManager\\openCVLibrary320\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "outputFile": "/Users/stories2/android-client/C:\\Users\\stories2\\Desktop\\FutsalManager\\openCVLibrary320\\build\\intermediates\\incremental\\mergeDebugAndroidTestResources\\merged.dir\\values\\values.xml",
+        "map": []
+    },
+    {
+        "outputFile": "/Users/stories2/android-client/openCVLibrary320/build/intermediates/incremental/mergeDebugAndroidTestResources/merged.dir/values/values.xml",
         "map": []
     }
 ]
