@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
-import com.futsal.manager.BluetoothModule.BluetoothManager;
+import com.futsal.manager.BluetoothModule.DeviceListActivity;
 import com.futsal.manager.CameraModule.VideoRecordBasedOnOpenCV;
 
 import org.opencv.android.OpenCVLoader;
@@ -45,7 +45,7 @@ public class FutsalManagerMain extends AppCompatActivity {
         btnGoToBluetooth.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent bluetoothManagerLayout = new Intent(FutsalManagerMain.this, BluetoothManager.class);
+                Intent bluetoothManagerLayout = new Intent(FutsalManagerMain.this, DeviceListActivity.class);
                 startActivity(bluetoothManagerLayout);
             }
         });
