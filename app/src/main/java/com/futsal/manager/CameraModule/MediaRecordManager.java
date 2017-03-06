@@ -84,13 +84,18 @@ public class MediaRecordManager extends Activity implements SurfaceHolder.Callba
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+    }
+
+    @Override
     public void surfaceCreated(SurfaceHolder holder) {
 
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-
+        Log.d(getString(R.string.app_name), "Surface Changed");
     }
 
     @Override

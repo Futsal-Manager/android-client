@@ -5,6 +5,7 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
 import android.os.Bundle;
@@ -46,7 +47,7 @@ import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_32F;
 
 public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeViewBase.CvCameraViewListener2,
                                                                     MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener,
-                                                                    SurfaceHolder.Callback{
+                                                                    SurfaceHolder.Callback, Camera.PreviewCallback{
 
     static final String videoRecordBasedOnOpencvTag = "video with opencv";
     /*static {
@@ -79,6 +80,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     long startTime;
     SurfaceView surfaceRecordVideo;
     SurfaceHolder surfaceHolderRecordVideo;
+    Camera phoneDeviceCamera ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -376,23 +378,32 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     }
 
     public void StartRecordMedia() {
+        opencvCameraView.disableView();
 
         if(mediaRecording == null) {
             String savePath = Environment.getExternalStorageDirectory().toString();
-            opencvCameraView.disableView();
             mediaRecording = new MediaRecorder();
+            try{
+                phoneDeviceCamera.unlock();
+                phoneDeviceCamera.setPreviewCallback(this);
+            }
+            catch (Exception err) {
+                Log.d(getString(R.string.app_name), "failed reconnect");
+            }
+            mediaRecording.setCamera(phoneDeviceCamera);
             mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
             mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
             mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
             mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
             mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
 
-            mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
+            //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
             mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
 
             try {
+                //phoneDeviceCamera.reconnect();
                 mediaRecording.prepare();
-                Thread.sleep(1000);
+                //Thread.sleep(1000);
                 mediaRecording.start();
             }
             catch (Exception err) {
@@ -405,6 +416,9 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
     public void StopRecordMedia() {
 
+        if(phoneDeviceCamera != null) {
+            phoneDeviceCamera.stopPreview();
+        }
         if(mediaRecording == null) {
             opencvCameraView.enableView();
             return;
@@ -418,16 +432,32 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
-
+        if(phoneDeviceCamera == null) {
+            phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+        }
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
-
+        Log.d(getString(R.string.app_name), "Surface Changed");
+        try {
+            phoneDeviceCamera.stopPreview();
+            phoneDeviceCamera.setPreviewCallback(this);
+            phoneDeviceCamera.setPreviewDisplay(surfaceHolderRecordVideo);
+            phoneDeviceCamera.startPreview();
+        }
+        catch (Exception err) {
+            Log.d(getString(R.string.app_name), "Error in StartRecordMedia: " + err.getMessage());
+        }
     }
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
+    }
+
+    @Override
+    public void onPreviewFrame(byte[] bytes, Camera camera) {
+        Log.d(getString(R.string.app_name), "on Preview Frame");
     }
 }
