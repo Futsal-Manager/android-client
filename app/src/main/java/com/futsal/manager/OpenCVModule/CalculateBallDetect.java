@@ -4,6 +4,7 @@ import android.content.Context;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
 /**
@@ -26,6 +27,8 @@ public class CalculateBallDetect {
         originGrayImage = new Mat(originImage.width(), originImage.height(), CvType.CV_8UC1);
 
         Imgproc.cvtColor(originImage, originGrayImage, Imgproc.COLOR_BGRA2GRAY);
+
+        Imgproc.GaussianBlur(originGrayImage, originGrayImage, new Size(9, 9), 2, 2);
 
         return originGrayImage;
     }
