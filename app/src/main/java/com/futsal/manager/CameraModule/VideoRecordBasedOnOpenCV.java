@@ -17,6 +17,7 @@ import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 import com.futsal.manager.R;
 
 import org.bytedeco.javacpp.avcodec;
@@ -81,6 +82,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     SurfaceView surfaceRecordVideo;
     SurfaceHolder surfaceHolderRecordVideo;
     Camera phoneDeviceCamera ;
+    CalculateBallDetect calculateBallDetect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +94,8 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
         surfaceRecordVideo = (SurfaceView) findViewById(R.id.surfaceRecordVideo);
+
+        calculateBallDetect = new CalculateBallDetect(getApplicationContext());
 
         surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
         surfaceHolderRecordVideo.addCallback(this);
@@ -223,6 +227,10 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public Mat onCameraFrame(CameraBridgeViewBase.CvCameraViewFrame inputFrame) {
         eachCameraFrameImage = inputFrame.rgba();
+
+        //Log.d(getString(R.string.app_name), "image info: " + eachCameraFrameImage.width() + ", " + eachCameraFrameImage.height() + ", " + eachCameraFrameImage.channels());
+        //960, 720, 4
+        eachCameraFrameImage = calculateBallDetect.DetectBallPosition(eachCameraFrameImage);
         /*Size eachFrameSize = eachCameraFrameImage.size();
         if(isVideoRecording) {
             try {
@@ -384,11 +392,12 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             String savePath = Environment.getExternalStorageDirectory().toString();
             mediaRecording = new MediaRecorder();
             try{
+                phoneDeviceCamera.startPreview();
                 phoneDeviceCamera.unlock();
                 phoneDeviceCamera.setPreviewCallback(this);
             }
             catch (Exception err) {
-                Log.d(getString(R.string.app_name), "failed reconnect");
+                Log.d(getString(R.string.app_name), "camera init failed");
             }
             mediaRecording.setCamera(phoneDeviceCamera);
             mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
@@ -418,6 +427,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
         if(phoneDeviceCamera != null) {
             phoneDeviceCamera.stopPreview();
+            phoneDeviceCamera.lock();
         }
         if(mediaRecording == null) {
             opencvCameraView.enableView();
@@ -459,5 +469,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera) {
         Log.d(getString(R.string.app_name), "on Preview Frame");
+
     }
 }
