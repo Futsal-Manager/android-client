@@ -222,6 +222,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public void onCameraViewStopped() {
         eachCameraFrameImage.release();
+        calculateBallDetect.ReleaseImages();
     }
 
     @Override
@@ -443,7 +444,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         if(phoneDeviceCamera == null) {
-            phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            //phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
         }
     }
 
