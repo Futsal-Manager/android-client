@@ -28,7 +28,7 @@ public class CommunicationTester extends Activity {
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                communicationWithServer.AuthLogin("yoohoogun114@naver.com", "qlalfqjsgh123");
+                communicationWithServer.AuthLogin("yoohoogun114@naver.com", "rlagusdn123");
             }
         });
     }

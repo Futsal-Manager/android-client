@@ -11,6 +11,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 /**
@@ -30,7 +31,7 @@ public class CommunicationWithServer{
         AuthLoginRequest authLoginRequest = new AuthLoginRequest();
         authLoginRequest.SetUsername(username);
         authLoginRequest.SetPassword(password);
-        Call<AuthLoginResponse> calling = retrofit2NetworkInterface.AuthLoginProcess(authLoginRequest);
+        Call<AuthLoginResponse> calling = retrofit2NetworkInterface.AuthLoginProcess("application/json", authLoginRequest);
         calling.enqueue(new Callback<AuthLoginResponse>() {
             @Override
             public void onResponse(Call<AuthLoginResponse> call, Response<AuthLoginResponse> response) {
@@ -53,5 +54,5 @@ interface Retrofit2NetworkInterface {
             .build();
 
     @POST("auth/login")
-    Call<AuthLoginResponse> AuthLoginProcess(@Body AuthLoginRequest responseData);
+    Call<AuthLoginResponse> AuthLoginProcess(@Header("Content-Type") String contentType, @Body AuthLoginRequest responseData);
 }
