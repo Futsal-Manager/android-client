@@ -50,6 +50,9 @@
         <activity android:name=".BluetoothModule.BluetoothChat">
 
         </activity>
+        <activity android:name=".NetworkModule.CommunicationTester">
+
+        </activity>
     </application>
 
 </manifest>

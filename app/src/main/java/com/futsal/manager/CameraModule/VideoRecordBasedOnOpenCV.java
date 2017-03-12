@@ -1,7 +1,6 @@
 package com.futsal.manager.CameraModule;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -102,7 +101,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         surfaceHolderRecordVideo.addCallback(this);
         surfaceHolderRecordVideo.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
-        Log.d("test", "" + ActivityManager.getMemoryClass());
+        //Log.d("test", "" + ActivityManager.getMemoryClass());
 
         //opencvCameraView.setMaxFrameSize(imageFrameWidth, imageFrameHeight);
         //deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");

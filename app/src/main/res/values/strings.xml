@@ -8,6 +8,9 @@
     <string name="toggleRecordOff">Stop Recording</string>
     <string name="toggleRecordOn">Start Recording</string>
 
+    <!-- communication tester -->
+    <string name="serverLogIn">Log in</string>
+
     <!--  BluetoothChat -->
     <string name="send">Send</string>
     <string name="not_connected">You are not connected to a device</string>

@@ -9,13 +9,14 @@ import android.widget.Button;
 
 import com.futsal.manager.BluetoothModule.BluetoothManager;
 import com.futsal.manager.CameraModule.VideoRecordBasedOnOpenCV;
+import com.futsal.manager.NetworkModule.CommunicationTester;
 
 import org.opencv.android.OpenCVLoader;
 
 public class FutsalManagerMain extends AppCompatActivity {
 
     static final String logCatTag = "MainActivity";
-    Button btnGoToCamera, btnGoToBluetooth;
+    Button btnGoToCamera, btnGoToBluetooth, btnGoToNetwork;
 
     static {
         if(OpenCVLoader.initDebug()) {
@@ -33,6 +34,7 @@ public class FutsalManagerMain extends AppCompatActivity {
 
         btnGoToCamera = (Button) findViewById(R.id.btnGoToCamera);
         btnGoToBluetooth = (Button) findViewById(R.id.btnGoToBluetooth);
+        btnGoToNetwork = (Button) findViewById(R.id.btnGoToNetwork);
 
         btnGoToCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,6 +52,12 @@ public class FutsalManagerMain extends AppCompatActivity {
             }
         });
 
-
+        btnGoToNetwork.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent networkManagerLayout = new Intent(FutsalManagerMain.this, CommunicationTester.class);
+                startActivity(networkManagerLayout);
+            }
+        });
     }
 }

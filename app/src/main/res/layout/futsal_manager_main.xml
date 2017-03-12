@@ -31,4 +31,12 @@
         android:layout_height="wrap_content"
         android:text="Bluetooth"
         />
+
+    <Button
+        android:layout_below="@+id/btnGoToBluetooth"
+        android:id="@+id/btnGoToNetwork"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Network"
+        />
 </RelativeLayout>
