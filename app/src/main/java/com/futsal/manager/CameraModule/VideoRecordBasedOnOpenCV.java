@@ -1,6 +1,7 @@
 package com.futsal.manager.CameraModule;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -100,6 +101,8 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
         surfaceHolderRecordVideo.addCallback(this);
         surfaceHolderRecordVideo.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        Log.d("test", "" + ActivityManager.getMemoryClass());
 
         //opencvCameraView.setMaxFrameSize(imageFrameWidth, imageFrameHeight);
         //deviceVideoFrameRecorder = InitVideoRecorder(deviceVideoFrameRecorder, "testVideo");
@@ -391,7 +394,24 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
         if(mediaRecording == null) {
             String savePath = Environment.getExternalStorageDirectory().toString();
-            mediaRecording = new MediaRecorder();
+            try {
+
+                mediaRecording = new MediaRecorder();//media 객체 생성 확인을 할 것
+                Log.e("test", "asdf: " + mediaRecording);
+                mediaRecording.setCamera(phoneDeviceCamera);
+                mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
+                mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+                mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+
+                //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
+                mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
+
+            }
+            catch (Exception err) {
+                Log.e("asdfasf", "error: " + err.getMessage());
+            }
             try{
                 phoneDeviceCamera.startPreview();
                 phoneDeviceCamera.unlock();
@@ -400,16 +420,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             catch (Exception err) {
                 Log.d(getString(R.string.app_name), "camera init failed");
             }
-            mediaRecording.setCamera(phoneDeviceCamera);
-            mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
-            mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-            mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-            mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-            mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-
-            //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
-            mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
-
             try {
                 //phoneDeviceCamera.reconnect();
                 mediaRecording.prepare();
@@ -444,7 +454,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         if(phoneDeviceCamera == null) {
-            //phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
         }
     }
 
@@ -461,7 +471,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             Log.d(getString(R.string.app_name), "Error in StartRecordMedia: " + err.getMessage());
         }
     }
-
+//android log to file
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
 
