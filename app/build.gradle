@@ -63,6 +63,10 @@ dependencies {
     compile 'com.getkeepsafe.relinker:relinker:1.2.2'
     compile 'com.squareup.retrofit2:retrofit:2.2.0'
     compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.googlecode.json-simple:json-simple:1.1'
+    compile 'com.squareup.okhttp3:okhttp:3.4.2'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.2'
+    compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.2'
     compile files('libs/artoolkitplus.jar')
     compile files('libs/ffmpeg.jar')
     compile files('libs/flandmark.jar')

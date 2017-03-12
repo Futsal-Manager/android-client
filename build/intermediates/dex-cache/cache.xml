@@ -219,6 +219,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/json-simple-1.1_bbb70e9a1e57e442055a5a34d6f00d94910d802c.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/Desktop/FutsalManager/app/libs/ffmpeg.jar"
         jumboMode="false"
         optimize="true"
@@ -327,6 +336,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.4.2/d99260c62d97beae99ed1f779a35a9bf48c094a6/logging-interceptor-3.4.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d99260c62d97beae99ed1f779a35a9bf48c094a6">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.4.2_f5742c17f9f94619375f5d506700cd9bd8e0ccde.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/Desktop/FutsalManager/app/libs/javacv.jar"
         jumboMode="false"
         optimize="true"
@@ -387,6 +405,15 @@
         revision="25.0.1"
         sha1="ae19e668754f80bc451d28d07c916d55f5d05fd8">
         <dex dex="/Users/stories2/Desktop/FutsalManager/app/build/intermediates/pre-dexed/debug/opencv_95443d47a0cabc95dcf8eee4d3c946eb69c534d5.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp-urlconnection/3.4.2/f0bbb44ac6987ce3e07ba78f6484ff10ca64bd2/okhttp-urlconnection-3.4.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0f0bbb44ac6987ce3e07ba78f6484ff10ca64bd2">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.4.2_05d062f2819b1ba0a152801ffeca4daafd2db54f.jar" />
     </item>
     <item
         is-multidex="false"

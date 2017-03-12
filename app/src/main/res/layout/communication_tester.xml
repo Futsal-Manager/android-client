@@ -23,4 +23,18 @@
         android:id="@+id/etxtPassword"
         android:text="rlagusdn123"
         />
+    
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSignup"
+        android:text="signup"
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFileList"
+        android:text="filelist"
+        />
 </LinearLayout>

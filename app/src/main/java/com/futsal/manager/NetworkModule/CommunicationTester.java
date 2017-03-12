@@ -15,7 +15,7 @@ import com.futsal.manager.R;
 public class CommunicationTester extends Activity {
 
     CommunicationWithServer communicationWithServer;
-    Button btnLogIn;
+    Button btnLogIn, btnSignup, btnFileList;
     EditText etxtUsername, etxtPassword;
 
     @Override
@@ -24,6 +24,8 @@ public class CommunicationTester extends Activity {
         setContentView(R.layout.communication_tester);
 
         btnLogIn = (Button) findViewById(R.id.btnLogIn);
+        btnSignup = (Button) findViewById(R.id.btnSignup);
+        btnFileList = (Button) findViewById(R.id.btnFileList);
         etxtUsername = (EditText) findViewById(R.id.etxtUsername);
         etxtPassword = (EditText) findViewById(R.id.etxtPassword);
 
@@ -33,6 +35,20 @@ public class CommunicationTester extends Activity {
             @Override
             public void onClick(View view) {
                 communicationWithServer.AuthLogin(etxtUsername.getText().toString(), etxtPassword.getText().toString());
+            }
+        });
+
+        btnSignup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                communicationWithServer.AuthSignup(etxtUsername.getText().toString(), etxtPassword.getText().toString());
+            }
+        });
+
+        btnFileList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                communicationWithServer.FileList();
             }
         });
     }
