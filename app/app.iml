@@ -143,6 +143,7 @@
     <orderEntry type="library" exported="" name="retrofit-2.2.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" exported="" name="libfreenect2" level="project" />
+    <orderEntry type="library" exported="" name="converter-gson-2.2.0" level="project" />
     <orderEntry type="library" exported="" name="libdc1394-linux-armhf" level="project" />
     <orderEntry type="library" exported="" name="ffmpeg-linux-armhf" level="project" />
     <orderEntry type="library" exported="" name="videoinput" level="project" />
@@ -221,6 +222,7 @@
     <orderEntry type="library" exported="" name="artoolkitplus" level="project" />
     <orderEntry type="library" exported="" name="artoolkitplus-android-x86" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" name="gson-2.7" level="project" />
     <orderEntry type="library" exported="" name="okio-1.11.0" level="project" />
     <orderEntry type="library" exported="" name="flandmark-android-arm" level="project" />
     <orderEntry type="library" exported="" name="libfreenect-platform" level="project" />

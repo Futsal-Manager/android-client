@@ -174,6 +174,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.2.0/a09926806199499a20b2f5168779499abfa33342/converter-gson-2.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09926806199499a20b2f5168779499abfa33342">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/converter-gson-2.2.0_da3938fe9c44510ca85d07edfbc140342bd9be18.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.2/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -477,6 +486,15 @@
         revision="25.0.1"
         sha1="bb48ed01be621b6b38b91d45a96e68e7ad7bf25e">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/flycapture_e66efc2a7ccedc42f75d237c2470962586ce2ab0.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.google.code.gson/gson/2.7/751f548c85fa49f330cecbb1875893f971b33c4e/gson-2.7.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/gson-2.7_e8a68ed640ccc9aeb27098b9f0f700a0b5e78baf.jar" />
     </item>
     <item
         is-multidex="false"
