@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.futsal.manager.R;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -41,6 +43,7 @@ public class CommunicationWithServer{
             @Override
             public void onFailure(Call<AuthLoginResponse> call, Throwable t) {
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
+                Log.d(applicationContext.getString(R.string.app_name), "Error: " + t.getMessage());
             }
         });
     }
@@ -48,9 +51,13 @@ public class CommunicationWithServer{
 
 interface Retrofit2NetworkInterface {
 
+    Gson gson = new GsonBuilder()
+            .setLenient()
+            .create();
+
     public static final Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build();
 
     @POST("auth/login")

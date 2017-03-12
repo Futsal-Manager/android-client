@@ -9,4 +9,18 @@
         android:id="@+id/btnLogIn"
         android:text="@string/serverLogIn"
         />
+    
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" 
+        android:id="@+id/etxtUsername"
+        android:text="yoohoogun116@naver.com"
+        />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtPassword"
+        android:text="rlagusdn123"
+        />
 </LinearLayout>
