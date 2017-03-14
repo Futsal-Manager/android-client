@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.futsal.manager.R;
@@ -35,6 +36,8 @@ public class BluetoothManager extends Activity{
     Set<BluetoothDevice> pairedDevices;
     BluetoothCommunication bluetoothCommunication;
 
+    Button btnSend, btnClose, btnReceive;
+
     Handler bluetoothManagerHandler = new Handler() {
 
         @Override
@@ -50,6 +53,9 @@ public class BluetoothManager extends Activity{
 
         listViewArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1);
         listOfBluetoothDevices = (ListView) findViewById(R.id.listOfBluetoothDevices);
+        btnSend = (Button) findViewById(R.id.btnSend);
+        btnClose = (Button) findViewById(R.id.btnClose);
+        btnReceive = (Button) findViewById(R.id.btnReceive);
 
         listOfBluetoothDevices.setAdapter(listViewArrayAdapter);
 
@@ -60,11 +66,32 @@ public class BluetoothManager extends Activity{
                 Log.d(bluetoothManagerLogCatTag, "item: " + selectedDeviceAddress);
                 deviceBluetoothAdapter.cancelDiscovery();
                 bluetoothCommunication = new BluetoothCommunication();
-                bluetoothCommunication.ConnectToTargetBluetoothDevice(deviceBluetoothAdapter.getRemoteDevice(selectedDeviceAddress));
+                bluetoothCommunication.ConnectToTargetBluetoothDevice(deviceBluetoothAdapter, selectedDeviceAddress);
             }
         });
 
         InitBluetooth();
+
+        btnSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bluetoothCommunication.TryToCommunication(1);
+            }
+        });
+
+        btnClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bluetoothCommunication.CloseConnection();
+            }
+        });
+
+        btnReceive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bluetoothCommunication.TryToCommunication(0);
+            }
+        });
     }
 
     @Override

@@ -1,8 +1,11 @@
 package com.futsal.manager.BluetoothModule;
 
+import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothServerSocket;
 import android.bluetooth.BluetoothSocket;
 import android.os.Build;
+import android.os.ParcelUuid;
 import android.util.Log;
 
 import java.io.IOException;
@@ -19,15 +22,22 @@ import static android.content.ContentValues.TAG;
 
 public class BluetoothCommunication extends Thread{
 
+    final static int BLE_RECEIVE_MODE = 0, BLE_SEND_MODE = 1;
+
     final String bluetoothCommunicationLogCatTag = "bluetooth communication";
     final UUID bluetoothUUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     BluetoothDevice targetBluetoothDevice;
     BluetoothSocket bluetoothSocket;
     Thread bluetoothCommunicationThread;
+    BluetoothServerSocket bluetoothServerSocket;
+    BluetoothAdapter bluetoothAdapter;
+
+    int mode;
 
     public BluetoothCommunication() {
         bluetoothCommunicationThread = new Thread(this);
+        mode = 0;
     }
 //주석 추가해 두기
     //android design pattern
@@ -36,9 +46,22 @@ public class BluetoothCommunication extends Thread{
     public void run() {
         super.run();
         InitConnection();
-        ConnectedThread connectedThread = new ConnectedThread(bluetoothSocket);
-        connectedThread.start();
-        CloseConnection();
+        //CloseConnection();
+    }
+
+    public void TryToCommunication(int mode) {
+        this.mode = mode;
+        ConnectedThread connectedThread;
+        switch (mode) {
+            case BLE_RECEIVE_MODE:
+                connectedThread = new ConnectedThread(bluetoothSocket);
+                connectedThread.start();
+                break;
+            case BLE_SEND_MODE:
+                connectedThread = new ConnectedThread(bluetoothAdapter);
+                connectedThread.start();
+                break;
+        }
     }
 
     public void CloseConnection() {
@@ -54,7 +77,11 @@ public class BluetoothCommunication extends Thread{
 
     public void InitConnection() {
         try {
-            bluetoothSocket.connect();
+            if(!bluetoothSocket.isConnected())
+                bluetoothSocket.connect();
+            else {
+                Log.d(bluetoothCommunicationLogCatTag, "already connected");
+            }
         }
         catch (Exception err) {
             Log.d(bluetoothCommunicationLogCatTag, "Error in InitConnection: " + err.getMessage());
@@ -69,10 +96,16 @@ public class BluetoothCommunication extends Thread{
         }
     }
 
-    public void ConnectToTargetBluetoothDevice(BluetoothDevice targetBluetoothDevice) {
-        this.targetBluetoothDevice = targetBluetoothDevice;
+    public void ConnectToTargetBluetoothDevice(BluetoothAdapter targetBluetoothAdapter, String selectedDeviceAddress) {
+        this.bluetoothAdapter = targetBluetoothAdapter;
+        this.targetBluetoothDevice = targetBluetoothAdapter.getRemoteDevice(selectedDeviceAddress);;
         try {
-            bluetoothSocket = createBluetoothSocket(targetBluetoothDevice);
+            ParcelUuid list[] = targetBluetoothDevice.getUuids();
+            for(ParcelUuid uuid : list) {
+                Log.d("ble", "connect uuid: " + uuid);
+            }
+            //bluetoothSocket = createBluetoothSocket(targetBluetoothDevice);
+            bluetoothSocket = createBluetoothSocketBasedOnStackoverflow(targetBluetoothDevice);
             bluetoothCommunicationThread.start();
         }
         catch (Exception err) {
@@ -87,16 +120,65 @@ public class BluetoothCommunication extends Thread{
                 final Method m = device.getClass().getMethod("createInsecureRfcommSocketToServiceRecord", new Class[] { UUID.class });
                 return (BluetoothSocket) m.invoke(device, bluetoothUUID);
             } catch (Exception e) {
-                Log.e(TAG, "Could not create Insecure RFComm Connection",e);
+                Log.e(bluetoothCommunicationLogCatTag, "Could not create Insecure RFComm Connection",e);
             }
         }
         return  device.createRfcommSocketToServiceRecord(bluetoothUUID);
     }
 
+    private BluetoothSocket createBluetoothSocketBasedOnStackoverflow(BluetoothDevice device) {
+
+        UUID SERIAL_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb"); // bluetooth serial port service
+        //UUID SERIAL_UUID = device.getUuids()[0].getUuid(); //if you don't know the UUID of the bluetooth device service, you can get it like this from android cache
+
+        BluetoothSocket socket = null;
+
+        try {
+            socket = device.createRfcommSocketToServiceRecord(SERIAL_UUID);
+        } catch (Exception e) {Log.e(bluetoothCommunicationLogCatTag,"Error creating socket");}
+
+        try {
+            socket.connect();
+            Log.e(bluetoothCommunicationLogCatTag,"Connected");
+            return socket;
+        } catch (IOException e) {
+            Log.e(bluetoothCommunicationLogCatTag,e.getMessage());
+            try {
+                Log.e(bluetoothCommunicationLogCatTag,"trying fallback...");
+
+                socket =(BluetoothSocket) device.getClass().getMethod("createRfcommSocket", new Class[] {int.class}).invoke(device,1);
+                socket.connect();
+
+                Log.e(bluetoothCommunicationLogCatTag,"Connected");
+                return socket;
+            }
+            catch (Exception e2) {
+                Log.e(bluetoothCommunicationLogCatTag, "Couldn't establish Bluetooth connection!");
+            }
+        }
+        return socket;
+    }
+
+    public BluetoothSocket createBluetoothSocketBasedOnStackoverflow2(BluetoothSocket device) {
+        try
+        {
+            Class<?> clazz = device.getRemoteDevice().getClass();
+            Class<?>[] paramTypes = new Class<?>[] {Integer.TYPE};
+            Method m = clazz.getMethod("createRfcommSocket", paramTypes);
+            Object[] params = new Object[] {Integer.valueOf(1)};
+            return (BluetoothSocket) m.invoke(device.getRemoteDevice(), params);
+        }
+        catch (Exception e)
+        {
+            Log.d(bluetoothCommunicationLogCatTag, "Error in createBluetoothSocketBasedOnStackoverflow2: " + e.getMessage());
+        }
+        return null;
+    }
+
     private class ConnectedThread extends Thread {
-        private final BluetoothSocket mmSocket;
-        private final InputStream mmInStream;
-        private final OutputStream mmOutStream;
+        private BluetoothSocket mmSocket;
+        private InputStream mmInStream;
+        private OutputStream mmOutStream;
         public ConnectedThread(BluetoothSocket socket) {
             Log.d(TAG, "create ConnectedThread");
             mmSocket = socket;
@@ -112,6 +194,30 @@ public class BluetoothCommunication extends Thread{
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
         }
+
+        public ConnectedThread(BluetoothAdapter bleAdapter) {
+            UUID SERIAL_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
+            try {
+                bluetoothServerSocket = bleAdapter.listenUsingRfcommWithServiceRecord("BT_SERVER", SERIAL_UUID);
+                Log.d(bluetoothCommunicationLogCatTag, "i am listening: " + bluetoothServerSocket);
+                bluetoothSocket = bluetoothServerSocket.accept();
+                Log.d(bluetoothCommunicationLogCatTag, "someone came to me: " + bluetoothSocket);
+                InputStream tmpIn = null;
+                OutputStream tmpOut = null; // BluetoothSocket의 inputstream 과 outputstream을 얻는다.
+                try {
+                    tmpIn = bluetoothSocket.getInputStream();
+                    tmpOut = bluetoothSocket.getOutputStream();
+                }
+                catch (IOException e) {
+                    Log.e(TAG, "temp sockets not created", e);
+                }
+                mmInStream = tmpIn;
+                mmOutStream = tmpOut;
+            }
+            catch (Exception err) {
+                Log.d(bluetoothCommunicationLogCatTag, "Error in ConnectedThread: " + err.getMessage());
+            }
+        }
         public void run() {
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
@@ -119,9 +225,19 @@ public class BluetoothCommunication extends Thread{
             String testCode = "Hello World";
             while (true) {
                 try { // InputStream으로부터 값을 받는 읽는 부분(값을 받는다)
-                     //bytes = mmInStream.read(buffer);
-                    write(testCode.getBytes());
-                    //Log.d(TAG, new String(bytes));
+                    switch (mode) {
+                        case BLE_RECEIVE_MODE:
+                            bytes = mmInStream.read(buffer);
+                            Log.d("ble", new String(buffer));
+                            break;
+                        case BLE_SEND_MODE:
+                            write(testCode.getBytes());
+                            break;
+                        default:
+                            break;
+                    }
+                    //
+                    //
                     break;
                 }
                 catch (Exception e)
@@ -149,6 +265,4 @@ public class BluetoothCommunication extends Thread{
             }
         }
     }
-
-
 }

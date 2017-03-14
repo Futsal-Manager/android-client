@@ -6,7 +6,32 @@
     <ListView
         android:id="@+id/listOfBluetoothDevices"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="wrap_content"
+        android:layout_weight="20">
 
     </ListView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnSend"
+        android:text="Send"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnClose"
+        android:text="Close"
+        android:layout_weight="1"
+        />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnReceive"
+        android:text="Receive"
+        android:layout_weight="1"
+        />
 </LinearLayout>
