@@ -33,11 +33,14 @@ public class BluetoothCommunication extends Thread{
     BluetoothServerSocket bluetoothServerSocket;
     BluetoothAdapter bluetoothAdapter;
 
+    String recentlyOrder;
+
     int mode;
 
     public BluetoothCommunication() {
         bluetoothCommunicationThread = new Thread(this);
         mode = 0;
+        recentlyOrder = "A";
     }
 //주석 추가해 두기
     //android design pattern
@@ -52,7 +55,7 @@ public class BluetoothCommunication extends Thread{
     public void TryToCommunication(int mode) {
         this.mode = mode;
         ConnectedThread connectedThread;
-        switch (mode) {
+        switch (mode) {/*
             case BLE_RECEIVE_MODE:
                 connectedThread = new ConnectedThread(bluetoothSocket);
                 connectedThread.start();
@@ -60,7 +63,10 @@ public class BluetoothCommunication extends Thread{
             case BLE_SEND_MODE:
                 connectedThread = new ConnectedThread(bluetoothAdapter);
                 connectedThread.start();
-                break;
+                break;*/
+            default:
+                connectedThread = new ConnectedThread(bluetoothSocket);
+                connectedThread.start();
         }
     }
 
@@ -175,6 +181,10 @@ public class BluetoothCommunication extends Thread{
         return null;
     }
 
+    public void SetOrder(String recentlyOrder) {
+        this.recentlyOrder = recentlyOrder;
+    }
+
     private class ConnectedThread extends Thread {
         private BluetoothSocket mmSocket;
         private InputStream mmInStream;
@@ -222,7 +232,8 @@ public class BluetoothCommunication extends Thread{
             Log.i(TAG, "BEGIN mConnectedThread");
             byte[] buffer = new byte[1024];
             int bytes; // Keep listening to the InputStream while connected
-            String testCode = "Hello World";
+            String testCode = recentlyOrder;
+            Log.d(bluetoothCommunicationLogCatTag, "Sending Order: " + recentlyOrder);
             while (true) {
                 try { // InputStream으로부터 값을 받는 읽는 부분(값을 받는다)
                     switch (mode) {
@@ -231,6 +242,7 @@ public class BluetoothCommunication extends Thread{
                             Log.d("ble", new String(buffer));
                             break;
                         case BLE_SEND_MODE:
+                            Log.d("ble", "sending");
                             write(testCode.getBytes());
                             break;
                         default:

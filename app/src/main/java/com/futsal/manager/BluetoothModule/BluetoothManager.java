@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import com.futsal.manager.R;
@@ -37,6 +38,7 @@ public class BluetoothManager extends Activity{
     BluetoothCommunication bluetoothCommunication;
 
     Button btnSend, btnClose, btnReceive;
+    EditText etxtOrder;
 
     Handler bluetoothManagerHandler = new Handler() {
 
@@ -56,6 +58,7 @@ public class BluetoothManager extends Activity{
         btnSend = (Button) findViewById(R.id.btnSend);
         btnClose = (Button) findViewById(R.id.btnClose);
         btnReceive = (Button) findViewById(R.id.btnReceive);
+        etxtOrder = (EditText) findViewById(R.id.etxtOrder);
 
         listOfBluetoothDevices.setAdapter(listViewArrayAdapter);
 
@@ -75,6 +78,7 @@ public class BluetoothManager extends Activity{
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                bluetoothCommunication.SetOrder(etxtOrder.getText().toString());
                 bluetoothCommunication.TryToCommunication(1);
             }
         });
@@ -92,6 +96,8 @@ public class BluetoothManager extends Activity{
                 bluetoothCommunication.TryToCommunication(0);
             }
         });
+
+
     }
 
     @Override

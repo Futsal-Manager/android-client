@@ -34,4 +34,12 @@
         android:text="Receive"
         android:layout_weight="1"
         />
+
+    <EditText
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/etxtOrder"
+        android:text=""
+        android:layout_weight="1"
+        />
 </LinearLayout>
