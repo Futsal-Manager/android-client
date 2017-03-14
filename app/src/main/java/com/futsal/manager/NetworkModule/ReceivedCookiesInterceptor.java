@@ -1,10 +1,24 @@
 package com.futsal.manager.NetworkModule;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.util.Log;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
+
+import okhttp3.Interceptor;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static android.content.Context.MODE_PRIVATE;
+
 /**
  * Created by stories2 on 2017. 3. 12..
  */
 
-/*public class ReceivedCookiesInterceptor implements Interceptor {
+public class ReceivedCookiesInterceptor implements Interceptor {
 
     Context context;
 
@@ -39,7 +53,7 @@ package com.futsal.manager.NetworkModule;
 
 
         return chain.proceed(builder.build());
-    }*/
+    }
 /*
     // 값 저장하기, ex name: FUTSAL_COOKIE, key: value
     private void savePreferences(String name, String key, HashSet<String> value, Context mContext){
@@ -88,5 +102,5 @@ package com.futsal.manager.NetworkModule;
 
 
         return chain.proceed(builder.build());
-    }
-}*/
+    }*/
+}

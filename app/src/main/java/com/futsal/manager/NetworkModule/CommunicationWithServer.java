@@ -1,17 +1,25 @@
 package com.futsal.manager.NetworkModule;
 
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 
 import com.futsal.manager.R;
 
+import org.json.JSONObject;
+
+import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
 import okhttp3.JavaNetCookieJar;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
+import okhttp3.RequestBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +29,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
@@ -35,8 +45,6 @@ public class CommunicationWithServer{
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
-
-
     }
 //login
     private static OkHttpClient createOkHttpClient() {
@@ -63,25 +71,6 @@ public class CommunicationWithServer{
                 .readTimeout(30, TimeUnit.SECONDS)
                 .build();
     }
-//file
-    /*private static OkHttpClient fileOkHttpClient() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-
-        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
-        ReceivedCookiesInterceptor receivedInterceptor = new ReceivedCookiesInterceptor(applicationContext);
-        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-        builder.addInterceptor(interceptor);
-        builder.addInterceptor(receivedInterceptor);
-        return builder.build();
-    }*/
-/*
-    public static OkHttpClient InterceptorClient() {
-        OkHttpClient client = new OkHttpClient();
-        client.interceptors().add(new AddCookiesInterceptor(applicationContext));
-        Log.d("test", "ap:" + applicationContext);
-        client.interceptors().add(new ReceivedCookiesInterceptor(applicationContext));
-        return client;
-    }*/
 
     public static Retrofit createRetrofit() {
         return new Retrofit.Builder()
@@ -92,24 +81,25 @@ public class CommunicationWithServer{
                 .build();
     }
 
+    public static OkHttpClient fileOkHttpClient() {
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+
+        HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
+        ReceivedCookiesInterceptor receivedCookiesInterceptor = new ReceivedCookiesInterceptor(applicationContext);
+        interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        builder.addInterceptor(interceptor);
+        builder.addInterceptor(receivedCookiesInterceptor);
+        return builder.build();
+    }
+
     public static Retrofit fileRetrofit() {
 
         OkHttpClient client = OkHttpClientTester();
-
-        /*Retrofit.Builder builder = new Retrofit.Builder()
-                .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
-                .addConverterFactory(GsonConverterFactory.create());
 
         return new Retrofit.Builder()
                 .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(fileOkHttpClient())
-                // .client(InterceptorClient())
-                .build();*/
-        return new Retrofit.Builder()
-                .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(client)
                 .build();
     }
 
@@ -159,10 +149,20 @@ public class CommunicationWithServer{
 
     public void FileList() {
         Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
-        Call<FileResponse> calling = retrofit2NetworkInterface.FileList("connect.sid=s%3A0RTgxu9-Zh2RLRE-BZ6Mx08ykSwxZ8qq.%2F3EvetAvcvyB9z%2FDtVzcFQu75fRqDl7njM3Fzwgu4EI");
+        Call<FileResponse> calling = retrofit2NetworkInterface.FileList();
         calling.enqueue(new Callback<FileResponse>() {
             @Override
             public void onResponse(Call<FileResponse> call, Response<FileResponse> response) {
+                Log.d(applicationContext.getString(R.string.app_name), "header test: " + response.headers().get("code"));
+                try {
+                    String errMsg = response.errorBody().string();
+                    Log.d(applicationContext.getString(R.string.app_name), "error body test: " + errMsg);
+                    JSONObject catchServerErrorMsg = new JSONObject(errMsg);
+                    Log.d(applicationContext.getString(R.string.app_name), "FileList ServerError Msg: " + catchServerErrorMsg.getString("errmsg"));
+                }
+                catch (Exception err) {
+                    Log.d(applicationContext.getString(R.string.app_name), "error body failed: " + err.getMessage());
+                }
                 Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body());
             }
 
@@ -171,6 +171,57 @@ public class CommunicationWithServer{
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
             }
         });
+    }
+
+    public void UploadFile(Uri fileSavedPath) {
+        Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
+        Log.d(applicationContext.getString(R.string.app_name), "custom get type: " + GetMimeType(fileSavedPath.getPath().toString()));
+        Log.d(applicationContext.getString(R.string.app_name), "file path: " + fileSavedPath.getPath().toString());
+        File savedVideoFile = LoadFileFromMemory(fileSavedPath.getPath());
+        Log.d(applicationContext.getString(R.string.app_name), "file is null: " + savedVideoFile);
+        Log.d(applicationContext.getString(R.string.app_name), "contentResolver is null: " + applicationContext.getContentResolver());
+        Log.d(applicationContext.getString(R.string.app_name), "type is null: " + applicationContext.getContentResolver().getType(fileSavedPath));
+        RequestBody requestFile =
+                RequestBody.create(
+                        MediaType.parse(GetMimeType(fileSavedPath.getPath().toString())),
+                        savedVideoFile
+                );
+
+        MultipartBody.Part body =
+                MultipartBody.Part.createFormData("picture", savedVideoFile.getName(), requestFile);
+
+        String descriptionString = "hello, this is description speaking";
+        RequestBody description =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, descriptionString);
+
+        Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(description, body);
+        calling.enqueue(new Callback<FileUploadResponse>() {
+            @Override
+            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
+                Log.v("Upload", "success: " + response.body().GetS3url());
+            }
+
+            @Override
+            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    public String GetMimeType(String path) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(path);
+        if (extension != null) {
+            type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension);
+        }
+        return type;
+    }
+
+    public File LoadFileFromMemory(String fileSavedPath) {
+        //File sdcard = Environment.getExternalStorageDirectory();
+        //return new File(sdcard, "testVideo3.mp4");
+        return new File(fileSavedPath);
     }
 }
 
@@ -188,5 +239,10 @@ interface Retrofit2NetworkInterface {
     Call<AuthSignupResponse> AuthSignup(@Header("Content-Type") String contentType, @Body AuthSignupRequest responseData);
 
     @GET("file")
-    Call<FileResponse>FileList(@Header("Cookie") String cookie);
+    Call<FileResponse>FileList();
+
+
+    @POST("file")
+    @Multipart
+    Call<FileUploadResponse>FileUpload(@Part("description") RequestBody description, @Part MultipartBody.Part file);
 }

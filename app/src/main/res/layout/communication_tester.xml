@@ -37,4 +37,11 @@
         android:id="@+id/btnFileList"
         android:text="filelist"
         />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnFileUpload"
+        android:text="fileUpload"
+        />
 </LinearLayout>
