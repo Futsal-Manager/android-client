@@ -76,7 +76,10 @@ public class CommunicationTester extends Activity {
             @Override
             public void onClick(View view) {
                 String savePath = Environment.getExternalStorageDirectory().toString() + "/testVideo3.mp4";
-                communicationWithServer.UploadFile(Uri.parse(savePath));
+                //communicationWithServer.UploadFile(Uri.parse(savePath));
+                //communicationWithServer.UploadFileTester(Uri.parse(savePath));
+                //communicationWithServer.UploadFileTester2(Uri.parse(savePath));
+                communicationWithServer.UploadFileTester3(Uri.parse(savePath));
             }
         });
 

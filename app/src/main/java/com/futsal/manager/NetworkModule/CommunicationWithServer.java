@@ -12,6 +12,8 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Headers;
@@ -32,6 +34,7 @@ import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
@@ -66,6 +69,7 @@ public class CommunicationWithServer{
 //login
     private static OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.followRedirects(false);
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         AddCookiesInterceptor addInterceptor = new AddCookiesInterceptor(applicationContext);
@@ -103,6 +107,9 @@ public class CommunicationWithServer{
     public static OkHttpClient fileOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
+        builder.connectTimeout(5, TimeUnit.MINUTES);
+        builder.readTimeout(5, TimeUnit.MINUTES);
+        builder.writeTimeout(5, TimeUnit.MINUTES);
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         ReceivedCookiesInterceptor receivedCookiesInterceptor = new ReceivedCookiesInterceptor(applicationContext);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
@@ -147,7 +154,13 @@ public class CommunicationWithServer{
                 String sid = response.headers().get("connect.sid");
                 Log.d(applicationContext.getString(R.string.app_name), "sid: " + sid);
                 Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body());
-                Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetMsg());
+                try {
+                    Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetMsg());
+                }
+                catch (Exception err) {
+                    Log.d(applicationContext.getString(R.string.app_name), "failed: " + err.getMessage());
+                }
+
             }
 
             @Override
@@ -251,6 +264,84 @@ public class CommunicationWithServer{
         });
     }
 
+    public void UploadFileTester(Uri fileSavedPath) {
+        Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
+        File savedVideoFile = LoadFileFromMemory(fileSavedPath.getPath());
+        FileUploadRequest fileUploadRequest = new FileUploadRequest();
+        fileUploadRequest.SetFile(savedVideoFile.getPath().toString());
+        Call<FileUploadResponse> calling;
+        calling = retrofit2NetworkInterface.FileUpload("multipart/form-data", fileUploadRequest);
+        calling.enqueue(new Callback<FileUploadResponse>() {
+            @Override
+            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
+                Log.v("Upload", "success: " + response.body().GetS3url());
+            }
+
+            @Override
+            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    public void UploadFileTester2(Uri fileSavedPath) {
+        Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
+        File savedVideoFile = LoadFileFromMemory(fileSavedPath.getPath());
+        //GetMimeType(fileSavedPath.getPath().toString())
+        //RequestBody requestBody = RequestBody.create(MediaType.parse(GetMimeType(fileSavedPath.getPath().toString())));
+        Map<String, RequestBody> map = new HashMap<>();
+        RequestBody fileBody = RequestBody.create(MediaType.parse(GetMimeType(fileSavedPath.getPath().toString())),
+                savedVideoFile);
+        map.put("file\"; file=\"" + savedVideoFile.getPath().toString() + "\"", fileBody);
+
+        Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(map);
+        calling.enqueue(new Callback<FileUploadResponse>() {
+            @Override
+            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
+                Log.v("Upload", "success: " + response.body().GetRes());
+            }
+
+            @Override
+            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
+    public void UploadFileTester3(Uri fileSavedPath) {
+        Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
+        File savedVideoFile = LoadFileFromMemory(fileSavedPath.getPath());
+        FileUploadRequest fileUploadRequest = new FileUploadRequest();
+        fileUploadRequest.SetFile(savedVideoFile.getPath().toString());
+        //GetMimeType(fileSavedPath.getPath().toString());
+        RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), savedVideoFile);//GetMimeType(fileSavedPath.getPath().toString())
+        MultipartBody.Part body = MultipartBody.Part.createFormData("upload", savedVideoFile.getName(), reqFile);
+        //RequestBody name = RequestBody.create(MediaType.parse("application/json"), "{\"file\":\"" + savedVideoFile.getPath().toString() + "\"}");
+
+        Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(fileUploadRequest, body);
+        calling.enqueue(new Callback<FileUploadResponse>() {
+            @Override
+            public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
+                if(response.headers().get("code").equals("200")) {
+                    Log.v("Upload", "success: " + response.body().GetRes());
+                }
+                else {
+                    try{
+                        Log.d("Upload", "error: " + response.errorBody().string());
+                    }
+                    catch (Exception err) {
+                        Log.d("Upload", "error: " + err.getMessage());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                Log.e("Upload error:", t.getMessage());
+            }
+        });
+    }
+
     public String GetMimeType(String path) {
         String type = null;
         String extension = MimeTypeMap.getFileExtensionFromUrl(path);
@@ -294,4 +385,15 @@ interface Retrofit2NetworkInterface {
     @POST("file")
     @Multipart
     Call<FileUploadResponse>FileUpload(@Header("Cookie") String cookie, @Part("description") RequestBody description, @Part MultipartBody.Part file);
+
+    @POST("file")
+    Call<FileUploadResponse>FileUpload(@Header("Content-Type") String contentType, @Body FileUploadRequest fileUploadRequest);
+
+    @POST("file")
+    @Multipart
+    Call<FileUploadResponse>FileUpload(@PartMap Map<String, RequestBody> params);
+
+    @POST("file")
+    @Multipart
+    Call<FileUploadResponse>FileUpload(@Part("file") FileUploadRequest fileUploadRequest, @Part MultipartBody.Part videoData);
 }
