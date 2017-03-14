@@ -73,7 +73,7 @@ public class CommunicationWithServer{
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(interceptor);
         builder.addInterceptor(addInterceptor);
-        builder.addInterceptor(receivedCookiesInterceptor);
+        //builder.addInterceptor(receivedCookiesInterceptor);
         return builder.build();
     }
 

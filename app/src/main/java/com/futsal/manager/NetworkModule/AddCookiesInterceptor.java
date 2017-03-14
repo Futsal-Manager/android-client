@@ -31,7 +31,7 @@ public class AddCookiesInterceptor implements Interceptor{
         SharedPreferences.Editor editor = pref.edit();
         editor.putStringSet(key, value);
         editor.commit();
-        //Log.d("test", "save cookie: " + value);
+        Log.d("test", "save cookie: " + value);
     }
 
     // login을 하고 나서 저장할아이, Cookie
