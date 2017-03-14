@@ -42,6 +42,7 @@ import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofi
 public class CommunicationWithServer{
 
     static Context applicationContext;
+    final boolean DEBUG_MODE = false;
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -149,7 +150,13 @@ public class CommunicationWithServer{
 
     public void FileList() {
         Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
-        Call<FileResponse> calling = retrofit2NetworkInterface.FileList();
+        Call<FileResponse> calling;
+        if(DEBUG_MODE) {
+            calling = retrofit2NetworkInterface.FileList("connect.sid=s%3AvM2Fqh8L2nV4-scJlZ6t3Se1IuPgU0YZ.Rv1uACki2p7f104Ac1rewRN8wKt1N994eXeJ6N%2BQiwI");
+        }
+        else {
+            calling = retrofit2NetworkInterface.FileList();
+        }
         calling.enqueue(new Callback<FileResponse>() {
             @Override
             public void onResponse(Call<FileResponse> call, Response<FileResponse> response) {
@@ -195,7 +202,13 @@ public class CommunicationWithServer{
                 RequestBody.create(
                         okhttp3.MultipartBody.FORM, descriptionString);
 
-        Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(description, body);
+        Call<FileUploadResponse> calling;
+        if(DEBUG_MODE) {
+            calling = retrofit2NetworkInterface.FileUpload("connect.sid=s%3AvM2Fqh8L2nV4-scJlZ6t3Se1IuPgU0YZ.Rv1uACki2p7f104Ac1rewRN8wKt1N994eXeJ6N%2BQiwI", description, body);
+        }
+        else {
+            calling = retrofit2NetworkInterface.FileUpload(description, body);
+        }
         calling.enqueue(new Callback<FileUploadResponse>() {
             @Override
             public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
@@ -241,8 +254,15 @@ interface Retrofit2NetworkInterface {
     @GET("file")
     Call<FileResponse>FileList();
 
+    @GET("file")
+    Call<FileResponse>FileList(@Header("Cookie") String cookie);
+
 
     @POST("file")
     @Multipart
     Call<FileUploadResponse>FileUpload(@Part("description") RequestBody description, @Part MultipartBody.Part file);
+
+    @POST("file")
+    @Multipart
+    Call<FileUploadResponse>FileUpload(@Header("Cookie") String cookie, @Part("description") RequestBody description, @Part MultipartBody.Part file);
 }
