@@ -54,7 +54,8 @@
         <activity android:name=".BluetoothModule.BluetoothChat">
 
         </activity>
-        <activity android:name=".NetworkModule.CommunicationTester">
+        <activity android:name=".NetworkModule.CommunicationTester"
+            android:hardwareAccelerated="true">
 
         </activity>
     </application>

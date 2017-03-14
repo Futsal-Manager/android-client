@@ -60,4 +60,19 @@
         >
 
     </SearchView>
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/btnPlayVideo"
+        android:text="play video"
+        />
+
+    <VideoView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:id="@+id/videoPlay"
+        >
+
+    </VideoView>
 </LinearLayout>

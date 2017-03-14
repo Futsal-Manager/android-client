@@ -1,6 +1,9 @@
 package com.futsal.manager.NetworkModule;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.graphics.PixelFormat;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -9,8 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.MediaController;
 import android.widget.SearchView;
 import android.widget.ToggleButton;
+import android.widget.VideoView;
 
 import com.futsal.manager.R;
 
@@ -21,10 +26,13 @@ import com.futsal.manager.R;
 public class CommunicationTester extends Activity {
 
     CommunicationWithServer communicationWithServer;
-    Button btnLogIn, btnSignup, btnFileList, btnFileUpload;
+    Button btnLogIn, btnSignup, btnFileList, btnFileUpload, btnPlayVideo;
     EditText etxtUsername, etxtPassword;
     ToggleButton toggleDebugMode;
     SearchView searchHash;
+    VideoView videoPlay;
+    MediaController mediaController;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,10 +43,12 @@ public class CommunicationTester extends Activity {
         btnSignup = (Button) findViewById(R.id.btnSignup);
         btnFileList = (Button) findViewById(R.id.btnFileList);
         btnFileUpload = (Button) findViewById(R.id.btnFileUpload);
+        btnPlayVideo = (Button) findViewById(R.id.btnPlayVideo);
         etxtUsername = (EditText) findViewById(R.id.etxtUsername);
         etxtPassword = (EditText) findViewById(R.id.etxtPassword);
         toggleDebugMode = (ToggleButton) findViewById(R.id.toggleDebugMode);
         searchHash = (SearchView) findViewById(R.id.searchHash);
+        videoPlay = (VideoView) findViewById(R.id.videoPlay);
 
         communicationWithServer = new CommunicationWithServer(getApplicationContext(), false);
 
@@ -83,6 +93,15 @@ public class CommunicationTester extends Activity {
             }
         });
 
+        btnPlayVideo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String webVideoUrl = communicationWithServer.GetFileUrl();
+                Log.d(getString(R.string.app_name), "web video url: " + webVideoUrl);
+                PlayVideo(webVideoUrl);
+            }
+        });
+
         toggleDebugMode.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
@@ -103,5 +122,34 @@ public class CommunicationTester extends Activity {
                 return true;
             }
         });
+    }
+    public void PlayVideo(String videopath) {
+        Log.e("entered", "playvide");
+        Log.e("path is", "" + videopath);
+        try {
+            progressDialog = ProgressDialog.show(CommunicationTester.this, "",
+                    "Buffering video...", false);
+            progressDialog.setCancelable(true);
+            getWindow().setFormat(PixelFormat.TRANSLUCENT);
+
+            mediaController = new MediaController(getApplicationContext());
+
+            Uri video = Uri.parse(videopath);
+            videoPlay.setMediaController(mediaController);
+            videoPlay.setVideoURI(video);
+
+            videoPlay.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+
+                public void onPrepared(MediaPlayer mp) {
+                    progressDialog.dismiss();
+                    videoPlay.start();
+                }
+            });
+
+        } catch (Exception e) {
+            progressDialog.dismiss();
+            System.out.println("Video Play Error :" + e.getMessage());
+        }
+
     }
 }

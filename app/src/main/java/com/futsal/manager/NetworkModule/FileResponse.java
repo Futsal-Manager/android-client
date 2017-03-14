@@ -1,6 +1,8 @@
 package com.futsal.manager.NetworkModule;
 
-import java.util.List;
+import com.google.gson.annotations.SerializedName;
+
+import java.util.ArrayList;
 
 /**
  * Created by stories2 on 2017. 3. 13..
@@ -19,13 +21,30 @@ public class FileResponse {
   ]
 }
      */
-    List fileList;
+    @SerializedName("list")
+    ArrayList<s3url> list;
 
-    public void SetFileList(List fileList) {
-        this.fileList = fileList;
+    public void SetList(ArrayList<s3url> list) {
+        this.list = list;
     }
 
-    public List GetFileList() {
-        return fileList;
+    public ArrayList<s3url> GetList() {
+        return list;
+    }
+
+    public class s3url {
+        public String s3url;
+
+        public s3url() {
+            s3url = "";
+        }
+
+        public void SetS3url(String s3url) {
+            this.s3url = s3url;
+        }
+
+        public String GetS3url() {
+            return s3url;
+        }
     }
 }

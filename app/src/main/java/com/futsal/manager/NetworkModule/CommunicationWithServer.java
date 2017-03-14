@@ -12,6 +12,7 @@ import org.json.JSONObject;
 import java.io.File;
 import java.net.CookieHandler;
 import java.net.CookieManager;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -46,7 +47,7 @@ public class CommunicationWithServer{
 
     static Context applicationContext;
     static boolean DEBUG_MODE = false;
-    String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw";
+    String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
 
     public CommunicationWithServer(Context applicationContext, boolean mode) {
         this.applicationContext = applicationContext;
@@ -212,7 +213,13 @@ public class CommunicationWithServer{
                 catch (Exception err) {
                     Log.d(applicationContext.getString(R.string.app_name), "error body failed: " + err.getMessage());
                 }
-                Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body());
+                Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetList());
+                ArrayList fileList = response.body().GetList();
+                ArrayList<FileResponse.s3url> linkList = fileList;
+                Log.d(applicationContext.getString(R.string.app_name), "url: " + linkList.get(0).GetS3url());
+
+                //Log.d(applicationContext.getString(R.string.app_name), "file url: " + fileList.get(0));
+                fileUrl = linkList.get(0).GetS3url();
             }
 
             @Override
@@ -220,6 +227,10 @@ public class CommunicationWithServer{
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
             }
         });
+    }
+
+    public String GetFileUrl() {
+        return fileUrl;
     }
 
     public void UploadFile(Uri fileSavedPath) {
