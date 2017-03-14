@@ -42,20 +42,38 @@ import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofi
 public class CommunicationWithServer{
 
     static Context applicationContext;
-    final boolean DEBUG_MODE = false;
+    static boolean DEBUG_MODE = false;
+    String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw";
 
-    public CommunicationWithServer(Context applicationContext) {
+    public CommunicationWithServer(Context applicationContext, boolean mode) {
         this.applicationContext = applicationContext;
+        DEBUG_MODE = mode;
     }
+
+    public void SetMode(boolean mode) {
+        DEBUG_MODE = mode;
+    }
+
+    public void SetHashCode(String hardCoding) {
+        this.hardCoding = hardCoding;
+        Log.d(applicationContext.getString(R.string.app_name), "Hash Set: " + this.hardCoding);
+    }
+
+    public String GetHashCode() {
+        return hardCoding;
+    }
+
 //login
     private static OkHttpClient createOkHttpClient() {
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         AddCookiesInterceptor addInterceptor = new AddCookiesInterceptor(applicationContext);
+        ReceivedCookiesInterceptor receivedCookiesInterceptor = new ReceivedCookiesInterceptor(applicationContext);
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         builder.addInterceptor(interceptor);
         builder.addInterceptor(addInterceptor);
+        builder.addInterceptor(receivedCookiesInterceptor);
         return builder.build();
     }
 
@@ -97,11 +115,22 @@ public class CommunicationWithServer{
 
         OkHttpClient client = OkHttpClientTester();
 
-        return new Retrofit.Builder()
-                .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .client(fileOkHttpClient())
-                .build();
+        if(DEBUG_MODE) {
+            return new Retrofit.Builder()
+                    .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    //.client(fileOkHttpClient())
+                    .client(client)
+                    .build();
+        }
+        else {
+            return new Retrofit.Builder()
+                    .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .client(fileOkHttpClient())
+                    //.client(client)
+                    .build();
+        }
     }
 
     public void AuthLogin(String username, String password) {
@@ -152,7 +181,7 @@ public class CommunicationWithServer{
         Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
         Call<FileResponse> calling;
         if(DEBUG_MODE) {
-            calling = retrofit2NetworkInterface.FileList("connect.sid=s%3AvM2Fqh8L2nV4-scJlZ6t3Se1IuPgU0YZ.Rv1uACki2p7f104Ac1rewRN8wKt1N994eXeJ6N%2BQiwI");
+            calling = retrofit2NetworkInterface.FileList(hardCoding);
         }
         else {
             calling = retrofit2NetworkInterface.FileList();
@@ -204,7 +233,7 @@ public class CommunicationWithServer{
 
         Call<FileUploadResponse> calling;
         if(DEBUG_MODE) {
-            calling = retrofit2NetworkInterface.FileUpload("connect.sid=s%3AvM2Fqh8L2nV4-scJlZ6t3Se1IuPgU0YZ.Rv1uACki2p7f104Ac1rewRN8wKt1N994eXeJ6N%2BQiwI", description, body);
+            calling = retrofit2NetworkInterface.FileUpload(hardCoding, description, body);
         }
         else {
             calling = retrofit2NetworkInterface.FileUpload(description, body);

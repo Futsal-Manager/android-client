@@ -44,4 +44,20 @@
         android:id="@+id/btnFileUpload"
         android:text="fileUpload"
         />
+
+    <ToggleButton
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/toggleDebugMode"
+        android:text="DebugMode"
+        />
+
+    <SearchView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchHash"
+        android:queryHint="Hash Code"
+        >
+
+    </SearchView>
 </LinearLayout>

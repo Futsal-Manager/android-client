@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.futsal.manager.R;
+
 import java.io.IOException;
 import java.util.HashSet;
 
@@ -40,11 +42,20 @@ public class AddCookiesInterceptor implements Interceptor{
             HashSet<String> cookies = new HashSet<>();
 
             for (String header : originalResponse.headers("Set-Cookie")) {
+                Log.d("test", "origin cookie: " + header);
                 String[] headers = header.split(";");
                 for(String checkHeader : headers) {
                     if(checkHeader.contains("connect.sid")) {
-                        cookies.add(checkHeader);
-                        Log.d("test", "header: " + checkHeader);
+                        String result = null;
+                        try {
+                            //result = java.net.URLDecoder.decode(checkHeader,"UTF-8");
+                            result = checkHeader;
+                        }
+                        catch (Exception err) {
+                            Log.d(context.getString(R.string.app_name), "Error in intercept: " + err.getMessage());
+                        }
+                        cookies.add(result);
+                        Log.d("test", "header: " + result);
                     }
                 }
             }
