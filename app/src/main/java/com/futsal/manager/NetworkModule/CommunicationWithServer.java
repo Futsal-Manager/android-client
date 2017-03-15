@@ -325,8 +325,8 @@ public class CommunicationWithServer{
         FileUploadRequest fileUploadRequest = new FileUploadRequest();
         fileUploadRequest.SetFile(savedVideoFile.getPath().toString());
         //GetMimeType(fileSavedPath.getPath().toString());
-        RequestBody reqFile = RequestBody.create(MediaType.parse("multipart/form-data"), savedVideoFile);//GetMimeType(fileSavedPath.getPath().toString())
-        MultipartBody.Part body = MultipartBody.Part.createFormData("upload", savedVideoFile.getName(), reqFile);
+        RequestBody reqFile = RequestBody.create(MediaType.parse(GetMimeType(fileSavedPath.getPath().toString())), savedVideoFile);//GetMimeType(fileSavedPath.getPath().toString())
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", savedVideoFile.getName(), reqFile);
         //RequestBody name = RequestBody.create(MediaType.parse("application/json"), "{\"file\":\"" + savedVideoFile.getPath().toString() + "\"}");
 
         Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(fileUploadRequest, body);
