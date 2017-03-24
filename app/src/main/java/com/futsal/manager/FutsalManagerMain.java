@@ -3,27 +3,28 @@ package com.futsal.manager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
 import com.futsal.manager.BluetoothModule.BluetoothManager;
 import com.futsal.manager.CameraModule.VideoRecordBasedOnOpenCV;
+import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.NetworkModule.CommunicationTester;
 
 import org.opencv.android.OpenCVLoader;
 
 public class FutsalManagerMain extends AppCompatActivity {
 
-    static final String logCatTag = "MainActivity";
     Button btnGoToCamera, btnGoToBluetooth, btnGoToNetwork;
 
     static {
         if(OpenCVLoader.initDebug()) {
-            Log.d(logCatTag, "OpenCV Loaded");
+            //Log.d(logCatTag, "OpenCV Loaded");
+            LogManager.PrintLog("FutsalManagerMain", "static", "OpenCV Loaded", DefineManager.LOG_LEVEL_INFO);
         }
         else {
-            Log.d(logCatTag, "OpenCV not Loaded");
+            //Log.d(logCatTag, "OpenCV not Loaded");
+            LogManager.PrintLog("FutsalManagerMain", "static", "OpenCV not Loaded", DefineManager.LOG_LEVEL_WARN);
         }
     }
 
