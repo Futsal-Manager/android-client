@@ -58,6 +58,10 @@
             android:hardwareAccelerated="true">
 
         </activity>
+        <activity android:name=".MakeVideoModule.CameraRecordManager"
+            android:hardwareAccelerated="true">
+
+        </activity>
     </application>
 
 </manifest>

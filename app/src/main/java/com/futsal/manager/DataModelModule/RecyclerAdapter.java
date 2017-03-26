@@ -2,6 +2,7 @@ package com.futsal.manager.DataModelModule;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.MakeVideoModule.CameraRecordManager;
 import com.futsal.manager.R;
 
 import java.util.List;
@@ -59,6 +61,9 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Snackbar.make(v, item.getTitle(), Snackbar.LENGTH_SHORT).show();
                 switch (position) {
                     case DefineManager.MAKE_NEW_VIDEO_ITEM:
+                        Intent recordVideoLayout = new Intent(context, CameraRecordManager.class);
+                        recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(recordVideoLayout);
                         break;
                     case DefineManager.SHOW_VIDEO_ITEM:
                         break;
