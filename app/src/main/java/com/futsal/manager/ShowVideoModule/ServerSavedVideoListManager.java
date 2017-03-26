@@ -17,6 +17,8 @@ import java.util.List;
 import static com.futsal.manager.DefineManager.CALLED_BY_SERVER_SAVED_LIST_ACTIVITY;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
+import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
 import static com.futsal.manager.DefineManager.WAIT_FOR_GET_FILE_LIST;
 import static com.futsal.manager.DefineManager.WAIT_FOR_LOGIN;
 
@@ -60,7 +62,7 @@ public class ServerSavedVideoListManager extends Activity implements Runnable{
 
     public void ServerLogin() {
         networkOrderStatus = WAIT_FOR_LOGIN;
-        communicationWithServer.AuthLogin("yoohoogun116@naver.com", "rlagusdn123");
+        communicationWithServer.AuthLogin(TEST_ACCOUNT, TEST_ACCOUNT_PASSWORD);
         loginLoopThread = new Thread(this);
         loginLoopThread.start();
     }

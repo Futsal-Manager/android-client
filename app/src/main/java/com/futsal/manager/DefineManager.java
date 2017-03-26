@@ -12,5 +12,5 @@ public class DefineManager {
                             CALLED_BY_FUTSAL_MAIN_ACTIVITY = 0, CALLED_BY_SERVER_SAVED_LIST_ACTIVITY = 1,
 
                             WAIT_FOR_LOGIN = 0, WAIT_FOR_GET_FILE_LIST = 1;
-    public static final String APP_NAME = "FutsalManager";
+    public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123";
 }

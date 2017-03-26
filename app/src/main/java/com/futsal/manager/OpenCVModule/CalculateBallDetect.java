@@ -1,9 +1,9 @@
 package com.futsal.manager.OpenCVModule;
 
 import android.content.Context;
-import android.util.Log;
 
-import com.futsal.manager.R;
+import com.futsal.manager.DefineManager;
+import com.futsal.manager.LogModule.LogManager;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
@@ -96,7 +96,8 @@ public class CalculateBallDetect {
                 Point pt = new Point(Math.round(vCircle[0]),
                         Math.round(vCircle[1]));
                 int radius = (int) Math.round(vCircle[2]);
-                Log.d("cv", pt + " radius " + radius);
+                //Log.d("cv", pt + " radius " + radius);
+                LogManager.PrintLog("CalculateBallDetect", "DetectBallPosition", "position: " + pt + " radius: " + radius, DefineManager.LOG_LEVEL_INFO);
                 Imgproc.circle(rgbaInnerWindow, pt, 3, new Scalar(0, 0, 255), 5);
                 Imgproc.circle(rgbaInnerWindow, pt, radius, new Scalar(255, 0, 0),
                         5);
@@ -109,7 +110,8 @@ public class CalculateBallDetect {
             return originImage;
         }
         catch (Exception err) {
-            Log.d(applicationContext.getString(R.string.app_name), "Error in DetectBallPosition: " + err.getMessage());
+            //Log.d(applicationContext.getString(R.string.app_name), "Error in DetectBallPosition: " + err.getMessage());
+            LogManager.PrintLog("CalculateBallDetect", "DetectBallPosition", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
         }
         return originImage;
     }
