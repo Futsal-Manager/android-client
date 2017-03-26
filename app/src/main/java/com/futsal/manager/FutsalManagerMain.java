@@ -57,8 +57,8 @@ public class FutsalManagerMain extends AppCompatActivity {
         recyFunctionList.setLayoutManager(recyFunctionListLayoutManager);
 
         eachCardViewItems = new ArrayList<>();
-        eachCardViewItems.add(new EachCardViewItems(R.drawable.img_0829, "MAKE NEW VIDEO"));
-        eachCardViewItems.add(new EachCardViewItems(R.drawable.img_0829, "SHOW VIDEO"));
+        eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "MAKE NEW VIDEO"));
+        eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "SHOW VIDEO"));
 
         recyFunctionList.setAdapter(new RecyclerAdapter(getApplicationContext(),eachCardViewItems,R.layout.futsal_manager_main, CALLED_BY_FUTSAL_MAIN_ACTIVITY));
 

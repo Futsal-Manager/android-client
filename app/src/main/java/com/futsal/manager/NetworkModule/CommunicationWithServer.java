@@ -5,6 +5,8 @@ import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import com.futsal.manager.DefineManager;
+import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
 import org.json.JSONObject;
@@ -14,6 +16,7 @@ import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -46,8 +49,13 @@ import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofi
 public class CommunicationWithServer{
 
     static Context applicationContext;
-    static boolean DEBUG_MODE = false;
+    static boolean DEBUG_MODE = false, loginStatus = false;
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
+    List<String> fileUrlList;
+
+    public CommunicationWithServer(Context applicationContext) {
+        this.applicationContext = applicationContext;
+    }
 
     public CommunicationWithServer(Context applicationContext, boolean mode) {
         this.applicationContext = applicationContext;
@@ -161,15 +169,20 @@ public class CommunicationWithServer{
                 catch (Exception err) {
                     Log.d(applicationContext.getString(R.string.app_name), "failed: " + err.getMessage());
                 }
-
+                loginStatus = true;
             }
 
             @Override
             public void onFailure(Call<AuthLoginResponse> call, Throwable t) {
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
                 Log.d(applicationContext.getString(R.string.app_name), "Error: " + t.getMessage());
+                loginStatus = false;
             }
         });
+    }
+
+    public boolean GetLoginStatus() {
+        return loginStatus;
     }
 
     public void AuthSignup(String username, String password) {
@@ -216,7 +229,13 @@ public class CommunicationWithServer{
                 Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetList());
                 ArrayList fileList = response.body().GetList();
                 ArrayList<FileResponse.s3url> linkList = fileList;
-                Log.d(applicationContext.getString(R.string.app_name), "url: " + linkList.get(0).GetS3url());
+                fileUrlList = new ArrayList<String>();
+                LogManager.PrintLog("CommunicationWithServer", "FileList", "saving each file url", DefineManager.LOG_LEVEL_INFO);
+                for(FileResponse.s3url eachFileUrlIndex : linkList) {
+                    fileUrlList.add(eachFileUrlIndex.GetS3url());
+                    LogManager.PrintLog("CommunicationWithServer", "FileList", "each file url: " + eachFileUrlIndex.GetS3url(), DefineManager.LOG_LEVEL_INFO);
+                }
+                //Log.d(applicationContext.getString(R.string.app_name), "url: " + linkList.get(0).GetS3url());
 
                 //Log.d(applicationContext.getString(R.string.app_name), "file url: " + fileList.get(0));
                 fileUrl = linkList.get(0).GetS3url();
@@ -231,6 +250,10 @@ public class CommunicationWithServer{
 
     public String GetFileUrl() {
         return fileUrl;
+    }
+
+    public List<String> GetFileUrls() {
+        return fileUrlList;
     }
 
     public void UploadFile(Uri fileSavedPath) {

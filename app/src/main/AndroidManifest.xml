@@ -26,7 +26,8 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FutsalManagerMain">
+        <activity android:name=".FutsalManagerMain"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -40,7 +41,8 @@
             android:hardwareAccelerated="true">
 
         </activity>
-        <activity android:name=".BluetoothModule.BluetoothManager">
+        <activity android:name=".BluetoothModule.BluetoothManager"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".CameraModule.MediaRecordManager"
@@ -48,13 +50,16 @@
             >
 
         </activity>
-        <activity android:name=".BluetoothModule.DeviceListActivity">
+        <activity android:name=".BluetoothModule.DeviceListActivity"
+            android:screenOrientation="portrait">
 
         </activity>
-        <activity android:name=".BluetoothModule.BluetoothChat">
+        <activity android:name=".BluetoothModule.BluetoothChat"
+            android:screenOrientation="portrait">
 
         </activity>
         <activity android:name=".NetworkModule.CommunicationTester"
+            android:screenOrientation="portrait"
             android:hardwareAccelerated="true">
 
         </activity>
@@ -62,7 +67,11 @@
             android:hardwareAccelerated="true">
 
         </activity>
-        <activity android:name=".ShowVideoModule.ServerSavedVideoListManager">
+        <activity android:name=".ShowVideoModule.ServerSavedVideoListManager"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ShowVideoModule.ShowVideoManager">
 
         </activity>
     </application>

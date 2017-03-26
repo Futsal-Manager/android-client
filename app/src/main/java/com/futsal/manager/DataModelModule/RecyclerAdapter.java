@@ -19,11 +19,13 @@ import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.MakeVideoModule.CameraRecordManager;
 import com.futsal.manager.R;
 import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
+import com.futsal.manager.ShowVideoModule.ShowVideoManager;
 
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.CALLED_BY_FUTSAL_MAIN_ACTIVITY;
 import static com.futsal.manager.DefineManager.CALLED_BY_SERVER_SAVED_LIST_ACTIVITY;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 
 /**
  * Created by stories2 on 2017. 3. 26..
@@ -81,7 +83,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                     }
                 }
                 else if(mode == CALLED_BY_SERVER_SAVED_LIST_ACTIVITY) {
-
+                    String videoUrl = item.getTitle();
+                    LogManager.PrintLog("RecyclerAdapter", "onBindViewHolder", "index name: " + videoUrl, LOG_LEVEL_INFO);
+                    /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setDataAndType(Uri.parse(videoUrl), "video/mp4");
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent);*/
+                    Intent videoPlayIntent = new Intent(context, ShowVideoManager.class);
+                    videoPlayIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    videoPlayIntent.putExtra("videoUrl", videoUrl);
+                    context.startActivity(videoPlayIntent);
                 }
             }
         });

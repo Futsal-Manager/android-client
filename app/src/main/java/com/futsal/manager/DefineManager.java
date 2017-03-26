@@ -9,6 +9,8 @@ public class DefineManager {
 
                             MAKE_NEW_VIDEO_ITEM = 0, SHOW_VIDEO_ITEM = 1,
 
-                            CALLED_BY_FUTSAL_MAIN_ACTIVITY = 0, CALLED_BY_SERVER_SAVED_LIST_ACTIVITY = 1;
+                            CALLED_BY_FUTSAL_MAIN_ACTIVITY = 0, CALLED_BY_SERVER_SAVED_LIST_ACTIVITY = 1,
+
+                            WAIT_FOR_LOGIN = 0, WAIT_FOR_GET_FILE_LIST = 1;
     public static final String APP_NAME = "FutsalManager";
 }
