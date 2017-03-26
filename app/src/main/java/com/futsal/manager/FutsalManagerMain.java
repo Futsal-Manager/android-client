@@ -20,6 +20,8 @@ import org.opencv.android.OpenCVLoader;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.CALLED_BY_FUTSAL_MAIN_ACTIVITY;
+
 public class FutsalManagerMain extends AppCompatActivity {
 
     Button btnGoToCamera, btnGoToBluetooth, btnGoToNetwork;
@@ -58,7 +60,7 @@ public class FutsalManagerMain extends AppCompatActivity {
         eachCardViewItems.add(new EachCardViewItems(R.drawable.img_0829, "MAKE NEW VIDEO"));
         eachCardViewItems.add(new EachCardViewItems(R.drawable.img_0829, "SHOW VIDEO"));
 
-        recyFunctionList.setAdapter(new RecyclerAdapter(getApplicationContext(),eachCardViewItems,R.layout.futsal_manager_main));
+        recyFunctionList.setAdapter(new RecyclerAdapter(getApplicationContext(),eachCardViewItems,R.layout.futsal_manager_main, CALLED_BY_FUTSAL_MAIN_ACTIVITY));
 
         btnGoToCamera.setOnClickListener(new View.OnClickListener() {
             @Override

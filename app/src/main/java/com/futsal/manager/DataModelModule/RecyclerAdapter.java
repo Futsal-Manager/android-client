@@ -18,8 +18,12 @@ import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.MakeVideoModule.CameraRecordManager;
 import com.futsal.manager.R;
+import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
 
 import java.util.List;
+
+import static com.futsal.manager.DefineManager.CALLED_BY_FUTSAL_MAIN_ACTIVITY;
+import static com.futsal.manager.DefineManager.CALLED_BY_SERVER_SAVED_LIST_ACTIVITY;
 
 /**
  * Created by stories2 on 2017. 3. 26..
@@ -28,11 +32,12 @@ import java.util.List;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
     Context context;
     List<EachCardViewItems> items;
-    int item_layout;
-    public RecyclerAdapter(Context context, List<EachCardViewItems> items, int item_layout) {
+    int item_layout, mode;
+    public RecyclerAdapter(Context context, List<EachCardViewItems> items, int item_layout, int mode) {
         this.context=context;
         this.items=items;
         this.item_layout=item_layout;
+        this.mode = mode;
     }
 
     @Override
@@ -59,16 +64,24 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
             public void onClick(View v) {
                 //Toast.makeText(context,item.getTitle(),Toast.LENGTH_SHORT).show();
                 Snackbar.make(v, item.getTitle(), Snackbar.LENGTH_SHORT).show();
-                switch (position) {
-                    case DefineManager.MAKE_NEW_VIDEO_ITEM:
-                        Intent recordVideoLayout = new Intent(context, CameraRecordManager.class);
-                        recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(recordVideoLayout);
-                        break;
-                    case DefineManager.SHOW_VIDEO_ITEM:
-                        break;
-                    default:
-                        break;
+                if(mode == CALLED_BY_FUTSAL_MAIN_ACTIVITY) {
+                    switch (position) {
+                        case DefineManager.MAKE_NEW_VIDEO_ITEM:
+                            Intent recordVideoLayout = new Intent(context, CameraRecordManager.class);
+                            recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(recordVideoLayout);
+                            break;
+                        case DefineManager.SHOW_VIDEO_ITEM:
+                            Intent serverSavedVideoListLayout = new Intent(context, ServerSavedVideoListManager.class);
+                            serverSavedVideoListLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(serverSavedVideoListLayout);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else if(mode == CALLED_BY_SERVER_SAVED_LIST_ACTIVITY) {
+
                 }
             }
         });

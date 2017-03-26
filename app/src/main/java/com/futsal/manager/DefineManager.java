@@ -7,6 +7,8 @@ package com.futsal.manager;
 public class DefineManager {
     public static final int LOG_LEVEL_VERBOSE = 0, LOG_LEVEL_DEBUG = 1, LOG_LEVEL_INFO = 2, LOG_LEVEL_WARN = 3, LOG_LEVEL_ERROR = 4,
 
-                            MAKE_NEW_VIDEO_ITEM = 0, SHOW_VIDEO_ITEM = 1;
+                            MAKE_NEW_VIDEO_ITEM = 0, SHOW_VIDEO_ITEM = 1,
+
+                            CALLED_BY_FUTSAL_MAIN_ACTIVITY = 0, CALLED_BY_SERVER_SAVED_LIST_ACTIVITY = 1;
     public static final String APP_NAME = "FutsalManager";
 }
