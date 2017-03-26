@@ -132,3 +132,9 @@ gradle-app.setting
 *.iml
 
 openCVLibrary320/openCVLibrary320.iml
+
+*.bin
+
+*.iml
+
+*.iml

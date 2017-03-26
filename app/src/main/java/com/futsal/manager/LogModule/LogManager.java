@@ -25,7 +25,7 @@ public class LogManager extends DefineManager{
                 LogWarn(logMsg);
                 break;
             case LOG_LEVEL_ERROR:
-                LogWarn(logMsg);
+                LogError(logMsg);
                 break;
             default:
                 LogError("[LogManager] {PrintLog} (Wrong Logger Message)");
