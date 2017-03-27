@@ -11,6 +11,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
@@ -20,7 +21,7 @@ import static android.content.ContentValues.TAG;
  * Created by stories2 on 2017. 2. 22..
  */
 
-public class BluetoothCommunication extends Thread{
+public class BluetoothCommunication extends Thread implements Serializable {
 
     final static int BLE_RECEIVE_MODE = 0, BLE_SEND_MODE = 1;
 
@@ -33,7 +34,7 @@ public class BluetoothCommunication extends Thread{
     BluetoothServerSocket bluetoothServerSocket;
     BluetoothAdapter bluetoothAdapter;
 
-    String recentlyOrder;
+    String recentlyOrder, selectedDeviceAddress;
 
     int mode;
 
@@ -41,6 +42,23 @@ public class BluetoothCommunication extends Thread{
         bluetoothCommunicationThread = new Thread(this);
         mode = 0;
         recentlyOrder = "A";
+    }
+
+    public BluetoothCommunication(BluetoothAdapter targetBluetoothAdapter, String selectedDeviceAddress) {
+        this.bluetoothAdapter = targetBluetoothAdapter;
+        this.selectedDeviceAddress = selectedDeviceAddress;
+    }
+
+    public void SetBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {
+        this.bluetoothAdapter = bluetoothAdapter;
+    }
+
+    public BluetoothAdapter GetBluetoothAdapter() {
+        return bluetoothAdapter;
+    }
+
+    public String GetSelectedDeviceAddress() {
+        return selectedDeviceAddress;
     }
 //주석 추가해 두기
     //android design pattern

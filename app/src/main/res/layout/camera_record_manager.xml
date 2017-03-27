@@ -25,11 +25,30 @@
 
     </org.opencv.android.JavaCameraView>
 
-    <ToggleButton
-        android:id="@+id/toogleRecordVideo"
+    <LinearLayout
         android:layout_width="60dp"
         android:layout_height="fill_parent"
-        android:text="@string/toggleRecordOff"
-        android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true" />
+        android:orientation="vertical"
+        >
+
+        <ToggleButton
+            android:id="@+id/toogleRecordVideo"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/toggleRecordOff"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnVideoUpload"
+            android:text="Upload"
+            android:layout_weight="1"
+            />
+
+    </LinearLayout>
+
 </LinearLayout>

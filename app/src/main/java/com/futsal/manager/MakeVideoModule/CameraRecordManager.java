@@ -1,14 +1,19 @@
 package com.futsal.manager.MakeVideoModule;
 
 import android.app.Activity;
+import android.bluetooth.BluetoothAdapter;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
+import com.futsal.manager.BluetoothModule.BluetoothCommunication;
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.OpenCVModule.CalculateBallDetect;
@@ -32,6 +37,9 @@ public class CameraRecordManager extends Activity{
     CalculateBallDetect calculateBallDetect;
     BaseLoaderCallback opencvBaseLoaderCallback;
     boolean isVideoRecording;
+    Button btnVideoUpload;
+    BluetoothCommunication bluetoothCommunication;
+    Intent passedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +54,7 @@ public class CameraRecordManager extends Activity{
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
         surfaceRecordVideo = (SurfaceView) findViewById(R.id.surfaceRecordVideo);
+        btnVideoUpload = (Button) findViewById(R.id.btnVideoUpload);
 
         surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
         surfaceHolderRecordVideo.addCallback(cameraRecordProcess);
@@ -59,6 +68,12 @@ public class CameraRecordManager extends Activity{
         cameraRecordProcess.SetSurfaceHolderRecordVideo(surfaceHolderRecordVideo);
 
         isVideoRecording = false;
+        passedData = getIntent();
+        bluetoothCommunication = (BluetoothCommunication)passedData.getExtras().getSerializable("bluetoothDeviceData");
+        bluetoothCommunication.SetBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
+
+        LogManager.PrintLog("CameraRecordManager", "onCreate", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +
+                                " ble address: " + bluetoothCommunication.GetSelectedDeviceAddress(), DefineManager.LOG_LEVEL_INFO);
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -98,6 +113,14 @@ public class CameraRecordManager extends Activity{
                 super.onPackageInstall(operation, callback);
             }
         };
+
+        btnVideoUpload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Snackbar.make(view, "Upload Process", Snackbar.LENGTH_SHORT).show();
+                LogManager.PrintLog("CameraRecordManager", "onClick", "Upload button clicked", DefineManager.LOG_LEVEL_INFO);
+            }
+        });
     }
 
     @Override

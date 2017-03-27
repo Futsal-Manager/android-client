@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Build;
 import android.support.design.widget.Snackbar;
 import android.support.v7.widget.CardView;
@@ -16,10 +17,9 @@ import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
-import com.futsal.manager.MakeVideoModule.CameraRecordManager;
+import com.futsal.manager.MakeVideoModule.BluetoothDeviceFinder;
 import com.futsal.manager.R;
 import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
-import com.futsal.manager.ShowVideoModule.ShowVideoManager;
 
 import java.util.List;
 
@@ -69,7 +69,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 if(mode == CALLED_BY_FUTSAL_MAIN_ACTIVITY) {
                     switch (position) {
                         case DefineManager.MAKE_NEW_VIDEO_ITEM:
-                            Intent recordVideoLayout = new Intent(context, CameraRecordManager.class);
+                            Intent recordVideoLayout = new Intent(context, BluetoothDeviceFinder.class);
                             recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(recordVideoLayout);
                             break;
@@ -85,14 +85,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 else if(mode == CALLED_BY_SERVER_SAVED_LIST_ACTIVITY) {
                     String videoUrl = item.getTitle();
                     LogManager.PrintLog("RecyclerAdapter", "onBindViewHolder", "index name: " + videoUrl, LOG_LEVEL_INFO);
-                    /*Intent intent = new Intent(Intent.ACTION_VIEW);
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
                     intent.setDataAndType(Uri.parse(videoUrl), "video/mp4");
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent);*/
-                    Intent videoPlayIntent = new Intent(context, ShowVideoManager.class);
+                    context.startActivity(intent);
+                    /*Intent videoPlayIntent = new Intent(context, ShowVideoManager.class);
                     videoPlayIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     videoPlayIntent.putExtra("videoUrl", videoUrl);
-                    context.startActivity(videoPlayIntent);
+                    context.startActivity(videoPlayIntent);*/
                 }
             }
         });

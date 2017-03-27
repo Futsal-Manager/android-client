@@ -74,6 +74,9 @@
         <activity android:name=".ShowVideoModule.ShowVideoManager">
 
         </activity>
+        <activity android:name=".MakeVideoModule.BluetoothDeviceFinder">
+
+        </activity>
     </application>
 
 </manifest>
