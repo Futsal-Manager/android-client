@@ -40,6 +40,8 @@ public class CameraRecordManager extends Activity{
     Button btnVideoUpload;
     BluetoothCommunication bluetoothCommunication;
     Intent passedData;
+    VideoUploadProcess videoUploadProcess;
+    Activity cameraRecordManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +70,7 @@ public class CameraRecordManager extends Activity{
         cameraRecordProcess.SetSurfaceHolderRecordVideo(surfaceHolderRecordVideo);
 
         isVideoRecording = false;
+        cameraRecordManager = this;
         passedData = getIntent();
         bluetoothCommunication = (BluetoothCommunication)passedData.getExtras().getSerializable("bluetoothDeviceData");
         bluetoothCommunication.SetBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
@@ -119,6 +122,9 @@ public class CameraRecordManager extends Activity{
             public void onClick(View view) {
                 //Snackbar.make(view, "Upload Process", Snackbar.LENGTH_SHORT).show();
                 LogManager.PrintLog("CameraRecordManager", "onClick", "Upload button clicked", DefineManager.LOG_LEVEL_INFO);
+                if(!isVideoRecording) {
+                    videoUploadProcess = new VideoUploadProcess(cameraRecordManager);
+                }
             }
         });
     }

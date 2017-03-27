@@ -74,7 +74,8 @@
         <activity android:name=".ShowVideoModule.ShowVideoManager">
 
         </activity>
-        <activity android:name=".MakeVideoModule.BluetoothDeviceFinder">
+        <activity android:name=".MakeVideoModule.BluetoothDeviceFinder"
+            android:screenOrientation="portrait">
 
         </activity>
     </application>

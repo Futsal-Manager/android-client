@@ -48,6 +48,8 @@ import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofi
 
 public class CommunicationWithServer{
 
+    public boolean videoUploadStatus = false;
+
     static Context applicationContext;
     static boolean DEBUG_MODE = false, loginStatus = false;
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
@@ -356,16 +358,24 @@ public class CommunicationWithServer{
         calling.enqueue(new Callback<FileUploadResponse>() {
             @Override
             public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
-                if(response.headers().get("code").equals("200")) {
-                    Log.v("Upload", "success: " + response.body().GetRes());
+                videoUploadStatus = true;
+                try {
+                    if(response.headers().get("code").equals("200")) {
+                        //Log.v("Upload", "success: " + response.body().GetRes());
+                        LogManager.PrintLog("CommunicationWithServer", "onResponse", "Upload Success: " + response.body().toString(), DefineManager.LOG_LEVEL_INFO);
+                    }
+                    else {
+                        try{
+                            LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error Body: " + response.errorBody().string(), DefineManager.LOG_LEVEL_ERROR);
+                        }
+                        catch (Exception err2) {
+                            LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error: " + err2.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                        }
+                    }
                 }
-                else {
-                    try{
-                        Log.d("Upload", "error: " + response.errorBody().string());
-                    }
-                    catch (Exception err) {
-                        Log.d("Upload", "error: " + err.getMessage());
-                    }
+                catch (Exception err) {
+                    LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                    videoUploadStatus = true;
                 }
             }
 
