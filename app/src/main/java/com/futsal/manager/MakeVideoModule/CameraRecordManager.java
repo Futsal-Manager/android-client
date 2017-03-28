@@ -42,6 +42,7 @@ public class CameraRecordManager extends Activity{
     Intent passedData;
     VideoUploadProcess videoUploadProcess;
     Activity cameraRecordManager;
+    BluetoothDeviceControlProcesser bluetoothDeviceControlProcesser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +78,7 @@ public class CameraRecordManager extends Activity{
 
         LogManager.PrintLog("CameraRecordManager", "onCreate", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +
                                 " ble address: " + bluetoothCommunication.GetSelectedDeviceAddress(), DefineManager.LOG_LEVEL_INFO);
+        bluetoothDeviceControlProcesser = new BluetoothDeviceControlProcesser(bluetoothCommunication);
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -139,6 +141,7 @@ public class CameraRecordManager extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         DisableCameraView(opencvCameraView);
+        bluetoothCommunication.CloseConnection();
     }
 
     public void DisableCameraView(JavaCameraView targetCameraView) {
