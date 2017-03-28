@@ -56,7 +56,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
 
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera) {
-        LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Getting Video Frame Image Data", DefineManager.LOG_LEVEL_INFO);
+        //LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Getting Video Frame Image Data", DefineManager.LOG_LEVEL_INFO);
     }
 
     @Override

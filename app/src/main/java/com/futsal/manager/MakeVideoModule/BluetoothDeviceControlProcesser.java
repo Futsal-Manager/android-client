@@ -15,7 +15,7 @@ public class BluetoothDeviceControlProcesser extends Thread {
     boolean orderSwap, threadControl;
 
     public BluetoothDeviceControlProcesser(BluetoothCommunication bluetoothCommunication) {
-        bluetoothCommunication.ConnectToTargetBluetoothDevice(bluetoothCommunication.GetBluetoothAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
+        //bluetoothCommunication.ConnectToTargetBluetoothDevice(bluetoothCommunication.GetBluetoothAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
         this.bluetoothCommunication = bluetoothCommunication;
         orderSwap = false;
         threadControl = true;

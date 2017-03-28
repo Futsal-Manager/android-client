@@ -37,7 +37,7 @@ public class CameraRecordManager extends Activity{
     CalculateBallDetect calculateBallDetect;
     BaseLoaderCallback opencvBaseLoaderCallback;
     boolean isVideoRecording;
-    Button btnVideoUpload;
+    Button btnVideoUpload, btnSendA, btnSendB;
     BluetoothCommunication bluetoothCommunication;
     Intent passedData;
     VideoUploadProcess videoUploadProcess;
@@ -58,6 +58,8 @@ public class CameraRecordManager extends Activity{
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
         surfaceRecordVideo = (SurfaceView) findViewById(R.id.surfaceRecordVideo);
         btnVideoUpload = (Button) findViewById(R.id.btnVideoUpload);
+        btnSendA = (Button) findViewById(R.id.btnSendA);
+        btnSendB = (Button)findViewById(R.id.btnSendB);
 
         surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
         surfaceHolderRecordVideo.addCallback(cameraRecordProcess);
@@ -78,7 +80,8 @@ public class CameraRecordManager extends Activity{
 
         LogManager.PrintLog("CameraRecordManager", "onCreate", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +
                                 " ble address: " + bluetoothCommunication.GetSelectedDeviceAddress(), DefineManager.LOG_LEVEL_INFO);
-        bluetoothDeviceControlProcesser = new BluetoothDeviceControlProcesser(bluetoothCommunication);
+        bluetoothCommunication.ConnectToTargetBluetoothDevice(BluetoothAdapter.getDefaultAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
+        //bluetoothDeviceControlProcesser = new BluetoothDeviceControlProcesser(bluetoothCommunication);
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -129,6 +132,42 @@ public class CameraRecordManager extends Activity{
                 }
             }
         });
+
+        btnSendA.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendMove();
+            }
+        });
+
+        btnSendB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SendStop();
+            }
+        });
+    }
+
+    void SendMove() {
+        try {
+            bluetoothCommunication.SetOrder("A");
+            bluetoothCommunication.TryToCommunication(1);
+            LogManager.PrintLog("CameraRecordManager", "SendMove", "Move Order Sended", DefineManager.LOG_LEVEL_INFO);
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("CameraRecordManager", "SendMove", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+        }
+    }
+
+    void SendStop() {
+        try {
+            bluetoothCommunication.SetOrder("B");
+            bluetoothCommunication.TryToCommunication(1);
+            LogManager.PrintLog("CameraRecordManager", "SendStop", "Stop Order Sended", DefineManager.LOG_LEVEL_INFO);
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("CameraRecordManager", "SendStop", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+        }
     }
 
     @Override
@@ -142,7 +181,9 @@ public class CameraRecordManager extends Activity{
         super.onDestroy();
         DisableCameraView(opencvCameraView);
         bluetoothCommunication.CloseConnection();
-        bluetoothDeviceControlProcesser.StopProcess();
+        if(bluetoothDeviceControlProcesser != null) {
+            bluetoothDeviceControlProcesser.StopProcess();
+        }
     }
 
     public void DisableCameraView(JavaCameraView targetCameraView) {

@@ -240,7 +240,12 @@ public class CommunicationWithServer{
                 //Log.d(applicationContext.getString(R.string.app_name), "url: " + linkList.get(0).GetS3url());
 
                 //Log.d(applicationContext.getString(R.string.app_name), "file url: " + fileList.get(0));
-                fileUrl = linkList.get(0).GetS3url();
+                try {
+                    fileUrl = linkList.get(0).GetS3url();
+                }
+                catch (Exception err) {
+                    LogManager.PrintLog("CommunicationWithServer", "FileList", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                }
             }
 
             @Override

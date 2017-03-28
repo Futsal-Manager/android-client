@@ -49,6 +49,22 @@
             android:layout_weight="1"
             />
 
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSendA"
+            android:text="A"
+            android:layout_weight="1"
+            />
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/btnSendB"
+            android:text="B"
+            android:layout_weight="1"
+            />
+
     </LinearLayout>
 
 </LinearLayout>
