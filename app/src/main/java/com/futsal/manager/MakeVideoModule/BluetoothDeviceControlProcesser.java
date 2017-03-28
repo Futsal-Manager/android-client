@@ -12,12 +12,13 @@ public class BluetoothDeviceControlProcesser extends Thread {
 
     BluetoothCommunication bluetoothCommunication;
     Thread testControlThread;
-    boolean orderSwap;
+    boolean orderSwap, threadControl;
 
     public BluetoothDeviceControlProcesser(BluetoothCommunication bluetoothCommunication) {
         bluetoothCommunication.ConnectToTargetBluetoothDevice(bluetoothCommunication.GetBluetoothAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
         this.bluetoothCommunication = bluetoothCommunication;
         orderSwap = false;
+        threadControl = true;
         testControlThread = new Thread(this);
         testControlThread.start();
         LogManager.PrintLog("BluetoothDeviceControlProcesser", "BluetoothDeviceControlProcesser", "Ready to Communicate with Embedded System", DefineManager.LOG_LEVEL_INFO);
@@ -26,7 +27,7 @@ public class BluetoothDeviceControlProcesser extends Thread {
     @Override
     public void run() {
         super.run();
-        while(true) {
+        while(threadControl) {
             try {
                 orderSwap = !orderSwap;
                 if(orderSwap) {
@@ -63,5 +64,10 @@ public class BluetoothDeviceControlProcesser extends Thread {
         catch (Exception err) {
             LogManager.PrintLog("BluetoothDeviceControlProcesser", "SendStop", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
         }
+    }
+
+    public void StopProcess() {
+        threadControl = false;
+        testControlThread.interrupt();
     }
 }

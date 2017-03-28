@@ -142,6 +142,7 @@ public class CameraRecordManager extends Activity{
         super.onDestroy();
         DisableCameraView(opencvCameraView);
         bluetoothCommunication.CloseConnection();
+        bluetoothDeviceControlProcesser.StopProcess();
     }
 
     public void DisableCameraView(JavaCameraView targetCameraView) {
