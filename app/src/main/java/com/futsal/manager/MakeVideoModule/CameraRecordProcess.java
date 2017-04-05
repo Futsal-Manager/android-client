@@ -31,6 +31,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     CalculateBallDetect calculateBallDetect;
     SurfaceHolder surfaceHolderRecordVideo;
     SurfaceView videoRecordSurfaceView;
+    CameraOpenCVViewer cameraOpenCVViewer;
 
     public CameraRecordProcess(Activity cameraRecordActivity) {
         this.cameraRecordActivity = cameraRecordActivity;
@@ -60,6 +61,10 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
         this.videoRecordSurfaceView = videoRecordSurfaceView;
     }
 
+    public void SetCameraOpenCVViewer(CameraOpenCVViewer cameraOpenCVViewer) {
+        this.cameraOpenCVViewer = cameraOpenCVViewer;
+    }
+
     @Override
     public void onPreviewFrame(byte[] bytes, Camera camera) {
         //LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Getting Video Frame Image Data", DefineManager.LOG_LEVEL_INFO);
@@ -69,8 +74,10 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             eachPreviewFrameHeight = videoRecordSurfaceView.getHeight();
             Mat eacPreviewFrameImage = new Mat(eachPreviewFrameHeight, eachPreviewFrameWith, CvType.CV_8UC1);
             eacPreviewFrameImage.put(0, 0, bytes);
+            cameraOpenCVViewer.SetProcessingMatData(eacPreviewFrameImage);
             eacPreviewFrameImage.release();
-            LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Getting Video Frame Image Data", DefineManager.LOG_LEVEL_INFO);
+            LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame",
+                    "Getting Video Frame Image Data " + eachPreviewFrameWith + " X " + eachPreviewFrameHeight, DefineManager.LOG_LEVEL_INFO);
         }
         catch (Exception err) {
             LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

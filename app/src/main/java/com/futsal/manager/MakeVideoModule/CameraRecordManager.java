@@ -79,6 +79,9 @@ public class CameraRecordManager extends Activity{
         cameraRecordProcess.SetCalculateBallDetect(calculateBallDetect);
         cameraRecordProcess.SetSurfaceHolderRecordVideo(surfaceHolderRecordVideo);
         cameraRecordProcess.SetVideoRecordSurfaceView(surfaceRecordVideo);
+        cameraRecordProcess.SetCameraOpenCVViewer(cameraOpenCVViewer);
+
+        cameraOpenCVViewer.SetCalculateBallDetect(calculateBallDetect);
 
         isVideoRecording = false;
         cameraRecordManager = this;
