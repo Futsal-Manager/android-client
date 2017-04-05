@@ -104,8 +104,10 @@ public class CalculateBallDetect {
             }
             circles.release();
             mIntermediateMat.release();
-            originImage = rgbaInnerWindow;
+            //originImage = rgbaInnerWindow;
             //rgbaInnerWindow.release();
+            rgbaInnerWindow.copyTo(originImage);
+            rgbaInnerWindow.release();
 
             return originImage;
         }
