@@ -74,7 +74,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
         if(phoneDeviceCamera == null) {
             phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
             try {
-                opencvCameraView.enableView();
+                //opencvCameraView.enableView();
             }
             catch (Exception err) {
                 LogManager.PrintLog("CameraRecordProcess", "surfaceCreated", "opencvCameraView Enable Fail: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
@@ -90,6 +90,8 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             phoneDeviceCamera.stopPreview();
             phoneDeviceCamera.setPreviewCallback(this);
             phoneDeviceCamera.setPreviewDisplay(surfaceHolderRecordVideo);
+
+            opencvCameraView.enableView();
             phoneDeviceCamera.startPreview();
         }
         catch (Exception err) {
