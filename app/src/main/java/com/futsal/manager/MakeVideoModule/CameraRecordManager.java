@@ -82,6 +82,7 @@ public class CameraRecordManager extends Activity{
         cameraRecordProcess.SetCameraOpenCVViewer(cameraOpenCVViewer);
 
         cameraOpenCVViewer.SetCalculateBallDetect(calculateBallDetect);
+        cameraOpenCVViewer.SetOpencvSurfaceHolder(opencvSurfaceHolder);
 
         isVideoRecording = false;
         cameraRecordManager = this;
@@ -192,6 +193,7 @@ public class CameraRecordManager extends Activity{
         super.onDestroy();
         DisableCameraView(opencvCameraView);
         bluetoothCommunication.CloseConnection();
+        cameraOpenCVViewer.StopProcessing();
         if(bluetoothDeviceControlProcesser != null) {
             bluetoothDeviceControlProcesser.StopProcess();
         }

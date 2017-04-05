@@ -74,7 +74,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             eachPreviewFrameHeight = videoRecordSurfaceView.getHeight();
             Mat eacPreviewFrameImage = new Mat(eachPreviewFrameHeight, eachPreviewFrameWith, CvType.CV_8UC1);
             eacPreviewFrameImage.put(0, 0, bytes);
-            cameraOpenCVViewer.SetProcessingMatData(eacPreviewFrameImage);
+            cameraOpenCVViewer.SetProcessingMatData(eacPreviewFrameImage, eachPreviewFrameWith, eachPreviewFrameHeight);
             eacPreviewFrameImage.release();
             LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame",
                     "Getting Video Frame Image Data " + eachPreviewFrameWith + " X " + eachPreviewFrameHeight, DefineManager.LOG_LEVEL_INFO);
