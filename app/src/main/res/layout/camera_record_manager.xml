@@ -17,13 +17,19 @@
     </FrameLayout>
 
     <org.opencv.android.JavaCameraView
-        android:layout_height="fill_parent"
-        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:layout_width="1dp"
         android:id="@+id/opencvCameraView"
-        android:layout_weight="1"
         >
 
     </org.opencv.android.JavaCameraView>
+
+    <SurfaceView
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:id="@+id/opencvSurfaceView"
+        android:layout_weight="1"
+        />
 
     <LinearLayout
         android:layout_width="60dp"

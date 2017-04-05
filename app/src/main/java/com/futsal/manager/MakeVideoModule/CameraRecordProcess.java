@@ -90,9 +90,8 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             phoneDeviceCamera.stopPreview();
             phoneDeviceCamera.setPreviewCallback(this);
             phoneDeviceCamera.setPreviewDisplay(surfaceHolderRecordVideo);
-
-            opencvCameraView.enableView();
             phoneDeviceCamera.startPreview();
+            //opencvCameraView.enableView();
         }
         catch (Exception err) {
             LogManager.PrintLog("CameraRecordProcess", "surfaceChanged", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
@@ -139,7 +138,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
 
     public void StartRecordMedia() {
 
-        opencvCameraView.disableView();
+        //opencvCameraView.disableView();
 
         if(mediaRecording == null) {
             String savePath = Environment.getExternalStorageDirectory().toString();
@@ -192,13 +191,13 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             phoneDeviceCamera.lock();
         }
         if(mediaRecording == null) {
-            opencvCameraView.enableView();
+            //opencvCameraView.enableView();
             return;
         }
         mediaRecording.stop();
         mediaRecording.reset();
         mediaRecording.release();
         mediaRecording = null;
-        opencvCameraView.enableView();
+        //opencvCameraView.enableView();
     }
 }

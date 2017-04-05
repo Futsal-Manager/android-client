@@ -32,8 +32,8 @@ public class CameraRecordManager extends Activity{
     CameraRecordProcess cameraRecordProcess;
     JavaCameraView opencvCameraView;
     ToggleButton toogleRecordVideo;
-    SurfaceView surfaceRecordVideo;
-    SurfaceHolder surfaceHolderRecordVideo;
+    SurfaceView surfaceRecordVideo, opencvSurfaceView;
+    SurfaceHolder surfaceHolderRecordVideo, opencvSurfaceHolder;
     CalculateBallDetect calculateBallDetect;
     BaseLoaderCallback opencvBaseLoaderCallback;
     boolean isVideoRecording;
@@ -43,6 +43,7 @@ public class CameraRecordManager extends Activity{
     VideoUploadProcess videoUploadProcess;
     Activity cameraRecordManager;
     BluetoothDeviceControlProcesser bluetoothDeviceControlProcesser;
+    CameraOpenCVViewer cameraOpenCVViewer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,10 +54,12 @@ public class CameraRecordManager extends Activity{
 
         cameraRecordProcess = new CameraRecordProcess(this);
         calculateBallDetect = new CalculateBallDetect(getApplicationContext());
+        cameraOpenCVViewer = new CameraOpenCVViewer(this);
 
         opencvCameraView = (JavaCameraView) findViewById(R.id.opencvCameraView);
         toogleRecordVideo = (ToggleButton) findViewById(R.id.toogleRecordVideo);
         surfaceRecordVideo = (SurfaceView) findViewById(R.id.surfaceRecordVideo);
+        opencvSurfaceView = (SurfaceView) findViewById(R.id.opencvSurfaceView);
         btnVideoUpload = (Button) findViewById(R.id.btnVideoUpload);
         btnSendA = (Button) findViewById(R.id.btnSendA);
         btnSendB = (Button)findViewById(R.id.btnSendB);
@@ -64,6 +67,10 @@ public class CameraRecordManager extends Activity{
         surfaceHolderRecordVideo = surfaceRecordVideo.getHolder();
         surfaceHolderRecordVideo.addCallback(cameraRecordProcess);
         surfaceHolderRecordVideo.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        opencvSurfaceHolder = opencvSurfaceView.getHolder();
+        opencvSurfaceHolder.addCallback(cameraOpenCVViewer);
+        opencvSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         opencvCameraView.setVisibility(SurfaceView.VISIBLE);
         opencvCameraView.setCvCameraViewListener(cameraRecordProcess);
