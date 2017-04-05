@@ -138,3 +138,5 @@ openCVLibrary320/openCVLibrary320.iml
 *.iml
 
 *.iml
+
+.idea/encodings.xml

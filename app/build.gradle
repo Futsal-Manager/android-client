@@ -60,8 +60,8 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.4.2'
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.2'
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.2'
-    compile 'com.android.support:cardview-v7:+'
-    compile 'com.android.support:recyclerview-v7:+'
+    compile 'com.android.support:cardview-v7:25.2.0'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
     compile files('libs/artoolkitplus.jar')
     compile files('libs/ffmpeg.jar')
     compile files('libs/flandmark.jar')
