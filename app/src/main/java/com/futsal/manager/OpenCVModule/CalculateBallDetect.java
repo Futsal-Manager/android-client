@@ -7,6 +7,8 @@ import com.futsal.manager.LogModule.LogManager;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -56,7 +58,9 @@ public class CalculateBallDetect {
                 iCannyUpperThreshold, iAccumulator, minRadius, maxRadius);
 
         return circleDetectedImage;*/
+
         try {
+
             Size sizeRgba = originImage.size(), resizeImage = new Size(320, 240);
             Mat rgbaInnerWindow = new Mat((int)sizeRgba.width, (int)sizeRgba.height, CvType.CV_8UC1);
             Mat mIntermediateMat = new Mat();
@@ -78,7 +82,7 @@ public class CalculateBallDetect {
             //Imgproc.cvtColor(rgbaInnerWindow, originImage,
             //        Imgproc.COLOR_RGBA2GRAY);
             Imgproc.cvtColor(originImage, rgbaInnerWindow, Imgproc.COLOR_BGRA2GRAY);
-            /*
+
             //Imgproc.resize(rgbaInnerWindow, rgbaInnerWindow, resizeImage);
             Mat circles = rgbaInnerWindow.clone();
             Imgproc.GaussianBlur(rgbaInnerWindow, rgbaInnerWindow, new Size(9, 9), 2, 2);
@@ -102,12 +106,14 @@ public class CalculateBallDetect {
                         5);
             }
 
-            circles.release();*/
+            circles.release();
             mIntermediateMat.release();
             //originImage = rgbaInnerWindow;
             //rgbaInnerWindow.release();
             rgbaInnerWindow.copyTo(originImage);
             rgbaInnerWindow.release();
+
+            //Imgproc.cvtColor(originImage, originImage, Imgproc.COLOR_BGRA2GRAY);
 
             return originImage;
         }

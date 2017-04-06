@@ -161,7 +161,12 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
                 }
                 else {
                     eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
-                    opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
+                    if(eachCameraPreviewFrameImage != null) {
+                        opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
+                    }
+                    else {
+                        LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null after processing", DefineManager.LOG_LEVEL_WARN);
+                    }
                     DrawSurfaceView();
                 }
                 Thread.sleep(1);
