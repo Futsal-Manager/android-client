@@ -1,6 +1,10 @@
 package com.futsal.manager.MakeVideoModule;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Rect;
+import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Environment;
@@ -13,8 +17,11 @@ import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 
 import org.opencv.android.CameraBridgeViewBase;
 import org.opencv.android.JavaCameraView;
+import org.opencv.android.Utils;
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
+
+import java.io.ByteArrayOutputStream;
 
 /**
  * Created by stories2 on 2017. 3. 27..
@@ -69,15 +76,36 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     public void onPreviewFrame(byte[] bytes, Camera camera) {
         //LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Getting Video Frame Image Data", DefineManager.LOG_LEVEL_INFO);
         try {
-            int eachPreviewFrameWith, eachPreviewFrameHeight;
+            //Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+            /*int eachPreviewFrameWith, eachPreviewFrameHeight;
             eachPreviewFrameWith = videoRecordSurfaceView.getWidth();
             eachPreviewFrameHeight = videoRecordSurfaceView.getHeight();
-            Mat eacPreviewFrameImage = new Mat(eachPreviewFrameHeight, eachPreviewFrameWith, CvType.CV_8UC1);
+            Mat eacPreviewFrameImage = new Mat(eachPreviewFrameHeight + eachPreviewFrameHeight / 2, eachPreviewFrameWith, CvType.CV_8UC1);
             eacPreviewFrameImage.put(0, 0, bytes);
             cameraOpenCVViewer.SetProcessingMatData(eacPreviewFrameImage, eachPreviewFrameWith, eachPreviewFrameHeight);
             eacPreviewFrameImage.release();
             LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame",
-                    "Getting Video Frame Image Data " + eachPreviewFrameWith + " X " + eachPreviewFrameHeight, DefineManager.LOG_LEVEL_INFO);
+                    "Getting Video Frame Image Data " + eachPreviewFrameWith + " X " + eachPreviewFrameHeight, DefineManager.LOG_LEVEL_INFO);*/
+
+            Camera.Parameters parameters = phoneDeviceCamera.getParameters();
+            int width, height;
+            width = parameters.getPreviewSize().width;
+            height = parameters.getPreviewSize().height;
+
+            YuvImage yuvImage = new YuvImage(bytes, parameters.getPreviewFormat(), width, height, null);
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            yuvImage.compressToJpeg(new Rect(0, 0, width, height), 70, byteArrayOutputStream);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(byteArrayOutputStream.toByteArray(), 0, byteArrayOutputStream.size());
+            Mat frameImage = new Mat();
+            bitmap = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+            Utils.bitmapToMat(bitmap, frameImage);
+            if(frameImage == null) {
+                LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "frameImage == null", DefineManager.LOG_LEVEL_WARN);
+            }
+            cameraOpenCVViewer.SetProcessingMatData(frameImage, width, height);
+            frameImage.release();
+            LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame",
+                    "Getting Video Frame Image Data " + width + " X " + height, DefineManager.LOG_LEVEL_INFO);
         }
         catch (Exception err) {
             LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

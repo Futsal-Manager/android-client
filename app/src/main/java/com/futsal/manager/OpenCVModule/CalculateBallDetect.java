@@ -7,8 +7,6 @@ import com.futsal.manager.LogModule.LogManager;
 
 import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 
@@ -80,6 +78,7 @@ public class CalculateBallDetect {
             //Imgproc.cvtColor(rgbaInnerWindow, originImage,
             //        Imgproc.COLOR_RGBA2GRAY);
             Imgproc.cvtColor(originImage, rgbaInnerWindow, Imgproc.COLOR_BGRA2GRAY);
+            /*
             //Imgproc.resize(rgbaInnerWindow, rgbaInnerWindow, resizeImage);
             Mat circles = rgbaInnerWindow.clone();
             Imgproc.GaussianBlur(rgbaInnerWindow, rgbaInnerWindow, new Size(9, 9), 2, 2);
@@ -102,7 +101,8 @@ public class CalculateBallDetect {
                 Imgproc.circle(rgbaInnerWindow, pt, radius, new Scalar(255, 0, 0),
                         5);
             }
-            circles.release();
+
+            circles.release();*/
             mIntermediateMat.release();
             //originImage = rgbaInnerWindow;
             //rgbaInnerWindow.release();

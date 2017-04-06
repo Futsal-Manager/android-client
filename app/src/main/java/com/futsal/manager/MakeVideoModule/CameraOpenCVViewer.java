@@ -10,10 +10,7 @@ import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 
 import org.opencv.android.Utils;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
 
 /**
  * Created by stories2 on 2017. 4. 6..
@@ -26,7 +23,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     SurfaceHolder opencvSurfaceHolder;
     Thread opencvDrawingThread;
     boolean running;
-    Bitmap opencvFrameImage;
+    Bitmap opencvFrameImage, realCameraBitmap;
     int eachFrameImageWith, eachFrameImageHeight;
 
     public CameraOpenCVViewer(Activity cameraRecordManagerActivity) {
@@ -55,7 +52,14 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
         try {
             surfaceViewCanvas = opencvSurfaceHolder.lockCanvas(null);
             if(opencvFrameImage != null) {
-                surfaceViewCanvas.drawBitmap(opencvFrameImage, 0, 0, null);
+                if(realCameraBitmap != null) {
+                    surfaceViewCanvas.drawBitmap(realCameraBitmap, 0, 0, null);
+                    LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "real camera preview", DefineManager.LOG_LEVEL_INFO);
+                }
+                else {
+                    surfaceViewCanvas.drawBitmap(opencvFrameImage, 0, 0, null);
+                    LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencv frame preview", DefineManager.LOG_LEVEL_INFO);
+                }
             }
             else {
                 LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencvFrameImage == null", DefineManager.LOG_LEVEL_WARN);
@@ -104,6 +108,22 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
         }
     }
 
+    public void SetProcessingMatData(Mat eachCameraPreviewFrameImage, int eachFrameImageWith, int eachFrameImageHeight, Bitmap realCameraBitmap) {
+        //this.eachCameraPreviewFrameImage = eachCameraPreviewFrameImage;
+        this.eachFrameImageWith = eachFrameImageWith;
+        this.eachFrameImageHeight = eachFrameImageHeight;
+        this.realCameraBitmap = realCameraBitmap;
+
+        eachCameraPreviewFrameImage.copyTo(this.eachCameraPreviewFrameImage);
+
+        if(eachCameraPreviewFrameImage == null) {
+            LogManager.PrintLog("CameraOpenCVViewer", "SetProcessingMatData", "eachCameraPreviewFrameImage = null", DefineManager.LOG_LEVEL_WARN);
+        }
+        else {
+            LogManager.PrintLog("CameraOpenCVViewer", "SetProcessingMatData", "eachCameraPreviewFrameImage ok", DefineManager.LOG_LEVEL_INFO);
+        }
+    }
+
     Bitmap MatToBitmap(Mat eachCameraPreviewFrameImage) {
         Bitmap eachCameraPreviewFrameBitmap = null;
         Mat convertTempImage = null;
@@ -112,8 +132,13 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
                 LogManager.PrintLog("CameraOpenCVViewer", "MatToBitmap", "eachCameraPreviewFrameImage = null", DefineManager.LOG_LEVEL_WARN);
             }
             else {
-                convertTempImage = new Mat(eachFrameImageHeight, eachFrameImageWith, CvType.CV_8U, new Scalar(4));
-                Imgproc.cvtColor(eachCameraPreviewFrameImage, convertTempImage, Imgproc.COLOR_GRAY2RGBA, 4);
+                /*convertTempImage = new Mat(eachFrameImageHeight, eachFrameImageWith, CvType.CV_8UC1, new Scalar(4));
+                //Imgproc.cvtColor(eachCameraPreviewFrameImage, convertTempImage, Imgproc.COLOR_YUV420sp2BGRA, 4);
+                Imgproc.cvtColor(eachCameraPreviewFrameImage, convertTempImage, Imgproc.COLOR_GRAY2BGRA, 4);*/
+                convertTempImage = new Mat();
+                eachCameraPreviewFrameImage.copyTo(convertTempImage);
+                LogManager.PrintLog("CameraOpenCVViewer", "MatToBitmap",
+                        "channels: " + eachCameraPreviewFrameImage.channels() + " cols: " + eachCameraPreviewFrameImage.cols() + " rows: " + eachCameraPreviewFrameImage.rows(), DefineManager.LOG_LEVEL_INFO);
                 eachCameraPreviewFrameBitmap = Bitmap.createBitmap(convertTempImage.cols(), convertTempImage.rows(), Bitmap.Config.ARGB_8888);
                 Utils.matToBitmap(convertTempImage, eachCameraPreviewFrameBitmap);
                 convertTempImage.release();
@@ -135,6 +160,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
                     LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null", DefineManager.LOG_LEVEL_WARN);
                 }
                 else {
+                    eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
                     opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
                     DrawSurfaceView();
                 }
