@@ -40,6 +40,7 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
+import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
 /**
@@ -108,7 +109,7 @@ public class CommunicationWithServer{
 
     public static Retrofit createRetrofit() {
         return new Retrofit.Builder()
-                .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+                .baseUrl("http://" + SERVER_DOMAIN_NAME + "/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(createOkHttpClient())
                // .client(InterceptorClient())
@@ -135,7 +136,7 @@ public class CommunicationWithServer{
 
         if(DEBUG_MODE) {
             return new Retrofit.Builder()
-                    .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+                    .baseUrl("http://" + SERVER_DOMAIN_NAME + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     //.client(fileOkHttpClient())
                     .client(client)
@@ -143,7 +144,7 @@ public class CommunicationWithServer{
         }
         else {
             return new Retrofit.Builder()
-                    .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+                    .baseUrl("http://" + SERVER_DOMAIN_NAME + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(fileOkHttpClient())
                     //.client(client)
@@ -410,7 +411,7 @@ public class CommunicationWithServer{
 interface Retrofit2NetworkInterface {
 
     public static final Retrofit retrofit = new Retrofit.Builder()
-            .baseUrl("http://ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com/")
+            .baseUrl("http://" + SERVER_DOMAIN_NAME + "/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

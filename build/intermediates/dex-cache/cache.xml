@@ -12,132 +12,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/stories2/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/support-annotations-25.2.0_09c9814f916dee9bad0a427643241f338a7c82dc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_c0e7ea9b6a2aa27da89e511f0b2fd5ffa073e410.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/opencv.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="ae19e668754f80bc451d28d07c916d55f5d05fd8">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/opencv_2ec8a89bca0ce908c66115fc6ed3065c276a6294.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_e664a56f493004b4f0064ad2f5495299f60997f8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/json-simple-1.1_bbb70e9a1e57e442055a5a34d6f00d94910d802c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/artoolkitplus.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="543bf47572afc2f02c30f125d77019b1306e82d1">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/artoolkitplus_f879c3693e019decbfa057ae0e84f93e10fe9578.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/librealsense.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a38afba003c895652db9f29f7e014e451a73a0b4">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/librealsense_7064ea4d3d05dc9df950f7156dca022c13dc13a1.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/javacpp.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="565d9ff1660f5fe2b406c97ba2894b446ae26a97">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/javacpp_3fa74a22eb6eb9a2930331793a4060df8cb27441.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_b96f92e7d4d4feb2792d5342b856e203382fd345.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/videoinput.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f30b2cba25b56af3a60a679775016537fda37c41">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/videoinput_c3fb4bcae4f3fa82cf36d36b5a65bec9b2be37de.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/flandmark.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e5cd132c846b296edc8eee43c596583adfd151de">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/flandmark_42651a9a44dc3c793b8f4fa1dbb230ca10fc7105.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_17d36d7167782777aef5cb135caa1938ebb6ec81.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.1.0_6251a68167f469f21f88dea3d1ebfbdae67311d6.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/libdc1394.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e702de628164ba633e77f3b4a4a16a0c402ce364">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/libdc1394_32f3e533d2fe2fd8c1dfd91863832d7d61be9439.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -165,30 +39,21 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/support-annotations-25.2.0_09c9814f916dee9bad0a427643241f338a7c82dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
         sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.1.0_5fe3537b914cfb96f0cd7c96e6e3488ee28f5c9e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/javacv.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f395969ebaee0a161444acb90f11c0132a87389f">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/javacv_45fb4af337a054236b99ca32507f4b100dabbc3f.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/libfreenect2.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="afd5363d196de86fece4e138ced9d624e0eab5b2">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/libfreenect2_da9cbeec311626370a3c7cb5676046040756cba1.jar" />
     </item>
     <item
         is-multidex="false"
@@ -207,6 +72,15 @@
         revision="25.0.1"
         sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.2.0_ebf5d5b131c01db23534bfc6b34b63e6bcdbd027.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_c0e7ea9b6a2aa27da89e511f0b2fd5ffa073e410.jar" />
     </item>
     <item
         is-multidex="false"
@@ -246,6 +120,24 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_e664a56f493004b4f0064ad2f5495299f60997f8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/json-simple-1.1_bbb70e9a1e57e442055a5a34d6f00d94910d802c.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okio/okio/1.11.0/840897fcd7223a8143f1d9b6f69714e7be34fd50/okio-1.11.0.jar"
         jumboMode="false"
         optimize="true"
@@ -261,6 +153,15 @@
         revision="25.0.1"
         sha1="d99260c62d97beae99ed1f779a35a9bf48c094a6">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.4.2_f5742c17f9f94619375f5d506700cd9bd8e0ccde.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_b96f92e7d4d4feb2792d5342b856e203382fd345.jar" />
     </item>
     <item
         is-multidex="false"
@@ -291,12 +192,21 @@
     </item>
     <item
         is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/flycapture.jar"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/animated-vector-drawable/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
         revision="25.0.1"
-        sha1="bb48ed01be621b6b38b91d45a96e68e7ad7bf25e">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/flycapture_e66efc2a7ccedc42f75d237c2470962586ce2ab0.jar" />
+        sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_17d36d7167782777aef5cb135caa1938ebb6ec81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.1.0_6251a68167f469f21f88dea3d1ebfbdae67311d6.jar" />
     </item>
     <item
         is-multidex="false"
@@ -306,24 +216,6 @@
         revision="25.0.1"
         sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/gson-2.7_e8a68ed640ccc9aeb27098b9f0f700a0b5e78baf.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/ffmpeg.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="2b506fefac100e50800bb1b5908d7588ab21fb45">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/ffmpeg_5a17b6c3b662b05ff1bb78c565cc60d7defe21eb.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/libs/libfreenect.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="ea7981fbc3eba3cf3d8c1b8492d1952b85d20068">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/libfreenect_8fb491318d46638aaa366714d0b3f84347d3cd88.jar" />
     </item>
 
 </items>

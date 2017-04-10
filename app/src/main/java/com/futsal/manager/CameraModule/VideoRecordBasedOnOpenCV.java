@@ -1,56 +1,14 @@
 package com.futsal.manager.CameraModule;
 
-import android.app.Activity;
-import android.content.pm.ActivityInfo;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.hardware.Camera;
-import android.media.CamcorderProfile;
-import android.media.MediaRecorder;
-import android.os.Bundle;
-import android.os.Environment;
-import android.util.Log;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.view.WindowManager;
-import android.widget.CompoundButton;
-import android.widget.ToggleButton;
-
-import com.futsal.manager.OpenCVModule.CalculateBallDetect;
-import com.futsal.manager.R;
-
-import org.bytedeco.javacpp.avcodec;
-import org.bytedeco.javacpp.avutil;
-import org.bytedeco.javacpp.opencv_core;
-import org.bytedeco.javacv.AndroidFrameConverter;
-import org.bytedeco.javacv.FFmpegFrameRecorder;
-import org.opencv.android.BaseLoaderCallback;
-import org.opencv.android.CameraBridgeViewBase;
-import org.opencv.android.InstallCallbackInterface;
-import org.opencv.android.JavaCameraView;
-import org.opencv.android.LoaderCallbackInterface;
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.core.Size;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-
-import static org.bytedeco.javacpp.opencv_core.IPL_DEPTH_32F;
-
 /**
  * Created by stories2 on 2017. 2. 19..
  */
-
+/*
 public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeViewBase.CvCameraViewListener2,
                                                                     MediaRecorder.OnInfoListener, MediaRecorder.OnErrorListener,
                                                                     SurfaceHolder.Callback, Camera.PreviewCallback{
 
-    static final String videoRecordBasedOnOpencvTag = "video with opencv";
+    static final String videoRecordBasedOnOpencvTag = "video with opencv";*/
     /*static {
         if(OpenCVLoader.initDebug()) {
             System.loadLibrary("avcore");
@@ -67,7 +25,7 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             Log.d(videoRecordBasedOnOpencvTag, "opencv module not loaded");
         }
     }*/
-
+/*
     JavaCameraView opencvCameraView;
     BaseLoaderCallback opencvBaseLoaderCallback;
     Mat eachCameraFrameImage;
@@ -181,13 +139,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
 
     public boolean IsOpencvModuleLoaded() {
         if(OpenCVLoader.initDebug()) {
-            /*System.loadLibrary("avcore");
-            System.loadLibrary("avformat");
-            System.loadLibrary("avcodec");
-            System.loadLibrary("avdevice");
-            System.loadLibrary("avfilter");
-            System.loadLibrary("avutil");
-            System.loadLibrary("swscale");*/
             //System.loadLibrary("avutil");
             //ReLinker.loadLibrary(getApplicationContext(), "avutil");
             //ReLinker.loadLibrary(getApplicationContext(), "avformat");
@@ -234,18 +185,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
         //Log.d(getString(R.string.app_name), "image info: " + eachCameraFrameImage.width() + ", " + eachCameraFrameImage.height() + ", " + eachCameraFrameImage.channels());
         //960, 720, 4
         eachCameraFrameImage = calculateBallDetect.DetectBallPosition(eachCameraFrameImage);
-        /*Size eachFrameSize = eachCameraFrameImage.size();
-        if(isVideoRecording) {
-            try {
-                byte[] byteFrame = new byte[(int) (eachCameraFrameImage.total() * eachCameraFrameImage.channels())];
-                eachCameraFrameImage.get(0, 0, byteFrame);
-                onFrame(byteFrame, eachFrameSize);
-                //deviceVideoFrameRecorder.record(new AndroidFrameConverter().convert(byteFrame, (int) eachFrameSize.width, (int) eachFrameSize.height));
-            }
-            catch (Exception err) {
-                Log.d(videoRecordBasedOnOpencvTag, "Error in onCameraFrame: " + err.getMessage());
-            }
-        }*/
         return eachCameraFrameImage;
     }
     private void onFrame(byte[] data, Size eachFrameSize){
@@ -324,13 +263,6 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
             videoFrameRecorder.setVideoOption("preset", "veryfast");
             videoFrameRecorder.setVideoOption("tune", "zerolatency");
             videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P);//AV_PIX_FMT_YUV420P
-            /*videoFrameRecorder.setVideoCodec(avcodec.AV_CODEC_ID_HUFFYUV);
-            videoFrameRecorder.setAudioCodec(avcodec.AV_CODEC_ID_NONE);
-            videoFrameRecorder.setFormat("avi");
-            //videoFrameRecorder.setVideoCodec(AV_CODEC_ID_MPEG4);
-            videoFrameRecorder.setFrameRate(24);
-            //videoFrameRecorder.setPixelFormat(AV_PIX_FMT_RGB24);
-            videoFrameRecorder.setPixelFormat(avutil.AV_PIX_FMT_RGB32);*/
             eachVideoFrame = opencv_core.IplImage.create(imageFrameWidth, imageFrameHeight, depth, channels);
 
         }
@@ -480,5 +412,5 @@ public class VideoRecordBasedOnOpenCV extends Activity implements CameraBridgeVi
     public void onPreviewFrame(byte[] bytes, Camera camera) {
         Log.d(getString(R.string.app_name), "on Preview Frame");
 
-    }
-}
+    }*/
+//}

@@ -42,6 +42,13 @@ android {
         exclude 'org/bytedeco/javacpp/macosx-x86_64/libusb-1.0.dylib'
     }
     lintOptions { abortOnError false }
+    productFlavors {
+        armv7a {
+            ndk {
+                abiFilter "armeabi-v7a"
+            }
+        }
+    }
 }
 
 dependencies {
@@ -62,16 +69,4 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp-urlconnection:3.4.2'
     compile 'com.android.support:cardview-v7:25.2.0'
     compile 'com.android.support:recyclerview-v7:25.2.0'
-    compile files('libs/artoolkitplus.jar')
-    compile files('libs/ffmpeg.jar')
-    compile files('libs/flandmark.jar')
-    compile files('libs/flycapture.jar')
-    compile files('libs/javacpp.jar')
-    //compile files('libs/javacv.jar')
-    compile files('libs/libdc1394.jar')
-    compile files('libs/libfreenect.jar')
-    compile files('libs/libfreenect2.jar')
-    compile files('libs/librealsense.jar')
-    compile files('libs/opencv.jar')
-    compile files('libs/videoinput.jar')
 }

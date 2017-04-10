@@ -5,12 +5,7 @@ import android.content.Context;
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgproc.Imgproc;
 
 /**
  * Created by stories2 on 2017. 3. 7..
@@ -60,7 +55,7 @@ public class CalculateBallDetect {
         return circleDetectedImage;*/
 
         try {
-
+/*
             Size sizeRgba = originImage.size(), resizeImage = new Size(320, 240);
             Mat rgbaInnerWindow = new Mat((int)sizeRgba.width, (int)sizeRgba.height, CvType.CV_8UC1);
             Mat mIntermediateMat = new Mat();
@@ -88,7 +83,7 @@ public class CalculateBallDetect {
             Imgproc.GaussianBlur(rgbaInnerWindow, rgbaInnerWindow, new Size(9, 9), 2, 2);
             Imgproc.Canny(rgbaInnerWindow, mIntermediateMat, 10, 90);
             Imgproc.HoughCircles(mIntermediateMat, circles,
-                    Imgproc.CV_HOUGH_GRADIENT, 1, 75, 50, 13, 35, 40);
+                    Imgproc.CV_HOUGH_GRADIENT, 1, 75, 50, 13, 35, 40);//파라미터가 의미하는 것을 찾아볼 것
             Imgproc.cvtColor(mIntermediateMat, rgbaInnerWindow,
                     Imgproc.COLOR_GRAY2BGRA, 4);
 
@@ -112,7 +107,7 @@ public class CalculateBallDetect {
             //rgbaInnerWindow.release();
             rgbaInnerWindow.copyTo(originImage);
             rgbaInnerWindow.release();
-
+*/
             //Imgproc.cvtColor(originImage, originImage, Imgproc.COLOR_BGRA2GRAY);
 
             return originImage;
