@@ -8,133 +8,7 @@
         optimize="true"
         revision="25.0.1"
         sha1="30a4938ea5235ccf532b3e9f04200e68547e36ad">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-cardview-v7-25.2.0_ee3d77f779e8bffe4560f7e7ac2d5122d77c2ac0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d38084015027549951cbaea5d5f6fb795cc81151">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-transition-25.1.0_a2a1cce1d2d24f939f1ec9f20fa9cf8d5fb4fc03.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/design/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="30103d98fa5ed824b54af839c85e2111f9bde8ec">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-design-25.1.0_223d83ba59d045bcb41d2f2da6ba5590e7f96f15.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.2.0/41e67dba73c3347e4503761642c39d0e06ca1f2/retrofit-2.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="041e67dba73c3347e4503761642c39d0e06ca1f2">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/retrofit-2.2.0_2b54ebf2a6cf4e07bdaa091cecc970ff039786c0.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/support-annotations-25.2.0_09c9814f916dee9bad0a427643241f338a7c82dc.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-media-compat-25.1.0_5fe3537b914cfb96f0cd7c96e6e3488ee28f5c9e.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/android-client/openCVLibrary320/unspecified/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="038e8806866760ccd8568b401b8052e937e4be1a">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/android-client-openCVLibrary320-unspecified_83c72f96a37346f65fea05785402c9440d619d07.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-25.2.0_ebf5d5b131c01db23534bfc6b34b63e6bcdbd027.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-vector-drawable-25.1.0_c0e7ea9b6a2aa27da89e511f0b2fd5ffa073e410.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/okhttp-3.6.0_26b46cb18d291b79e71b6d9412d24577ca98d3ac.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.2.0/a09926806199499a20b2f5168779499abfa33342/converter-gson-2.2.0.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="a09926806199499a20b2f5168779499abfa33342">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/converter-gson-2.2.0_da3938fe9c44510ca85d07edfbc140342bd9be18.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.2/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.getkeepsafe.relinker-relinker-1.2.2_f8646c32476136f30f73f3ca522921f0d5f66d1c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-v4-25.1.0_fb3288c790d39c4d2700cdaaea02ae0a46f7d8ba.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-fragment-25.1.0_e664a56f493004b4f0064ad2f5495299f60997f8.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.1"
-        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/json-simple-1.1_bbb70e9a1e57e442055a5a34d6f00d94910d802c.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-cardview-v7-25.2.0_ee3d77f779e8bffe4560f7e7ac2d5122d77c2ac0.jar" />
     </item>
     <item
         is-multidex="false"
@@ -143,7 +17,25 @@
         optimize="true"
         revision="25.0.1"
         sha1="840897fcd7223a8143f1d9b6f69714e7be34fd50">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/okio-1.11.0_1692ae9f70c37dc857b2d5f022a77d2e3d5df1f6.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/okio-1.11.0_1692ae9f70c37dc857b2d5f022a77d2e3d5df1f6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d38084015027549951cbaea5d5f6fb795cc81151">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-transition-25.1.0_a2a1cce1d2d24f939f1ec9f20fa9cf8d5fb4fc03.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/design/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="30103d98fa5ed824b54af839c85e2111f9bde8ec">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-design-25.1.0_223d83ba59d045bcb41d2f2da6ba5590e7f96f15.jar" />
     </item>
     <item
         is-multidex="false"
@@ -152,7 +44,7 @@
         optimize="true"
         revision="25.0.1"
         sha1="d99260c62d97beae99ed1f779a35a9bf48c094a6">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/logging-interceptor-3.4.2_f5742c17f9f94619375f5d506700cd9bd8e0ccde.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/logging-interceptor-3.4.2_f5742c17f9f94619375f5d506700cd9bd8e0ccde.jar" />
     </item>
     <item
         is-multidex="false"
@@ -161,7 +53,7 @@
         optimize="true"
         revision="25.0.1"
         sha1="0a0ef86b7fa568a52bf6214a0326ca1f1d618da7">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-utils-25.1.0_b96f92e7d4d4feb2792d5342b856e203382fd345.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-core-utils-25.1.0_b96f92e7d4d4feb2792d5342b856e203382fd345.jar" />
     </item>
     <item
         is-multidex="false"
@@ -170,7 +62,7 @@
         optimize="true"
         revision="25.0.1"
         sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-25.2.0_26f345de0ff81a3cf6e7c0918bf779cff95c2f64.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-core-ui-25.2.0_26f345de0ff81a3cf6e7c0918bf779cff95c2f64.jar" />
     </item>
     <item
         is-multidex="false"
@@ -179,7 +71,16 @@
         optimize="true"
         revision="25.0.1"
         sha1="152de8da301561dcb0946471697a420d8f7a68c5">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-25.2.0_fdb51078daba774d849a238dca1740c04e74ff82.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-recyclerview-v7-25.2.0_fdb51078daba774d849a238dca1740c04e74ff82.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/retrofit/2.2.0/41e67dba73c3347e4503761642c39d0e06ca1f2/retrofit-2.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="041e67dba73c3347e4503761642c39d0e06ca1f2">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/retrofit-2.2.0_2b54ebf2a6cf4e07bdaa091cecc970ff039786c0.jar" />
     </item>
     <item
         is-multidex="false"
@@ -188,7 +89,25 @@
         optimize="true"
         revision="25.0.1"
         sha1="0f0bbb44ac6987ce3e07ba78f6484ff10ca64bd2">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/okhttp-urlconnection-3.4.2_05d062f2819b1ba0a152801ffeca4daafd2db54f.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/okhttp-urlconnection-3.4.2_05d062f2819b1ba0a152801ffeca4daafd2db54f.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/25.2.0/support-annotations-25.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="4a5a82a027706397fff621b22fd6fa796e91d7c5">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/support-annotations-25.2.0_09c9814f916dee9bad0a427643241f338a7c82dc.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="f02263e35e52668dd17b73bf961437e3d562b35f">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-media-compat-25.1.0_5fe3537b914cfb96f0cd7c96e6e3488ee28f5c9e.jar" />
     </item>
     <item
         is-multidex="false"
@@ -197,7 +116,16 @@
         optimize="true"
         revision="25.0.1"
         sha1="6fb6ac3e8d3b9013819920d9ea11f3803c4c0033">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-animated-vector-drawable-25.1.0_17d36d7167782777aef5cb135caa1938ebb6ec81.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-animated-vector-drawable-25.1.0_17d36d7167782777aef5cb135caa1938ebb6ec81.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/android-client/openCVLibrary320/unspecified/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="038e8806866760ccd8568b401b8052e937e4be1a">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/android-client-openCVLibrary320-unspecified_83c72f96a37346f65fea05785402c9440d619d07.jar" />
     </item>
     <item
         is-multidex="false"
@@ -206,7 +134,79 @@
         optimize="true"
         revision="25.0.1"
         sha1="1630658fbc2d222b988603c27b4a4249586fbfe7">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/com.android.support-appcompat-v7-25.1.0_6251a68167f469f21f88dea3d1ebfbdae67311d6.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-appcompat-v7-25.1.0_6251a68167f469f21f88dea3d1ebfbdae67311d6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-compat-25.2.0_ebf5d5b131c01db23534bfc6b34b63e6bcdbd027.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-vector-drawable/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e79aa3d9a16f8c9f16377c0608de70a8f31e5d80">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-vector-drawable-25.1.0_c0e7ea9b6a2aa27da89e511f0b2fd5ffa073e410.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/okhttp/3.6.0/69edde9fc4b01c9fd51d25b83428837478c27254/okhttp-3.6.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="69edde9fc4b01c9fd51d25b83428837478c27254">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/okhttp-3.6.0_26b46cb18d291b79e71b6d9412d24577ca98d3ac.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.retrofit2/converter-gson/2.2.0/a09926806199499a20b2f5168779499abfa33342/converter-gson-2.2.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="a09926806199499a20b2f5168779499abfa33342">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/converter-gson-2.2.0_da3938fe9c44510ca85d07edfbc140342bd9be18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.getkeepsafe.relinker/relinker/1.2.2/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b64dd5f01bc37de289f90fd59299b0c76d119611">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.getkeepsafe.relinker-relinker-1.2.2_f8646c32476136f30f73f3ca522921f0d5f66d1c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-v4/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-v4-25.1.0_fb3288c790d39c4d2700cdaaea02ae0a46f7d8ba.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/support-fragment/25.1.0/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="2a53c4f3518116b8c6aee0e477233f0f7da8616f">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.android.support-support-fragment-25.1.0_e664a56f493004b4f0064ad2f5495299f60997f8.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="5e303a03d04e6788dddfa3655272580ae0fc13bb">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/json-simple-1.1_bbb70e9a1e57e442055a5a34d6f00d94910d802c.jar" />
     </item>
     <item
         is-multidex="false"
@@ -215,7 +215,7 @@
         optimize="true"
         revision="25.0.1"
         sha1="751f548c85fa49f330cecbb1875893f971b33c4e">
-        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/debug/gson-2.7_e8a68ed640ccc9aeb27098b9f0f700a0b5e78baf.jar" />
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/gson-2.7_e8a68ed640ccc9aeb27098b9f0f700a0b5e78baf.jar" />
     </item>
 
 </items>
