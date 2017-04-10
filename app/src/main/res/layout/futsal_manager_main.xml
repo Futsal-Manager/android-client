@@ -10,38 +10,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.futsal.manager.FutsalManagerMain">
 
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!" />
-
-    <Button
-        android:layout_below="@+id/hello"
-        android:id="@+id/btnGoToCamera"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Camera"
-        />
-
-    <Button
-        android:layout_below="@+id/btnGoToCamera"
-        android:id="@+id/btnGoToBluetooth"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Bluetooth"
-        />
-
-    <Button
-        android:layout_below="@+id/btnGoToBluetooth"
-        android:id="@+id/btnGoToNetwork"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Network"
-        />
-
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/btnGoToNetwork"
         android:id="@+id/recyFunctionList"
         android:scrollbars="vertical"
         android:layout_width="match_parent"
