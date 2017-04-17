@@ -160,7 +160,8 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
                     LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null", DefineManager.LOG_LEVEL_WARN);
                 }
                 else {
-                    eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
+                    //eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
+                    eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPositionVer2(eachCameraPreviewFrameImage);
                     if(eachCameraPreviewFrameImage != null) {
                         opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
                     }
@@ -180,7 +181,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     public void StopProcessing() {
         try {
             running = false;
-
+            calculateBallDetect.ReleaseMats();
             eachCameraPreviewFrameImage.release();
         }
         catch (Exception err) {
