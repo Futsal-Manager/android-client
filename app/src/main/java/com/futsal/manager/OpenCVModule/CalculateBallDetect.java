@@ -108,6 +108,10 @@ public class CalculateBallDetect {
         return frame;
     }
 
+    public Point GetBallPosition() {
+        return xy;
+    }
+
     public MatOfPoint2f MatOfPointToMatOfPoint2f(MatOfPoint matOfPoint) {
         if(matOfPoint == null) {
             return null;

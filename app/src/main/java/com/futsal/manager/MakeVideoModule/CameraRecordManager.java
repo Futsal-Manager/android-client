@@ -93,7 +93,7 @@ public class CameraRecordManager extends Activity{
         LogManager.PrintLog("CameraRecordManager", "onCreate", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +
                                 " ble address: " + bluetoothCommunication.GetSelectedDeviceAddress(), DefineManager.LOG_LEVEL_INFO);
         bluetoothCommunication.ConnectToTargetBluetoothDevice(BluetoothAdapter.getDefaultAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
-        //bluetoothDeviceControlProcesser = new BluetoothDeviceControlProcesser(bluetoothCommunication);
+        bluetoothDeviceControlProcesser = new BluetoothDeviceControlProcesser(bluetoothCommunication, cameraOpenCVViewer);
 
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

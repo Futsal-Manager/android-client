@@ -11,6 +11,7 @@ import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 
 import org.opencv.android.Utils;
 import org.opencv.core.Mat;
+import org.opencv.core.Point;
 
 /**
  * Created by stories2 on 2017. 4. 6..
@@ -25,6 +26,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     boolean running;
     Bitmap opencvFrameImage, realCameraBitmap;
     int eachFrameImageWith, eachFrameImageHeight;
+    Point xy;
 
     public CameraOpenCVViewer(Activity cameraRecordManagerActivity) {
         eachCameraPreviewFrameImage = new Mat();
@@ -45,6 +47,10 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     @Override
     public void surfaceRedrawNeeded(SurfaceHolder holder) {
 
+    }
+
+    public Point GetBallPosition() {
+        return xy;
     }
 
     public void DrawSurfaceView() {
@@ -162,6 +168,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
                 else {
                     //eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
                     eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPositionVer2(eachCameraPreviewFrameImage);
+                    xy = calculateBallDetect.GetBallPosition();
                     if(eachCameraPreviewFrameImage != null) {
                         opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
                     }
