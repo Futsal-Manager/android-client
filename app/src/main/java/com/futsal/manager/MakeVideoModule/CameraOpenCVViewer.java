@@ -160,6 +160,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
 
     @Override
     public void run() {
+        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         while(running) {
             try {
                 if(eachCameraPreviewFrameImage == null) {
