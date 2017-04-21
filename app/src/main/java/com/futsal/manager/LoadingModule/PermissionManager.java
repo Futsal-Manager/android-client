@@ -8,6 +8,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.LinearLayout;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.FutsalManagerMain;
@@ -24,10 +27,12 @@ import static com.futsal.manager.DefineManager.PERMISSION_REQUESTED_ORDER;
  * Created by stories2 on 2017. 4. 11..
  */
 
-public class PermissionManager extends AppCompatActivity {
+public class PermissionManager extends AppCompatActivity implements Animation.AnimationListener{
 
     String[] needPermissionList;
     PermissionManagerProcesser permissionManagerProcesser;
+    Animation loadingScreenFadeOut;
+    LinearLayout loadingScreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,6 +41,11 @@ public class PermissionManager extends AppCompatActivity {
         LogManager.PrintLog("PermissionManager", "onCreate", "Android Version: " + Build.VERSION.SDK_INT, DefineManager.LOG_LEVEL_INFO);
 
         permissionManagerProcesser = new PermissionManagerProcesser();
+
+        loadingScreenFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
+        loadingScreenFadeOut.setAnimationListener(this);
+
+        loadingScreen = (LinearLayout) findViewById(R.id.loadingScreen);
 
         if(Build.VERSION.SDK_INT >= ANDROID_VERSION_OF_MARSHMALLOW) {
             needPermissionList = new String[] {
@@ -47,11 +57,13 @@ public class PermissionManager extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, needPermissionList, PERMISSION_REQUESTED_ORDER);
             }
             else {
-                MoveToMainActivity();
+                //MoveToMainActivity();
+                loadingScreen.setAnimation(loadingScreenFadeOut);
             }
         }
         else {
-            MoveToMainActivity();
+            //MoveToMainActivity();
+            loadingScreen.setAnimation(loadingScreenFadeOut);
         }
     }
 
@@ -84,5 +96,20 @@ public class PermissionManager extends AppCompatActivity {
             default:
                 break;
         }
+    }
+
+    @Override
+    public void onAnimationStart(Animation animation) {
+
+    }
+
+    @Override
+    public void onAnimationEnd(Animation animation) {
+        MoveToMainActivity();
+    }
+
+    @Override
+    public void onAnimationRepeat(Animation animation) {
+
     }
 }
