@@ -46,7 +46,7 @@ public class BluetoothDeviceControlProcesser extends Thread {
                 if(xy != null) {
                     SendBallPosition(xy);
                 }
-                Thread.sleep(500);
+                Thread.sleep(100);
             }
             catch (Exception err) {
                 LogManager.PrintLog("BluetoothDeviceControlProcesser", "run", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

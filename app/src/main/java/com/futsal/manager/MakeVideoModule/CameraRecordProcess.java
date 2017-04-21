@@ -22,6 +22,10 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
+import java.util.List;
+
+import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
+import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
 
 /**
  * Created by stories2 on 2017. 3. 27..
@@ -39,6 +43,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     SurfaceHolder surfaceHolderRecordVideo;
     SurfaceView videoRecordSurfaceView;
     CameraOpenCVViewer cameraOpenCVViewer;
+    Camera.Parameters parameters;
 
     public CameraRecordProcess(Activity cameraRecordActivity) {
         this.cameraRecordActivity = cameraRecordActivity;
@@ -87,7 +92,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame",
                     "Getting Video Frame Image Data " + eachPreviewFrameWith + " X " + eachPreviewFrameHeight, DefineManager.LOG_LEVEL_INFO);*/
 
-            Camera.Parameters parameters = phoneDeviceCamera.getParameters();
+
             int width, height;
             width = parameters.getPreviewSize().width;
             height = parameters.getPreviewSize().height;
@@ -126,6 +131,15 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         if(phoneDeviceCamera == null) {
             phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+            parameters = phoneDeviceCamera.getParameters();
+            List<Camera.Size> screenResolution = parameters.getSupportedPictureSizes();
+            for(Camera.Size sizes : screenResolution) {
+                LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "support resolution: " + sizes.width + " " + sizes.height, DefineManager.LOG_LEVEL_INFO);
+            }
+            parameters.setPictureSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
+            parameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
+            phoneDeviceCamera.setParameters(parameters);
+            parameters = phoneDeviceCamera.getParameters();
             try {
                 //opencvCameraView.enableView();
             }

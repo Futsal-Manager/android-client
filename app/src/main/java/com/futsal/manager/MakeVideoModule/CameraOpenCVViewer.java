@@ -27,6 +27,7 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     Bitmap opencvFrameImage, realCameraBitmap;
     int eachFrameImageWith, eachFrameImageHeight;
     Point xy;
+    int cnt;
 
     public CameraOpenCVViewer(Activity cameraRecordManagerActivity) {
         eachCameraPreviewFrameImage = new Mat();
@@ -160,25 +161,30 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
 
     @Override
     public void run() {
-        android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+
+        //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
         while(running) {
             try {
-                if(eachCameraPreviewFrameImage == null) {
-                    LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null", DefineManager.LOG_LEVEL_WARN);
-                }
-                else {
-                    //eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
-                    eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPositionVer2(eachCameraPreviewFrameImage);
-                    xy = calculateBallDetect.GetBallPosition();
-                    if(eachCameraPreviewFrameImage != null) {
-                        opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
+                cnt++;
+                if(cnt % 5 == 0) {
+
+                    if(eachCameraPreviewFrameImage == null) {
+                        LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null", DefineManager.LOG_LEVEL_WARN);
                     }
                     else {
-                        LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null after processing", DefineManager.LOG_LEVEL_WARN);
+                        //eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPosition(eachCameraPreviewFrameImage);
+                        eachCameraPreviewFrameImage = calculateBallDetect.DetectBallPositionVer2(eachCameraPreviewFrameImage);
+                        xy = calculateBallDetect.GetBallPosition();
+                        if(eachCameraPreviewFrameImage != null) {
+                            opencvFrameImage = MatToBitmap(eachCameraPreviewFrameImage);
+                        }
+                        else {
+                            LogManager.PrintLog("CameraOpenCVViewer", "run", "eachCameraPreviewFrameImage == null after processing", DefineManager.LOG_LEVEL_WARN);
+                        }
+                        DrawSurfaceView();
                     }
-                    DrawSurfaceView();
                 }
-                Thread.sleep(1);
+                //Thread.sleep(1);
             }
             catch (Exception err) {
                 LogManager.PrintLog("CameraOpenCVViewer", "run", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

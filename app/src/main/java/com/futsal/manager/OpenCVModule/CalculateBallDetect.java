@@ -38,6 +38,7 @@ public class CalculateBallDetect {
     float[] radius;
     Moments M;
     MatOfPoint2f c;
+    Size resizeResolution;
 
     public CalculateBallDetect(Context context) {
         applicationContext = context;
@@ -58,6 +59,8 @@ public class CalculateBallDetect {
         orangeUpper = new Scalar(25, 255, 255);
 
         listOfContour = new ArrayList<MatOfPoint>();
+
+        resizeResolution = new Size(640, 480);
     }
 
     public Mat DetectBallPositionVer2(Mat frame) {
@@ -67,8 +70,10 @@ public class CalculateBallDetect {
         try {
 
             // Imgproc.GaussianBlur(frame, blurred, new Size(EACH_BLUR_BLOCK_SIZE, EACH_BLUR_BLOCK_SIZE), 0); #Todo: 이거 문제
-            Imgproc.blur(frame, blurred, new Size(7,7));
+            //Imgproc.blur(frame, blurred, new Size(7,7));
 
+            //Imgproc.resize(frame, frame, resizeResolution);
+            //LogManager.PrintLog("OpenCVModuleProcesser", "DetectCircleFromFrameImage", "resolution: " + frame.cols() + " " + frame.rows(), LOG_LEVEL_INFO);
             Imgproc.cvtColor(frame, hsv, Imgproc.COLOR_RGB2HSV);
 
             Core.inRange(hsv, orangeLower, orangeUpper, mask);

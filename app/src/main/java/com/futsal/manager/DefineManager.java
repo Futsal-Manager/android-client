@@ -24,7 +24,12 @@ public class DefineManager {
                             OpenCVModuleProcesser
                             Blur Process Parameter
                             */
-                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 10;
+                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 10,
+
+                            /*
+
+                             */
+                            CAMERA_WIDTH_RESOLUTION = 640, CAMERA_HEIGHT_RESOLUTION = 480;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com";
 }
