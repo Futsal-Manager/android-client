@@ -29,7 +29,9 @@ public class DefineManager {
                             /*
 
                              */
-                            CAMERA_WIDTH_RESOLUTION = 640, CAMERA_HEIGHT_RESOLUTION = 480;
+                            CAMERA_WIDTH_RESOLUTION = 640, CAMERA_HEIGHT_RESOLUTION = 480,
+
+                            BLUETOOTH_SEND_SPEED = 100;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com";
 }

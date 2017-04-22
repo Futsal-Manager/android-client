@@ -6,6 +6,8 @@ import com.futsal.manager.LogModule.LogManager;
 
 import org.opencv.core.Point;
 
+import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
+
 /**
  * Created by stories2 on 2017. 3. 28..
  */
@@ -46,7 +48,7 @@ public class BluetoothDeviceControlProcesser extends Thread {
                 if(xy != null) {
                     SendBallPosition(xy);
                 }
-                Thread.sleep(100);
+                Thread.sleep(BLUETOOTH_SEND_SPEED);
             }
             catch (Exception err) {
                 LogManager.PrintLog("BluetoothDeviceControlProcesser", "run", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
