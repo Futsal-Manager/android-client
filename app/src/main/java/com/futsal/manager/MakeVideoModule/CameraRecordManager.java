@@ -274,7 +274,7 @@ public class CameraRecordManager extends Activity{
                             finish();
                         }
                     });
-                    bluetoothConnectionWarningDialog.setCancelable(false);
+                    bluetoothConnectionWarningDialog.setCancelable(true);
                     bluetoothConnectionWarningDialog.create().show();
                 }
             }
