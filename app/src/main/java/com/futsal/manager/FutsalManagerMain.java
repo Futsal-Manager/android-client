@@ -24,16 +24,7 @@ public class FutsalManagerMain extends AppCompatActivity {
     List<EachCardViewItems> eachCardViewItems;
 
 
-    static {
-        if(OpenCVLoader.initDebug()) {
-            //Log.d(logCatTag, "OpenCV Loaded");
-            LogManager.PrintLog("FutsalManagerMain", "static", "OpenCV Loaded", DefineManager.LOG_LEVEL_INFO);
-        }
-        else {
-            //Log.d(logCatTag, "OpenCV not Loaded");
-            LogManager.PrintLog("FutsalManagerMain", "static", "OpenCV not Loaded", DefineManager.LOG_LEVEL_WARN);
-        }
-    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

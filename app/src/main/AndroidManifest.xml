@@ -59,7 +59,8 @@
 
         </activity>
         <activity android:name=".MakeVideoModule.CameraRecordManager"
-            android:hardwareAccelerated="true">
+            android:hardwareAccelerated="true"
+            android:screenOrientation="landscape">
 
         </activity>
         <activity android:name=".ShowVideoModule.ServerSavedVideoListManager"

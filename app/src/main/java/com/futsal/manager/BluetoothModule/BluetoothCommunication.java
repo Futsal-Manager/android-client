@@ -8,6 +8,8 @@ import android.os.Build;
 import android.os.ParcelUuid;
 import android.util.Log;
 
+import com.futsal.manager.LogModule.LogManager;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -16,6 +18,9 @@ import java.lang.reflect.Method;
 import java.util.UUID;
 
 import static android.content.ContentValues.TAG;
+import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 
 /**
  * Created by stories2 on 2017. 2. 22..
@@ -120,21 +125,25 @@ public class BluetoothCommunication extends Thread implements Serializable {
         }
     }
 
-    public void ConnectToTargetBluetoothDevice(BluetoothAdapter targetBluetoothAdapter, String selectedDeviceAddress) {
+    public boolean ConnectToTargetBluetoothDevice(BluetoothAdapter targetBluetoothAdapter, String selectedDeviceAddress) {
         this.bluetoothAdapter = targetBluetoothAdapter;
         this.targetBluetoothDevice = targetBluetoothAdapter.getRemoteDevice(selectedDeviceAddress);;
         try {
             ParcelUuid list[] = targetBluetoothDevice.getUuids();
             for(ParcelUuid uuid : list) {
-                Log.d("ble", "connect uuid: " + uuid);
+                //Log.d("ble", "connect uuid: " + uuid);
+                LogManager.PrintLog("BluetoothCommunication", "ConnectToTargetBluetoothDevice", "Support UUID: " + uuid, LOG_LEVEL_DEBUG);
             }
             //bluetoothSocket = createBluetoothSocket(targetBluetoothDevice);
             bluetoothSocket = createBluetoothSocketBasedOnStackoverflow(targetBluetoothDevice);
             bluetoothCommunicationThread.start();
+            return true;
         }
         catch (Exception err) {
-            Log.d(bluetoothCommunicationLogCatTag, "Error in ConnectToTargetBluetoothDevice: " + err.getMessage());
+            LogManager.PrintLog("BluetoothCommunication", "ConnectToTargetBluetoothDevice", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            //Log.d(bluetoothCommunicationLogCatTag, "Error in ConnectToTargetBluetoothDevice: " + err.getMessage());
         }
+        return false;
     }
 
     private BluetoothSocket createBluetoothSocket(BluetoothDevice device)
@@ -284,6 +293,7 @@ public class BluetoothCommunication extends Thread implements Serializable {
             }
             catch (IOException e) {
                 Log.e(TAG, "Exception during write", e);
+                BLUETOOTH_CONNECTION_FAILURE = true;
             }
         }
         public void cancel() {
