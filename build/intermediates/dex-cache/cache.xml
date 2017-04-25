@@ -21,6 +21,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.nineoldandroids/library/2.4.0/e9b63380f3a242dbdbf103a2355ad7e43bad17cb/library-2.4.0.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/library-2.4.0_7287b7e0c3df9e8d878eb905db570db34ce7d753.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.android.support/transition/25.1.0/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -45,6 +54,15 @@
         revision="25.0.1"
         sha1="d99260c62d97beae99ed1f779a35a9bf48c094a6">
         <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/logging-interceptor-3.4.2_f5742c17f9f94619375f5d506700cd9bd8e0ccde.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.wrapp.floatlabelededittext/library/0.0.6/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="0db8e1dc3097c0db8425b339e5e720ef6e918400">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.wrapp.floatlabelededittext-library-0.0.6_45a59a18daefe78195f87cd3a59ef56a9ec32bc2.jar" />
     </item>
     <item
         is-multidex="false"
