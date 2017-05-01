@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
+import com.futsal.manager.DevModule.DevelopModeManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.MakeVideoModule.BluetoothDeviceFinder;
 import com.futsal.manager.R;
@@ -25,6 +26,7 @@ import java.util.List;
 
 import static com.futsal.manager.DefineManager.CALLED_BY_FUTSAL_MAIN_ACTIVITY;
 import static com.futsal.manager.DefineManager.CALLED_BY_SERVER_SAVED_LIST_ACTIVITY;
+import static com.futsal.manager.DefineManager.DEV_OPTION_ITEM;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 
 /**
@@ -77,6 +79,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Intent serverSavedVideoListLayout = new Intent(context, ServerSavedVideoListManager.class);
                             serverSavedVideoListLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(serverSavedVideoListLayout);
+                            break;
+                        case DEV_OPTION_ITEM:
+                            Intent developOptionLayout = new Intent(context, DevelopModeManager.class);
+                            developOptionLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(developOptionLayout);
                             break;
                         default:
                             break;

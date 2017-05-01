@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="OpenCV Setting"
+                android:textSize="30dp"
+                />
+
+            <CheckBox
+                android:id="@+id/checkBlur"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Blur Effect"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Minimum detect color"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:id="@+id/txtMinH"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="H"
+                />
+            <SeekBar
+                android:id="@+id/seekMinH"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+            <TextView
+                android:id="@+id/txtMinS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="S"
+                />
+            <SeekBar
+                android:id="@+id/seekMinS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+            <TextView
+                android:id="@+id/txtMinV"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="V"
+                />
+            <SeekBar
+                android:id="@+id/seekMinV"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Maximum detect color"
+                android:textSize="20dp"
+                />
+            <TextView
+                android:id="@+id/txtMaxH"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="H"
+                />
+            <SeekBar
+                android:id="@+id/seekMaxH"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+            <TextView
+                android:id="@+id/txtMaxS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="S"
+                />
+            <SeekBar
+                android:id="@+id/seekMaxS"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+            <TextView
+                android:id="@+id/txtMaxV"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="V"
+                />
+            <SeekBar
+                android:id="@+id/seekMaxV"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max = "255"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Processing Picture Size"
+                android:textSize="20dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinPictureSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Camera Setting"
+                android:textSize="30dp"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Record Video Size"
+                android:textSize="20dp"
+                />
+
+            <Spinner
+                android:id="@+id/spinRecordSize"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+            </Spinner>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Video Encoding Bit Rate"
+                android:textSize="20dp"
+                />
+
+            <EditText
+                android:id="@+id/etxtBitRate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+
+        </LinearLayout>
+
+    </ScrollView>
+</LinearLayout>
