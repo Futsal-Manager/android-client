@@ -1,12 +1,14 @@
 package com.futsal.manager.MakeVideoModule;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
+import android.os.AsyncTask;
 import android.os.Environment;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -210,49 +212,56 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
         //opencvCameraView.disableView();
 
         if(mediaRecording == null) {
-            String savePath = Environment.getExternalStorageDirectory().toString();
+
             try {
+                RecordVideoModuleInit recordVideoModuleInit = new RecordVideoModuleInit(cameraRecordActivity);
+                recordVideoModuleInit.execute();
+                try {
+                    String savePath = Environment.getExternalStorageDirectory().toString();
+                    mediaRecording = new MediaRecorder();//media 객체 생성 확인을 할 것
+                    //Log.e("test", "asdf: " + mediaRecording);
+                    mediaRecording.setCamera(phoneDeviceCamera);
+                    mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+                    mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                    mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+                    //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+                    mediaRecording.setVideoSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
+                    mediaRecording.setVideoEncodingBitRate(6000000);
+                    mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
-                mediaRecording = new MediaRecorder();//media 객체 생성 확인을 할 것
-                //Log.e("test", "asdf: " + mediaRecording);
-                mediaRecording.setCamera(phoneDeviceCamera);
-                mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
-                mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
-                mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
-                //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-                mediaRecording.setVideoSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
-                mediaRecording.setVideoEncodingBitRate(6000000);
-                mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
+                    //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
+                    mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
 
-                //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
-                mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
-
+                }
+                catch (Exception err) {
+                    LogManager.PrintLog("CameraRecordProcess", "InitStartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                }
+                try{
+                    phoneDeviceCamera.startPreview();
+                    phoneDeviceCamera.unlock();
+                    phoneDeviceCamera.setPreviewCallback(this);
+                }
+                catch (Exception err) {
+                    //Log.d(getString(R.string.app_name), "camera init failed");
+                    LogManager.PrintLog("CameraRecordProcess", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                }
+                try {
+                    //phoneDeviceCamera.reconnect();
+                    mediaRecording.prepare();
+                    //Thread.sleep(1000);
+                    mediaRecording.start();
+                }
+                catch (Exception err) {
+                    //Log.d(videoRecordBasedOnOpencvTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
+                    LogManager.PrintLog("CameraRecordProcess", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                    mediaRecording.release();
+                    mediaRecording = null;
+                }
             }
             catch (Exception err) {
-                LogManager.PrintLog("CameraRecordProcess", "InitRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
-            }
-            try{
-                phoneDeviceCamera.startPreview();
-                phoneDeviceCamera.unlock();
-                phoneDeviceCamera.setPreviewCallback(this);
-            }
-            catch (Exception err) {
-                //Log.d(getString(R.string.app_name), "camera init failed");
-                LogManager.PrintLog("CameraRecordProcess", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
-            }
-            try {
-                //phoneDeviceCamera.reconnect();
-                mediaRecording.prepare();
-                //Thread.sleep(1000);
-                mediaRecording.start();
-            }
-            catch (Exception err) {
-                //Log.d(videoRecordBasedOnOpencvTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
-                LogManager.PrintLog("CameraRecordProcess", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
-                mediaRecording.release();
-                mediaRecording = null;
+
             }
         }
     }
@@ -272,5 +281,68 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
         mediaRecording.release();
         mediaRecording = null;
         //opencvCameraView.enableView();
+    }
+
+    public class RecordVideoModuleInit extends AsyncTask<Void, Void, Void> {
+
+        ProgressDialog recordVideoModuleProcess;
+
+        public RecordVideoModuleInit(Activity cameraRecordActivity) {
+            super();
+            recordVideoModuleProcess = new ProgressDialog(cameraRecordActivity);
+        }
+
+        @Override
+        protected Void doInBackground(Void... params) {
+            try {
+                Thread.sleep(1000);
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("RecordVideoModuleInit", "doInBackground", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            try {
+                recordVideoModuleProcess.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                recordVideoModuleProcess.setMessage("녹화 준비중");
+                recordVideoModuleProcess.setCancelable(false);
+
+                recordVideoModuleProcess.show();
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("RecordVideoModuleInit", "onPreExecute", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+            }
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            try {
+                recordVideoModuleProcess.dismiss();
+
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("RecordVideoModuleInit", "onPostExecute", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+            }
+            super.onPostExecute(aVoid);
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onCancelled(Void aVoid) {
+            super.onCancelled(aVoid);
+        }
+
+        @Override
+        protected void onCancelled() {
+            super.onCancelled();
+        }
     }
 }
