@@ -25,6 +25,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
+import static com.futsal.manager.DefineManager.CAMERA_RECORD_HEIGHT_RESOLUTION;
+import static com.futsal.manager.DefineManager.CAMERA_RECORD_WIDTH_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
 
 /**
@@ -136,7 +138,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             for(Camera.Size sizes : screenResolution) {
                 LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "support resolution: " + sizes.width + " " + sizes.height, DefineManager.LOG_LEVEL_INFO);
             }
-            parameters.setPictureSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
+            parameters.setPictureSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
             parameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
             phoneDeviceCamera.setParameters(parameters);
             parameters = phoneDeviceCamera.getParameters();
@@ -219,13 +221,17 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
                 mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
                 mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
                 mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+                //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+                mediaRecording.setVideoSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
+                mediaRecording.setVideoEncodingBitRate(6000000);
+                mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
                 //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
                 mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
 
             }
             catch (Exception err) {
-                LogManager.PrintLog("CameraRecordProcess", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                LogManager.PrintLog("CameraRecordProcess", "InitRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
             }
             try{
                 phoneDeviceCamera.startPreview();
@@ -254,8 +260,8 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     public void StopRecordMedia() {
 
         if(phoneDeviceCamera != null) {
-            phoneDeviceCamera.stopPreview();
-            phoneDeviceCamera.lock();
+            //phoneDeviceCamera.stopPreview();
+            //phoneDeviceCamera.lock();
         }
         if(mediaRecording == null) {
             //opencvCameraView.enableView();
