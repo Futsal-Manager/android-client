@@ -162,6 +162,37 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="0"
+                android:inputType="number"
+                android:singleLine="true"
+                android:imeOptions="actionDone"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth Setting"
+                android:textSize="30dp"
+                />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Bluetooth Send Speed"
+                android:textSize="20dp"
+                />
+
+            <TextView
+                android:id="@+id/txtbluetoothSendSpeed"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="0"
+                />
+
+            <SeekBar
+                android:id="@+id/seekBluetoothSendSpeed"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:max="2000"
                 />
 
         </LinearLayout>

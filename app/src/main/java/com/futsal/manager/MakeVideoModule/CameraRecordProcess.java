@@ -26,10 +26,14 @@ import org.opencv.core.Mat;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
-import static com.futsal.manager.DefineManager.CAMERA_RECORD_HEIGHT_RESOLUTION;
-import static com.futsal.manager.DefineManager.CAMERA_RECORD_WIDTH_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
+import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
+import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
+import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
+import static com.futsal.manager.DefineManager.SCREEN_WIDTH;
+import static com.futsal.manager.DefineManager.VIDEO_RECORD_BIT_RATE;
 
 /**
  * Created by stories2 on 2017. 3. 27..
@@ -140,7 +144,8 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
             for(Camera.Size sizes : screenResolution) {
                 LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "support resolution: " + sizes.width + " " + sizes.height, DefineManager.LOG_LEVEL_INFO);
             }
-            parameters.setPictureSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
+            parameters.setPictureSize(AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_WIDTH],
+                    AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_HEIGHT]);
             parameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
             phoneDeviceCamera.setParameters(parameters);
             parameters = phoneDeviceCamera.getParameters();
@@ -227,8 +232,9 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
                     mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
                     mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
                     //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-                    mediaRecording.setVideoSize(CAMERA_RECORD_WIDTH_RESOLUTION, CAMERA_RECORD_HEIGHT_RESOLUTION);
-                    mediaRecording.setVideoEncodingBitRate(6000000);
+                    mediaRecording.setVideoSize(AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_WIDTH],
+                            AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_HEIGHT]);
+                    mediaRecording.setVideoEncodingBitRate(VIDEO_RECORD_BIT_RATE);
                     mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
                     //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());

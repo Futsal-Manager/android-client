@@ -18,7 +18,14 @@ import org.opencv.imgproc.Moments;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.BLUR_MODE_OPTION;
+import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_H;
+import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_S;
+import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_V;
 import static com.futsal.manager.DefineManager.MINIMUM_CIRCLE_RADIUS;
+import static com.futsal.manager.DefineManager.MINIMUM_DETECT_COLOR_H;
+import static com.futsal.manager.DefineManager.MINIMUM_DETECT_COLOR_S;
+import static com.futsal.manager.DefineManager.MINIMUM_DETECT_COLOR_V;
 import static com.futsal.manager.DefineManager.NOT_AVAILABLE;
 
 /**
@@ -55,8 +62,8 @@ public class CalculateBallDetect {
 
         M = new Moments();
 
-        orangeLower = new Scalar(0, 150, 150);
-        orangeUpper = new Scalar(25, 255, 255);
+        orangeLower = new Scalar(MINIMUM_DETECT_COLOR_H, MINIMUM_DETECT_COLOR_S, MINIMUM_DETECT_COLOR_V);
+        orangeUpper = new Scalar(MAXIMUM_DETECT_COLOR_H, MAXIMUM_DETECT_COLOR_S, MAXIMUM_DETECT_COLOR_V);
 
         listOfContour = new ArrayList<MatOfPoint>();
 
@@ -70,7 +77,10 @@ public class CalculateBallDetect {
         try {
 
             // Imgproc.GaussianBlur(frame, blurred, new Size(EACH_BLUR_BLOCK_SIZE, EACH_BLUR_BLOCK_SIZE), 0); #Todo: 이거 문제
-            //Imgproc.blur(frame, blurred, new Size(7,7));
+            //
+            if(BLUR_MODE_OPTION) {
+                Imgproc.blur(frame, blurred, new Size(7,7));
+            }
 
             //Imgproc.resize(frame, frame, resizeResolution);
             //LogManager.PrintLog("OpenCVModuleProcesser", "DetectCircleFromFrameImage", "resolution: " + frame.cols() + " " + frame.rows(), LOG_LEVEL_INFO);
