@@ -21,6 +21,7 @@ import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 import com.futsal.manager.R;
+import com.futsal.manager.VideoUploadModule.UploadNewVideoManager;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.InstallCallbackInterface;
@@ -47,7 +48,6 @@ public class CameraRecordManager extends Activity{
     Button btnVideoUpload, btnSendA, btnSendB;
     BluetoothCommunication bluetoothCommunication;
     Intent passedData;
-    VideoUploadProcess videoUploadProcess;
     Activity cameraRecordManager;
     BluetoothDeviceControlProcesser bluetoothDeviceControlProcesser;
     CameraOpenCVViewer cameraOpenCVViewer;
@@ -160,7 +160,10 @@ public class CameraRecordManager extends Activity{
                 //Snackbar.make(view, "Upload Process", Snackbar.LENGTH_SHORT).show();
                 LogManager.PrintLog("CameraRecordManager", "onClick", "Upload button clicked", DefineManager.LOG_LEVEL_INFO);
                 if(!isVideoRecording) {
-                    videoUploadProcess = new VideoUploadProcess(cameraRecordManager);
+                    Intent uploadVideoLayout = new Intent(getApplicationContext(), UploadNewVideoManager.class);
+                    uploadVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(uploadVideoLayout);
+                    finish();
                 }
             }
         });

@@ -65,7 +65,8 @@ public class BluetoothDeviceFinder extends Activity {
                 bluetoothCommunication = new BluetoothCommunication(null, selectedDeviceAddress);
                 Intent startRealService = new Intent(getApplicationContext(), CameraRecordManager.class);
                 startRealService.putExtra("bluetoothDeviceData", bluetoothCommunication);
-                 startActivity(startRealService);
+                startActivity(startRealService);
+                finish();
             }
         });
     }

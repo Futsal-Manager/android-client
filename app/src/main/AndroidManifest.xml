@@ -96,6 +96,11 @@
             >
 
         </activity>
+        <activity android:name=".VideoUploadModule.UploadNewVideoManager"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
     </application>
 
 </manifest>
