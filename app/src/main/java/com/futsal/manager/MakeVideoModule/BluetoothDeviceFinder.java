@@ -16,6 +16,8 @@ import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
+import static com.futsal.manager.DefineManager.BLUETOOTH_COMMUNICATION_TEMP;
+
 /**
  * Created by stories2 on 2017. 3. 27..
  */
@@ -64,7 +66,8 @@ public class BluetoothDeviceFinder extends Activity {
                 //deviceBluetoothAdapter.cancelDiscovery();
                 bluetoothCommunication = new BluetoothCommunication(null, selectedDeviceAddress);
                 Intent startRealService = new Intent(getApplicationContext(), CameraRecordManager.class);
-                startRealService.putExtra("bluetoothDeviceData", bluetoothCommunication);
+                //startRealService.putExtra("bluetoothDeviceData", bluetoothCommunication);
+                BLUETOOTH_COMMUNICATION_TEMP = bluetoothCommunication;
                 startActivity(startRealService);
                 finish();
             }

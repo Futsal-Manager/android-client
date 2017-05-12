@@ -52,6 +52,8 @@ public class BluetoothCommunication extends Thread implements Serializable {
     public BluetoothCommunication(BluetoothAdapter targetBluetoothAdapter, String selectedDeviceAddress) {
         this.bluetoothAdapter = targetBluetoothAdapter;
         this.selectedDeviceAddress = selectedDeviceAddress;
+
+        bluetoothCommunicationThread = new Thread(this);
     }
 
     public void SetBluetoothAdapter(BluetoothAdapter bluetoothAdapter) {

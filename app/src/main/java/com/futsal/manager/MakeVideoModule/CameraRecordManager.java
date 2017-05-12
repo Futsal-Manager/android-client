@@ -28,6 +28,7 @@ import org.opencv.android.InstallCallbackInterface;
 import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 
+import static com.futsal.manager.DefineManager.BLUETOOTH_COMMUNICATION_TEMP;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.NOT_WORKING;
 
@@ -226,7 +227,7 @@ public class CameraRecordManager extends Activity{
         protected Void doInBackground(Void... params) {
             try {
                 passedData = getIntent();
-                bluetoothCommunication = (BluetoothCommunication)passedData.getExtras().getSerializable("bluetoothDeviceData");
+                bluetoothCommunication = BLUETOOTH_COMMUNICATION_TEMP;//(BluetoothCommunication)passedData.getExtras().getSerializable("bluetoothDeviceData");
                 bluetoothCommunication.SetBluetoothAdapter(BluetoothAdapter.getDefaultAdapter());
 
                 LogManager.PrintLog("MakeNewHistoryViewInit", "doInBackground", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +

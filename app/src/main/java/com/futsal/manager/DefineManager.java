@@ -1,5 +1,7 @@
 package com.futsal.manager;
 
+import com.futsal.manager.BluetoothModule.BluetoothCommunication;
+
 /**
  * Created by stories2 on 2017. 3. 24..
  */
@@ -58,4 +60,6 @@ public class DefineManager {
             {1280, 720},
             {1920, 1080}
     };
+
+    public static BluetoothCommunication BLUETOOTH_COMMUNICATION_TEMP;
 }
