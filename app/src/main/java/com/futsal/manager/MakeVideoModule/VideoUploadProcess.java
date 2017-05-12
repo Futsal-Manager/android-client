@@ -8,6 +8,8 @@ import android.os.Environment;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.NetworkModule.CommunicationWithServer;
 
+import java.util.Date;
+
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
@@ -77,6 +79,7 @@ public class VideoUploadProcess implements Runnable {
     void UploadVideo() {
         try {
             networkOrderStatus = WAIT_FOR_UPLOAD_VIDEO;
+
             String savePath = Environment.getExternalStorageDirectory().toString() + "/testVideo3.mp4";
             communicationWithServer.UploadFileTester3(Uri.parse(savePath));
             uploadThread.start();

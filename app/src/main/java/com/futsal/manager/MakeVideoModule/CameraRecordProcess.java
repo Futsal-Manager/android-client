@@ -24,6 +24,7 @@ import org.opencv.core.CvType;
 import org.opencv.core.Mat;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Date;
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
@@ -238,7 +239,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
                     mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
                     //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
-                    mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");
+                    mediaRecording.setOutputFile(savePath + "/" + GetVideoName());
 
                 }
                 catch (Exception err) {
@@ -270,6 +271,19 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
 
             }
         }
+    }
+
+    String GetVideoName() {
+        Date recordDateInfo = new Date();
+        int year, month, day, hour, min, sec;
+        year = recordDateInfo.getYear();
+        month = recordDateInfo.getMonth();
+        day = recordDateInfo.getDate();
+        hour = recordDateInfo.getHours();
+        min = recordDateInfo.getMinutes();
+        sec = recordDateInfo.getSeconds();
+        String dateInfo = "" + year + "-" + month + "-" + day + " " + hour + ":" + min + ":" + sec + ".mp4";
+        return dateInfo;
     }
 
     public void StopRecordMedia() {

@@ -189,6 +189,7 @@ public class BluetoothCommunication extends Thread implements Serializable {
             }
             catch (Exception e2) {
                 Log.e(bluetoothCommunicationLogCatTag, "Couldn't establish Bluetooth connection!");
+                BLUETOOTH_CONNECTION_FAILURE = true;
             }
         }
         return socket;

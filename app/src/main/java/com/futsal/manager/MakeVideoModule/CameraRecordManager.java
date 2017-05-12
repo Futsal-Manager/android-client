@@ -29,6 +29,7 @@ import org.opencv.android.JavaCameraView;
 import org.opencv.android.OpenCVLoader;
 
 import static com.futsal.manager.DefineManager.BLUETOOTH_COMMUNICATION_TEMP;
+import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.NOT_WORKING;
 
@@ -233,8 +234,8 @@ public class CameraRecordManager extends Activity{
                 LogManager.PrintLog("MakeNewHistoryViewInit", "doInBackground", "ble adapter: " + bluetoothCommunication.GetBluetoothAdapter() +
                         " ble address: " + bluetoothCommunication.GetSelectedDeviceAddress(), DefineManager.LOG_LEVEL_INFO);
                 bluetoothConnectionStatus = bluetoothCommunication.ConnectToTargetBluetoothDevice(BluetoothAdapter.getDefaultAdapter(), bluetoothCommunication.GetSelectedDeviceAddress());
-
-                if(bluetoothConnectionStatus == NOT_WORKING) {
+                bluetoothCommunication.SetOrder("{(0)[0]}");
+                if(bluetoothConnectionStatus == NOT_WORKING || BLUETOOTH_CONNECTION_FAILURE) {
                     LogManager.PrintLog("MakeNewHistoryViewInit", "doInBackground", "bluetooth connection failed", LOG_LEVEL_WARN);
                 }
                 else {
@@ -267,7 +268,7 @@ public class CameraRecordManager extends Activity{
             try {
                 makeNewHistoryViewInitProgressDialog.dismiss();
 
-                if(bluetoothConnectionStatus == NOT_WORKING) {
+                if(bluetoothConnectionStatus == NOT_WORKING || BLUETOOTH_CONNECTION_FAILURE) {
                     final AlertDialog.Builder bluetoothConnectionWarningDialog  = new AlertDialog.Builder(CameraRecordManager.this);
                     bluetoothConnectionWarningDialog.setMessage("블루투스 장비 연결을 확인하세요");
                     bluetoothConnectionWarningDialog.setTitle("장비 연결 문제 발생");
@@ -281,6 +282,7 @@ public class CameraRecordManager extends Activity{
                     bluetoothConnectionWarningDialog.setCancelable(true);
                     bluetoothConnectionWarningDialog.create().show();
                 }
+                BLUETOOTH_CONNECTION_FAILURE = false;
             }
             catch (Exception err) {
                 LogManager.PrintLog("MakeNewHistoryViewInit", "onPostExecute", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
