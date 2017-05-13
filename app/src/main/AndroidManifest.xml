@@ -18,6 +18,7 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.front"/>
     <uses-feature android:name="android.hardware.camera.front.autofocus"/>
+    <uses-feature android:name="android.hardware.camera2.full" />
 
     <application
         android:largeHeap="true"
@@ -97,6 +98,24 @@
 
         </activity>
         <activity android:name=".VideoUploadModule.UploadNewVideoManager"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+
+        <activity android:name=".MakeNewMemoryModule.MakeNewMemoryManager"
+            android:screenOrientation="landscape"
+            >
+
+        </activity>
+
+        <activity android:name=".EmbeddedCommunicationModule.EmbeddedSystemFinder"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+
+        <activity android:name=".EmbeddedCommunicationModule.BluetoothDeviceSelector"
             android:screenOrientation="portrait"
             >
 

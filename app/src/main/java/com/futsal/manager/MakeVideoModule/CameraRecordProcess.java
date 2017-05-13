@@ -30,6 +30,7 @@ import java.util.List;
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
@@ -139,18 +140,19 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     @Override
     public void surfaceCreated(SurfaceHolder surfaceHolder) {
         if(phoneDeviceCamera == null) {
-            phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
-            parameters = phoneDeviceCamera.getParameters();
-            List<Camera.Size> screenResolution = parameters.getSupportedPictureSizes();
-            for(Camera.Size sizes : screenResolution) {
-                LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "support resolution: " + sizes.width + " " + sizes.height, DefineManager.LOG_LEVEL_INFO);
-            }
-            parameters.setPictureSize(AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_WIDTH],
-                    AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_HEIGHT]);
-            parameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
-            phoneDeviceCamera.setParameters(parameters);
-            parameters = phoneDeviceCamera.getParameters();
             try {
+                phoneDeviceCamera = Camera.open(Camera.CameraInfo.CAMERA_FACING_BACK);
+                parameters = phoneDeviceCamera.getParameters();
+                List<Camera.Size> screenResolution = parameters.getSupportedPictureSizes();
+                for(Camera.Size sizes : screenResolution) {
+                    LogManager.PrintLog("CameraRecordProcess", "onPreviewFrame", "support resolution: " + sizes.width + " " + sizes.height, DefineManager.LOG_LEVEL_INFO);
+                }
+                parameters.setPictureSize(AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_WIDTH],
+                        AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_HEIGHT]);
+                parameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
+                phoneDeviceCamera.setParameters(parameters);
+                parameters = phoneDeviceCamera.getParameters();
+
                 //opencvCameraView.enableView();
             }
             catch (Exception err) {
@@ -177,7 +179,16 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
 
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
-
+        try {
+            phoneDeviceCamera.lock();
+            surfaceHolder.removeCallback(this);
+            phoneDeviceCamera.stopPreview();
+            phoneDeviceCamera.release();
+            phoneDeviceCamera = null;
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("CameraRecordProcess", "surfaceDestroyed", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
     }
 
     @Override

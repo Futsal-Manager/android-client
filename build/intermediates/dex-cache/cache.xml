@@ -219,6 +219,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Users/stories2/android-client/app/build/intermediates/exploded-aar/com.victor/lib/1.0.4/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="8b534207608aa1c205263d7426e634872ae34f08">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/com.victor-lib-1.0.4_97f88569ec52b822ef4a98db5e5671d410a66f53.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.googlecode.json-simple/json-simple/1.1/5e303a03d04e6788dddfa3655272580ae0fc13bb/json-simple-1.1.jar"
         jumboMode="false"
         optimize="true"

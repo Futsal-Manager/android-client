@@ -31,4 +31,8 @@
     <!-- Options Menu -->
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
+
+    <!-- EmbeddedCommunicaionModule/EmbeddedSystemFinder -->
+    <string name="notAvailalbeMessage">Your device not supported bluetooth.</string>
+    <string name="okIwillBuyNewProduct">Ok</string>
 </resources>

@@ -195,12 +195,14 @@ public class CameraRecordManager extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         try {
-            DisableCameraView(opencvCameraView);
-            bluetoothCommunication.CloseConnection();
+            if(!BLUETOOTH_CONNECTION_FAILURE) {
+                bluetoothCommunication.CloseConnection();
+            }
             cameraOpenCVViewer.StopProcessing();
             if(bluetoothDeviceControlProcesser != null) {
                 bluetoothDeviceControlProcesser.StopProcess();
             }
+            DisableCameraView(opencvCameraView);
         }
         catch (Exception err) {
             LogManager.PrintLog("CameraRecordManager", "onDestroy", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

@@ -58,18 +58,23 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
         Canvas surfaceViewCanvas = null;
         try {
             surfaceViewCanvas = opencvSurfaceHolder.lockCanvas(null);
-            if(opencvFrameImage != null) {
-                if(realCameraBitmap != null) {
-                    surfaceViewCanvas.drawBitmap(realCameraBitmap, 0, 0, null);
-                    LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "real camera preview", DefineManager.LOG_LEVEL_INFO);
+            if(surfaceViewCanvas != null) {
+                if(opencvFrameImage != null) {
+                    if(realCameraBitmap != null) {
+                        surfaceViewCanvas.drawBitmap(realCameraBitmap, 0, 0, null);
+                        LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "real camera preview", DefineManager.LOG_LEVEL_INFO);
+                    }
+                    else {
+                        surfaceViewCanvas.drawBitmap(opencvFrameImage, 0, 0, null);
+                        LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencv frame preview", DefineManager.LOG_LEVEL_INFO);
+                    }
                 }
                 else {
-                    surfaceViewCanvas.drawBitmap(opencvFrameImage, 0, 0, null);
-                    LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencv frame preview", DefineManager.LOG_LEVEL_INFO);
+                    LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencvFrameImage == null", DefineManager.LOG_LEVEL_WARN);
                 }
             }
             else {
-                LogManager.PrintLog("CameraOpenCVViewer", "DrawSurfaceView", "opencvFrameImage == null", DefineManager.LOG_LEVEL_WARN);
+                //running = false;
             }
         }
         catch (Exception err) {

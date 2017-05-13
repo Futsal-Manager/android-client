@@ -17,8 +17,8 @@ import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.DevModule.DevelopModeManager;
+import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
 import com.futsal.manager.LogModule.LogManager;
-import com.futsal.manager.MakeVideoModule.BluetoothDeviceFinder;
 import com.futsal.manager.R;
 import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
 
@@ -71,7 +71,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 if(mode == CALLED_BY_FUTSAL_MAIN_ACTIVITY) {
                     switch (position) {
                         case DefineManager.MAKE_NEW_VIDEO_ITEM:
-                            Intent recordVideoLayout = new Intent(context, BluetoothDeviceFinder.class);
+                            Intent recordVideoLayout = new Intent(context, EmbeddedSystemFinder.class);
                             recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(recordVideoLayout);
                             break;

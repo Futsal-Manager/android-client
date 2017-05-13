@@ -14,9 +14,8 @@ import android.widget.ListView;
 import com.futsal.manager.BluetoothModule.BluetoothCommunication;
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.MakeNewMemoryModule.MakeNewMemoryManager;
 import com.futsal.manager.R;
-
-import static com.futsal.manager.DefineManager.BLUETOOTH_COMMUNICATION_TEMP;
 
 /**
  * Created by stories2 on 2017. 3. 27..
@@ -65,9 +64,9 @@ public class BluetoothDeviceFinder extends Activity {
                 LogManager.PrintLog("BluetoothDeviceFinder", "onItemClick", "Selected Device Address: " + selectedDeviceAddress, DefineManager.LOG_LEVEL_INFO);
                 //deviceBluetoothAdapter.cancelDiscovery();
                 bluetoothCommunication = new BluetoothCommunication(null, selectedDeviceAddress);
-                Intent startRealService = new Intent(getApplicationContext(), CameraRecordManager.class);
-                //startRealService.putExtra("bluetoothDeviceData", bluetoothCommunication);
-                BLUETOOTH_COMMUNICATION_TEMP = bluetoothCommunication;
+                Intent startRealService = new Intent(getApplicationContext(), MakeNewMemoryManager.class);
+                startRealService.putExtra("bluetoothDeviceData", bluetoothCommunication);
+                //BLUETOOTH_COMMUNICATION_TEMP = bluetoothCommunication;
                 startActivity(startRealService);
                 finish();
             }
