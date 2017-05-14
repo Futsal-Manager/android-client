@@ -46,7 +46,9 @@ public class DefineManager {
 
                             ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT = 1, SEARCH_EMBEDDED_SYSTEM = 2;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
-                        SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com";
+                        SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
+
+                        AVAILABLE_BLUETOOTH_NAME = "HC-06";
 
     public static final boolean NOT_WORKING = false;
 

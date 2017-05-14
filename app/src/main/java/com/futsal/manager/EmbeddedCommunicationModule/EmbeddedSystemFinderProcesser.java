@@ -16,6 +16,7 @@ import com.futsal.manager.R;
 
 import java.util.Set;
 
+import static com.futsal.manager.DefineManager.AVAILABLE_BLUETOOTH_NAME;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
 import static com.futsal.manager.DefineManager.ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT;
@@ -131,7 +132,11 @@ public class EmbeddedSystemFinderProcesser {
                             deviceName, deviceAddress, false
                     );
                 }
-                EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.add(bluetoothDeviceItemModel);
+                if(deviceName != null) {
+                    if(deviceName.contains(AVAILABLE_BLUETOOTH_NAME)) {
+                        EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.add(bluetoothDeviceItemModel);
+                    }
+                }
             }
             else if(BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(bluetoothSearchAction)) {
                 if(EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.isEmpty()) {
@@ -141,7 +146,7 @@ public class EmbeddedSystemFinderProcesser {
                     LogManager.PrintLog("EmbeddedSystemFinderProcesser", "onReceive", "Ok we found some devices", LOG_LEVEL_DEBUG);
                 }
                 UpdateTextOfProcessStatus("Ok, just wait a sec.");
-                UselessDelay(1000);
+                UselessDelay(1);
                 MoveToDeviceSelectManager();
             }
         }
@@ -184,7 +189,12 @@ public class EmbeddedSystemFinderProcesser {
             BluetoothDeviceItemModel bluetoothDeviceItemModel = new BluetoothDeviceItemModel(deviceName, deviceAddress, true);
 
             LogManager.PrintLog("EmbeddedSystemFinderProcesser", "GetPairedDevice", "name: " + deviceName + " address: " + deviceAddress, LOG_LEVEL_DEBUG);
-            EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.add(bluetoothDeviceItemModel);
+
+            if(deviceName != null) {
+                if(deviceName.contains(AVAILABLE_BLUETOOTH_NAME)) {
+                    EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.add(bluetoothDeviceItemModel);
+                }
+            }
         }
     }
 }
