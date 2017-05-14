@@ -19,6 +19,7 @@
                 android:layout_width="355dp"
                 android:layout_height="210dp"
                 android:id="@+id/imageTitle"
+                android:scaleType="fitXY"
                 />
             <TextView
                 android:id="@+id/txtTitle"

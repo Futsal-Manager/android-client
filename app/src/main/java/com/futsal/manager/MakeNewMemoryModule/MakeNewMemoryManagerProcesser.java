@@ -253,7 +253,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         return dateInfo;
     }
 
-    String GetFilePath() {
+    public String GetFilePath() {
         File fileSavePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + File.separator + "FutsalManager");
         String savePath = fileSavePath.getPath();
         LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetFilePath", "Path: " + savePath, LOG_LEVEL_DEBUG);

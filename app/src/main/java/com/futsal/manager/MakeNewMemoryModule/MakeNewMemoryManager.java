@@ -1,6 +1,8 @@
 package com.futsal.manager.MakeNewMemoryModule;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
@@ -12,6 +14,8 @@ import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
 import org.opencv.android.OpenCVLoader;
+
+import java.io.File;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -50,6 +54,7 @@ public class MakeNewMemoryManager extends Activity {
                 if(isRecording) {
                     btnImageRecord.setBackgroundResource(R.drawable.after_record);
                     makeNewMemoryManagerProcesser.StartRecording();
+                    UselessDelay(1000);
                 }
                 else {
                     btnImageRecord.setBackgroundResource(R.drawable.before_record);
@@ -61,22 +66,43 @@ public class MakeNewMemoryManager extends Activity {
         btnImagePictures.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                OpenVideoListGallery();
             }
         });
 
         btnImageSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isSettingShowed = !isSettingShowed;
-                if(isSettingShowed) {
-                    btnImageSetting.setBackgroundResource(R.drawable.after_setting);
-                }
-                else {
-                    btnImageSetting.setBackgroundResource(R.drawable.before_setting);
+                if(!isRecording) {
+                    isSettingShowed = !isSettingShowed;
+                    if(isSettingShowed) {
+                        btnImageSetting.setBackgroundResource(R.drawable.after_setting);
+                    }
+                    else {
+                        btnImageSetting.setBackgroundResource(R.drawable.before_setting);
+                    }
                 }
             }
         });
+    }
+
+    void OpenVideoListGallery() {
+        try {
+            String openPath = makeNewMemoryManagerProcesser.GetFilePath();
+/*
+            Intent videoGalleryOpen =new Intent();
+            //videoGalleryOpen.setType("video/mp4");
+            videoGalleryOpen.setAction(Intent.ACTION_VIEW);
+            videoGalleryOpen.setDataAndType(Uri.fromFile(new File(openPath)), "image/*");
+            startActivity(videoGalleryOpen);*/
+
+            Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+            intent.setDataAndType(Uri.fromFile(new File(openPath)), "*/*");
+            startActivity(Intent.createChooser(intent, "Open folder"));
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("MakeNewMemoryManager", "OpenVideoListGallery", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+        }
     }
 
     void InitLayout() {
@@ -97,4 +123,12 @@ public class MakeNewMemoryManager extends Activity {
         super.onDestroy();
     }
 
+    void UselessDelay(int delayTime) {
+        try {
+            Thread.sleep(delayTime);
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("MakeNewMemoryManager", "UselessDelay", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+        }
+    }
 }
