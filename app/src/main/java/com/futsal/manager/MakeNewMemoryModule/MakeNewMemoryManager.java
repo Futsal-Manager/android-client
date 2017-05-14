@@ -38,6 +38,7 @@ public class MakeNewMemoryManager extends Activity {
     boolean isSettingShowed, isRecording;
     SurfaceView surfaceRecordVideo;
     MakeNewMemoryManagerProcesser makeNewMemoryManagerProcesser;
+    MakeNewMemorySettingManager makeNewMemorySettingManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,16 +75,18 @@ public class MakeNewMemoryManager extends Activity {
             @Override
             public void onClick(View v) {
                 if(!isRecording) {
-                    isSettingShowed = !isSettingShowed;
-                    if(isSettingShowed) {
-                        btnImageSetting.setBackgroundResource(R.drawable.after_setting);
-                    }
-                    else {
-                        btnImageSetting.setBackgroundResource(R.drawable.before_setting);
-                    }
+                    btnImageSetting.setBackgroundResource(R.drawable.after_setting);
+                    CloseSettingMenuChecker();
+                    makeNewMemorySettingManager.show();
                 }
             }
         });
+    }
+
+    void CloseSettingMenuChecker() {
+        if(makeNewMemorySettingManager.isShowing()) {
+            makeNewMemorySettingManager.dismiss();
+        }
     }
 
     void OpenVideoListGallery() {
@@ -115,6 +118,7 @@ public class MakeNewMemoryManager extends Activity {
         surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
 
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo);
+        makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
     }
 
     @Override

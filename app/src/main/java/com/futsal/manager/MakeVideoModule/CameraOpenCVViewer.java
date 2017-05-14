@@ -200,6 +200,8 @@ public class CameraOpenCVViewer implements SurfaceHolder.Callback2, Runnable {
     public void StopProcessing() {
         try {
             running = false;
+            opencvDrawingThread.interrupt();
+            opencvDrawingThread.join();
             calculateBallDetect.ReleaseMats();
             eachCameraPreviewFrameImage.release();
         }

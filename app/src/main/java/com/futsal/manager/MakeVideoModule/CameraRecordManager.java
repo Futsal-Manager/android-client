@@ -21,7 +21,6 @@ import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.OpenCVModule.CalculateBallDetect;
 import com.futsal.manager.R;
-import com.futsal.manager.VideoUploadModule.UploadNewVideoManager;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.InstallCallbackInterface;
@@ -120,7 +119,7 @@ public class CameraRecordManager extends Activity{
         toogleRecordVideo.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean isRecording) {
-                isVideoRecording = !isVideoRecording;
+                /*isVideoRecording = !isVideoRecording;
                 if(isRecording) {
                     //StartRecordVideo();
                     cameraRecordProcess.StartRecordMedia();
@@ -133,7 +132,7 @@ public class CameraRecordManager extends Activity{
                     cameraRecordProcess.StopRecordMedia();
                     LogManager.PrintLog("CameraRecordManager", "onCheckedChanged", "Toggle Changed to Stop Record Video", DefineManager.LOG_LEVEL_INFO);
                     //Log.d(videoRecordBasedOnOpencvTag, "Stopped");
-                }
+                }*/
             }
         });
 
@@ -160,13 +159,13 @@ public class CameraRecordManager extends Activity{
             @Override
             public void onClick(View view) {
                 //Snackbar.make(view, "Upload Process", Snackbar.LENGTH_SHORT).show();
-                LogManager.PrintLog("CameraRecordManager", "onClick", "Upload button clicked", DefineManager.LOG_LEVEL_INFO);
+                /*LogManager.PrintLog("CameraRecordManager", "onClick", "Upload button clicked", DefineManager.LOG_LEVEL_INFO);
                 if(!isVideoRecording) {
                     Intent uploadVideoLayout = new Intent(getApplicationContext(), UploadNewVideoManager.class);
                     uploadVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(uploadVideoLayout);
                     finish();
-                }
+                }*/
             }
         });
 /*
@@ -195,10 +194,10 @@ public class CameraRecordManager extends Activity{
     protected void onDestroy() {
         super.onDestroy();
         try {
+            cameraOpenCVViewer.StopProcessing();
             if(!BLUETOOTH_CONNECTION_FAILURE) {
                 bluetoothCommunication.CloseConnection();
             }
-            cameraOpenCVViewer.StopProcessing();
             if(bluetoothDeviceControlProcesser != null) {
                 bluetoothDeviceControlProcesser.StopProcess();
             }

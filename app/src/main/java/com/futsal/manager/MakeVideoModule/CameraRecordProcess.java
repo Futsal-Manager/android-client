@@ -180,7 +180,7 @@ public class CameraRecordProcess implements CameraBridgeViewBase.CvCameraViewLis
     @Override
     public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
         try {
-            phoneDeviceCamera.lock();
+            phoneDeviceCamera.setPreviewCallback(null);
             surfaceHolder.removeCallback(this);
             phoneDeviceCamera.stopPreview();
             phoneDeviceCamera.release();
