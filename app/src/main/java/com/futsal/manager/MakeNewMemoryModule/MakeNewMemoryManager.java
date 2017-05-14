@@ -49,9 +49,11 @@ public class MakeNewMemoryManager extends Activity {
                 isRecording = !isRecording;
                 if(isRecording) {
                     btnImageRecord.setBackgroundResource(R.drawable.after_record);
+                    makeNewMemoryManagerProcesser.StartRecording();
                 }
                 else {
                     btnImageRecord.setBackgroundResource(R.drawable.before_record);
+                    makeNewMemoryManagerProcesser.StopRecording();
                 }
             }
         });

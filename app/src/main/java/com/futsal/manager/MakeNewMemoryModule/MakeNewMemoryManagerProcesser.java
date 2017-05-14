@@ -2,6 +2,8 @@ package com.futsal.manager.MakeNewMemoryModule;
 
 import android.app.Activity;
 import android.hardware.Camera;
+import android.media.MediaRecorder;
+import android.os.Environment;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -18,8 +20,10 @@ import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
+import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
 import static com.futsal.manager.DefineManager.SCREEN_WIDTH;
+import static com.futsal.manager.DefineManager.VIDEO_RECORD_BIT_RATE;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -35,6 +39,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
     MakeNewMemoryOpencvManager makeNewMemoryOpencvManager;
     MakeNewMemoryBluetoothManager makeNewMemoryBluetoothManager;
     Thread makeNewMemoryManagerProcesserMainLoop;
+    MediaRecorder mediaRecording;
     boolean running;
 
     public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView) {
@@ -47,6 +52,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
     void InitLayout() {
 
         running = true;
+        mediaRecording = null;
 
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
         cameraSurfaceHolder.addCallback(this);
@@ -148,4 +154,84 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
             }
         }
     }
+
+    public void StartRecording() {
+        StartRecordMedia();
+    }
+
+    public void StopRecording() {
+        StopRecordMedia();
+    }
+
+    public void StopRecordMedia() {
+        if(mediaRecording == null) {
+            //opencvCameraView.enableView();
+            return;
+        }
+        mediaRecording.stop();
+        mediaRecording.reset();
+        mediaRecording.release();
+        mediaRecording = null;
+        //opencvCameraView.enableView();
+    }
+
+    public void StartRecordMedia() {
+
+        //opencvCameraView.disableView();
+
+        if(mediaRecording == null) {
+
+            try {
+                try {
+                    String savePath = Environment.getExternalStorageDirectory().toString();
+                    mediaRecording = new MediaRecorder();//media 객체 생성 확인을 할 것
+                    //Log.e("test", "asdf: " + mediaRecording);
+                    mediaRecording.setCamera(phoneDeviceCamera);
+                    mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
+                    mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
+                    mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
+                    mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+                    mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+                    //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
+                    mediaRecording.setVideoSize(AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_WIDTH],
+                            AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_HEIGHT]);
+                    mediaRecording.setVideoEncodingBitRate(VIDEO_RECORD_BIT_RATE);
+                    mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
+
+                    //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
+                    mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");// + GetVideoName());
+
+                }
+                catch (Exception err) {
+                    LogManager.PrintLog("MakeNewMemoryManagerProcesser", "InitStartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                }
+                try{
+                    phoneDeviceCamera.startPreview();
+                    phoneDeviceCamera.unlock();
+                    phoneDeviceCamera.setPreviewCallback(this);
+                }
+                catch (Exception err) {
+                    //Log.d(getString(R.string.app_name), "camera init failed");
+                    LogManager.PrintLog("MakeNewMemoryManagerProcesser", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                }
+                try {
+                    //phoneDeviceCamera.reconnect();
+                    mediaRecording.prepare();
+                    //Thread.sleep(1000);
+                    mediaRecording.start();
+                }
+                catch (Exception err) {
+                    //Log.d(videoRecordBasedOnOpencvTag, "Error in setOnCheckedChangeListener: " + err.getMessage());
+                    LogManager.PrintLog("MakeNewMemoryManagerProcesser", "StartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                    mediaRecording.release();
+                    mediaRecording = null;
+                }
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("MakeNewMemoryManagerProcesser", "StartRecordMedia", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            }
+        }
+    }
 }
+
+
