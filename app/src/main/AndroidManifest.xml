@@ -105,6 +105,7 @@
 
         <activity android:name=".MakeNewMemoryModule.MakeNewMemoryManager"
             android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             >
 
         </activity>
