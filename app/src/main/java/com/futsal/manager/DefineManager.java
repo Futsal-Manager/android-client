@@ -1,11 +1,14 @@
 package com.futsal.manager;
 
 import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothSocket;
 
 import com.futsal.manager.BluetoothModule.BluetoothCommunication;
 import com.futsal.manager.EmbeddedCommunicationModule.BluetoothDeviceItemModel;
 
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by stories2 on 2017. 3. 24..
@@ -75,4 +78,10 @@ public class DefineManager {
     public static BluetoothAdapter EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER = null;
 
     public static List<BluetoothDeviceItemModel> EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST = null;
+
+    public static BluetoothDevice EMBEDDED_SYSTEM_DEVICE = null;
+
+    public static BluetoothSocket EMBEDDED_SYSTEM_DEVICE_SOCKET = null;
+
+    public static UUID SERIAL_UUID = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
 }

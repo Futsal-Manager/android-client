@@ -5,13 +5,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
 
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
+import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE;
+import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.SEARCH_EMBEDDED_SYSTEM;
 
 /**
@@ -41,6 +45,20 @@ public class EmbeddedSystemFinder extends Activity {
 
         embeddedSystemFinderProcesser = new EmbeddedSystemFinderProcesser(this, txtWaitStatus);
         embeddedSystemFinderProcesser.InitBluetoothFinder();
+
+        if(EMBEDDED_SYSTEM_DEVICE != null) {
+            EMBEDDED_SYSTEM_DEVICE = null;
+        }
+
+        if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+            try {
+                EMBEDDED_SYSTEM_DEVICE_SOCKET.close();
+                EMBEDDED_SYSTEM_DEVICE_SOCKET = null;
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("EmbeddedSystemFinder", "InitProcess", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            }
+        }
     }
 
     @Override

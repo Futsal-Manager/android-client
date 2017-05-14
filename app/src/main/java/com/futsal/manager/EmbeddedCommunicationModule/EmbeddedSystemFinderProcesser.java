@@ -171,6 +171,9 @@ public class EmbeddedSystemFinderProcesser {
 
     public void StopSearchDevices() {
         try {
+            if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.isDiscovering()) {
+                EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.cancelDiscovery();
+            }
             embeddedSystemFinder.unregisterReceiver(bluetoothDeviceSearcher);
         }
         catch (Exception err) {

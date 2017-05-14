@@ -14,6 +14,7 @@ import com.futsal.manager.R;
 
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -25,6 +26,7 @@ public class BluetoothDeviceSelector extends Activity {
     ArrayAdapter<String> eachListOfBluetoothDevicesAdapter;
     String[] availableDeviceList;
     Button btnResearch;
+    BluetoothDeviceSelectorProcesser bluetoothDeviceSelectorProcesser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,12 @@ public class BluetoothDeviceSelector extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String selectedItemInfo = (String) listOfBluetoothDevices.getItemAtPosition(position);
                 LogManager.PrintLog("BluetoothDeviceSelector", "onItemClick", "Selected: " + selectedItemInfo, LOG_LEVEL_DEBUG);
+                if(EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST != null) {
+                    bluetoothDeviceSelectorProcesser.TryConnectToTargetDevice(EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.get(position));
+                }
+                else {
+                    LogManager.PrintLog("BluetoothDeviceSelector", "onItemClick", "N/A Data", LOG_LEVEL_WARN);
+                }
             }
         });
 
@@ -57,6 +65,7 @@ public class BluetoothDeviceSelector extends Activity {
         listOfBluetoothDevices = (ListView)findViewById(R.id.listOfBluetoothDevices);
         btnResearch = (Button)findViewById(R.id.btnResearch);
         eachListOfBluetoothDevicesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, availableDeviceList);
+        bluetoothDeviceSelectorProcesser = new BluetoothDeviceSelectorProcesser(this);
 
         listOfBluetoothDevices.setAdapter(eachListOfBluetoothDevicesAdapter);
     }

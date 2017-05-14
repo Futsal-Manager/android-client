@@ -35,4 +35,10 @@
     <!-- EmbeddedCommunicaionModule/EmbeddedSystemFinder -->
     <string name="notAvailalbeMessage">Your device not supported bluetooth.</string>
     <string name="okIwillBuyNewProduct">Ok</string>
+
+    <!-- EmbeddedCommunicaionModule/BluetoothDeviceSelectorProcesser -->
+    <string name="waitWhileConnecting">Connecting...</string>
+    <string name="cannotConnectDeviceTitle">Problem</string>
+    <string name="cannotConnectDeviceMessage">Cannot connect to target device.</string>
+    <string name="okJesus">Ok</string>
 </resources>
