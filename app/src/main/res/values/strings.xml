@@ -41,4 +41,9 @@
     <string name="cannotConnectDeviceTitle">Problem</string>
     <string name="cannotConnectDeviceMessage">Cannot connect to target device.</string>
     <string name="okJesus">Ok</string>
+
+    <!-- ShareYourMemoryModule/UploadSelectedVideo -->
+    <string name="iHateYouTitle">Error</string>
+    <string name="iHateYouMessage">File Load Failed</string>
+    <string name="meToo">Ok</string>
 </resources>

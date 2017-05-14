@@ -2,14 +2,12 @@ package com.futsal.manager.MakeVideoModule;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.net.Uri;
 import android.os.Environment;
 
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.NetworkModule.CommunicationWithServer;
 
-import java.util.Date;
-
+import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
@@ -28,10 +26,28 @@ public class VideoUploadProcess implements Runnable {
     CommunicationWithServer communicationWithServer;
     Activity cameraRecordManagerActivity;
     ProgressDialog progressDialog;
+    String videoSavedPath = null;
+    boolean isProcessDone;
 
     public VideoUploadProcess(Activity cameraRecordManagerActivity) {
         loginThread = new Thread(this);
         uploadThread = new Thread(this);
+        communicationWithServer = new CommunicationWithServer(cameraRecordManagerActivity);
+
+        progressDialog = ProgressDialog.show(cameraRecordManagerActivity, "",
+                "Video Uploading", false);
+        progressDialog.setCancelable(true);
+
+        TryLoginToServer();
+    }
+
+    public VideoUploadProcess(Activity cameraRecordManagerActivity, String videoSavedPath) {
+        loginThread = new Thread(this);
+        uploadThread = new Thread(this);
+
+        this.videoSavedPath = videoSavedPath;
+        isProcessDone = false;
+
         communicationWithServer = new CommunicationWithServer(cameraRecordManagerActivity);
 
         progressDialog = ProgressDialog.show(cameraRecordManagerActivity, "",
@@ -79,16 +95,24 @@ public class VideoUploadProcess implements Runnable {
     void UploadVideo() {
         try {
             networkOrderStatus = WAIT_FOR_UPLOAD_VIDEO;
-
             String savePath = Environment.getExternalStorageDirectory().toString() + "/testVideo3.mp4";
-            communicationWithServer.UploadFileTester3(Uri.parse(savePath));
+            if(videoSavedPath != null) {
+                savePath = videoSavedPath;
+            }
+            LogManager.PrintLog("VideoUploadProcess", "UploadVideo", "upload target file path: " + savePath, LOG_LEVEL_DEBUG);
+            communicationWithServer.UploadFileTester3(savePath);
             uploadThread.start();
             uploadThread.join();
             LogManager.PrintLog("VideoUploadProcess", "UploadVideo", "Upload Process Ended", LOG_LEVEL_INFO);
+            isProcessDone = true;
             progressDialog.dismiss();
         }
         catch (Exception err) {
             LogManager.PrintLog("VideoUploadProcess", "UploadVideo", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
         }
+    }
+
+    public boolean IsProcessDone() {
+        return isProcessDone;
     }
 }

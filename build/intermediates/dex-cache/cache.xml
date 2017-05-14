@@ -48,6 +48,15 @@
     </item>
     <item
         is-multidex="false"
+        jar="/Applications/Android Studio.app/Contents/gradle/m2repository/commons-io/commons-io/2.4/commons-io-2.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.1"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/Users/stories2/android-client/app/build/intermediates/pre-dexed/armv7a/debug/commons-io-2.4_db9d9c7f5dc9abc44c05f9a56b43532b2a4af315.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/Users/stories2/.gradle/caches/modules-2/files-2.1/com.squareup.okhttp3/logging-interceptor/3.4.2/d99260c62d97beae99ed1f779a35a9bf48c094a6/logging-interceptor-3.4.2.jar"
         jumboMode="false"
         optimize="true"

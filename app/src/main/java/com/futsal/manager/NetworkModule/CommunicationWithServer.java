@@ -353,6 +353,60 @@ public class CommunicationWithServer{
         });
     }
 
+    public void UploadFileTester3(String fileSavedPath) {
+        LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Upload Target Path: " + fileSavedPath, LOG_LEVEL_DEBUG);
+        Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
+        File savedVideoFile = LoadFileFromMemory(fileSavedPath);
+        LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "File loaded: " + savedVideoFile, LOG_LEVEL_DEBUG);
+        FileUploadRequest fileUploadRequest = new FileUploadRequest();
+        fileUploadRequest.SetFile(savedVideoFile.getPath().toString());
+        LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "File upload ready", LOG_LEVEL_DEBUG);
+        //GetMimeType(fileSavedPath.getPath().toString());
+        RequestBody reqFile = RequestBody.create(MediaType.parse(GetMimeType(fileSavedPath)), savedVideoFile);//GetMimeType(fileSavedPath.getPath().toString())
+        LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Video Name?: " + savedVideoFile.getName(), LOG_LEVEL_DEBUG);
+        MultipartBody.Part body = MultipartBody.Part.createFormData("file", savedVideoFile.getName(), reqFile);
+        //RequestBody name = RequestBody.create(MediaType.parse("application/json"), "{\"file\":\"" + savedVideoFile.getPath().toString() + "\"}");
+        LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Video Upload Ready", LOG_LEVEL_INFO);
+        try {
+            Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(fileUploadRequest, body, "chunked", "-1");
+            LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Calling` Retrofit Network", LOG_LEVEL_INFO);
+
+            calling.enqueue(new Callback<FileUploadResponse>() {
+                @Override
+                public void onResponse(Call<FileUploadResponse> call, Response<FileUploadResponse> response) {
+                    videoUploadStatus = true;
+                    try {
+                        LogManager.PrintLog("CommunicationWithServer", "onResponse", "Raw Response: " + response.message(), LOG_LEVEL_DEBUG);
+                        if(response.headers().get("code").equals("200")) {
+                            //Log.v("Upload", "success: " + response.body().GetRes());
+                            LogManager.PrintLog("CommunicationWithServer", "onResponse", "Upload Success: " + response.body().toString(), DefineManager.LOG_LEVEL_INFO);
+                        }
+                        else {
+                            try{
+                                LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error Body: " + response.errorBody().string(), DefineManager.LOG_LEVEL_ERROR);
+                            }
+                            catch (Exception err2) {
+                                LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error: " + err2.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                            }
+                        }
+                    }
+                    catch (Exception err) {
+                        LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
+                        videoUploadStatus = true;
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                    LogManager.PrintLog("CommunicationWithServer", "onFailure", "Error: " + t.getMessage(), LOG_LEVEL_ERROR);
+                }
+            });
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Upload Process Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
+    }
+
     public void UploadFileTester3(Uri fileSavedPath) {
         Retrofit2NetworkInterface retrofit2NetworkInterface = fileRetrofit().create(Retrofit2NetworkInterface.class);
         File savedVideoFile = LoadFileFromMemory(fileSavedPath.getPath());
