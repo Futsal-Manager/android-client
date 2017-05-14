@@ -12,12 +12,16 @@ import com.futsal.manager.LogModule.LogManager;
 
 import org.opencv.core.Point;
 
+import java.io.File;
+import java.util.Date;
+
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
 import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
@@ -183,7 +187,9 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
 
             try {
                 try {
-                    String savePath = Environment.getExternalStorageDirectory().toString();
+                    String savePath = GetFilePath() + "/FutsalManager" + GetVideoName() + ".mp4";
+                    LogManager.PrintLog("MakeNewMemoryManagerProcesser", "StartRecordMedia", "Video save path: " + savePath, LOG_LEVEL_DEBUG);
+
                     mediaRecording = new MediaRecorder();//media 객체 생성 확인을 할 것
                     //Log.e("test", "asdf: " + mediaRecording);
                     mediaRecording.setCamera(phoneDeviceCamera);
@@ -199,7 +205,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
                     //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
-                    mediaRecording.setOutputFile(savePath + "/testVideo3.mp4");// + GetVideoName());
+                    mediaRecording.setOutputFile(savePath);// + GetVideoName());
 
                 }
                 catch (Exception err) {
@@ -231,6 +237,30 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                 LogManager.PrintLog("MakeNewMemoryManagerProcesser", "StartRecordMedia", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
             }
         }
+    }
+
+    String GetVideoName() {
+        Date recordDateInfo = new Date();
+        int year, month, day, hour, min, sec;
+        year = recordDateInfo.getYear();
+        month = recordDateInfo.getMonth();
+        day = recordDateInfo.getDate();
+        hour = recordDateInfo.getHours();
+        min = recordDateInfo.getMinutes();
+        sec = recordDateInfo.getSeconds();
+        String dateInfo = "" + (year - 100) + "" + (month + 1) + "" + day + " " + hour + "" + min + "" + sec;
+        //dateInfo = "";
+        return dateInfo;
+    }
+
+    String GetFilePath() {
+        File fileSavePath = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM).getPath() + File.separator + "FutsalManager");
+        String savePath = fileSavePath.getPath();
+        LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetFilePath", "Path: " + savePath, LOG_LEVEL_DEBUG);
+        if(!fileSavePath.exists()) {
+            fileSavePath.mkdirs();
+        }
+        return savePath;
     }
 }
 
