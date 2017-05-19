@@ -46,4 +46,8 @@
     <string name="iHateYouTitle">Error</string>
     <string name="iHateYouMessage">File Load Failed</string>
     <string name="meToo">Ok</string>
+
+    <!-- MakeNewMemoryModule/MakeNewMemoryManagerProcesser -->
+    <string name="bluetoothDeviceConnectionRefused">Lost connection with embedded device.</string>
+    <string name="ohShit">Ok</string>
 </resources>

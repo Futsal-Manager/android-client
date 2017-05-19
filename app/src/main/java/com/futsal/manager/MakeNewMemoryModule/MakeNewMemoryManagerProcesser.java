@@ -1,14 +1,19 @@
 package com.futsal.manager.MakeNewMemoryModule;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Message;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.R;
 
 import org.opencv.core.Point;
 
@@ -16,6 +21,7 @@ import java.io.File;
 import java.util.Date;
 
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
+import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
@@ -23,6 +29,7 @@ import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
@@ -44,7 +51,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
     MakeNewMemoryBluetoothManager makeNewMemoryBluetoothManager;
     Thread makeNewMemoryManagerProcesserMainLoop;
     MediaRecorder mediaRecording;
-    boolean running;
+    boolean running, showEmbeddedSystemWarningMessage;
 
     public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView) {
         this.makeNewMmeoryManager = makeNewMmeoryManager;
@@ -57,6 +64,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
 
         running = true;
         mediaRecording = null;
+        showEmbeddedSystemWarningMessage = true;
 
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
         cameraSurfaceHolder.addCallback(this);
@@ -144,13 +152,43 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         return ballPositionDataOrder;
     }
 
+    Handler mainLoopMessageHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            AlertDialog.Builder bluetoothNotAvailableDialogBuilder = new AlertDialog.Builder(makeNewMmeoryManager);
+            bluetoothNotAvailableDialogBuilder.setMessage(makeNewMmeoryManager.getString(R.string.bluetoothDeviceConnectionRefused));
+            bluetoothNotAvailableDialogBuilder.setPositiveButton(R.string.ohShit, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    makeNewMmeoryManager.finish();
+                }
+            });
+            AlertDialog bluetoothModuleInitFailMessage = bluetoothNotAvailableDialogBuilder.create();
+            bluetoothModuleInitFailMessage.show();
+        }
+    };
+
     @Override
     public void run() {
         super.run();
         while(running) {
             try {
-                String bluetoothSendMessageData = PointToString(makeNewMemoryOpencvManager.GetLastBallDetectedPosition());
-                makeNewMemoryBluetoothManager.SendBluetoothOrder(bluetoothSendMessageData);
+                if(BLUETOOTH_CONNECTION_FAILURE != true) {
+                    String bluetoothSendMessageData = PointToString(makeNewMemoryOpencvManager.GetLastBallDetectedPosition());
+                    makeNewMemoryBluetoothManager.SendBluetoothOrder(bluetoothSendMessageData);
+                }
+                else {
+                    if(showEmbeddedSystemWarningMessage) {
+                        showEmbeddedSystemWarningMessage = false;
+                        Message bluetoothCrashMessage = mainLoopMessageHandler.obtainMessage();
+                        mainLoopMessageHandler.sendMessage(bluetoothCrashMessage);
+                        LogManager.PrintLog("MakeNewMemoryManagerProcesser", "run", "print warning message", LOG_LEVEL_INFO);
+                    }
+                }
                 Thread.sleep(BLUETOOTH_SEND_SPEED);
             }
             catch (Exception err) {

@@ -11,6 +11,7 @@ import com.victor.loading.newton.NewtonCradleLoading;
 
 import java.util.ArrayList;
 
+import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
@@ -40,6 +41,8 @@ public class EmbeddedSystemFinder extends Activity {
         txtWaitStatus = (TextView) findViewById(R.id.txtWaitStatus);
         newtonCradleLoading = (NewtonCradleLoading) findViewById(R.id.newton_cradle_loading);
         newtonCradleLoading.start();
+
+        BLUETOOTH_CONNECTION_FAILURE = false;
 
         EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST = new ArrayList<BluetoothDeviceItemModel>();
 

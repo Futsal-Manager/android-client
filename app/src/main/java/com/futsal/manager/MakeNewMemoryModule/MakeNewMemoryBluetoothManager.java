@@ -8,6 +8,7 @@ import com.futsal.manager.LogModule.LogManager;
 
 import java.io.OutputStream;
 
+import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 
@@ -25,8 +26,10 @@ public class MakeNewMemoryBluetoothManager {
     }
 
     public void SendBluetoothOrder(String ballPositionDataOrder) {
-        bluetoothOrderSender = new BluetoothOrderSender();
-        bluetoothOrderSender.execute(ballPositionDataOrder);
+        if(BLUETOOTH_CONNECTION_FAILURE != true) {
+            bluetoothOrderSender = new BluetoothOrderSender();
+            bluetoothOrderSender.execute(ballPositionDataOrder);
+        }
     }
 
     public class BluetoothOrderSender extends AsyncTask<String, Void, Void> {
@@ -44,6 +47,7 @@ public class MakeNewMemoryBluetoothManager {
             }
             catch (Exception err) {
                 LogManager.PrintLog("MakeNewMemoryBluetoothManager", "doInBackground", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                BLUETOOTH_CONNECTION_FAILURE = true;
             }
             return null;
         }
