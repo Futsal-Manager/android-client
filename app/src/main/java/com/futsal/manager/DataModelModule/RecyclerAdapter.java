@@ -20,6 +20,7 @@ import com.futsal.manager.DevModule.DevelopModeManager;
 import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
+import com.futsal.manager.ShowVideoModule.LibraryVideoManager;
 import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
 
 import java.util.List;
@@ -27,6 +28,7 @@ import java.util.List;
 import static com.futsal.manager.DefineManager.CALLED_BY_FUTSAL_MAIN_ACTIVITY;
 import static com.futsal.manager.DefineManager.CALLED_BY_SERVER_SAVED_LIST_ACTIVITY;
 import static com.futsal.manager.DefineManager.DEV_OPTION_ITEM;
+import static com.futsal.manager.DefineManager.LIBRARY_ITEM;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 
 /**
@@ -84,6 +86,11 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Intent developOptionLayout = new Intent(context, DevelopModeManager.class);
                             developOptionLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(developOptionLayout);
+                            break;
+                        case LIBRARY_ITEM:
+                            Intent libraryLayout = new Intent(context, LibraryVideoManager.class);
+                            libraryLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(libraryLayout);
                             break;
                         default:
                             break;

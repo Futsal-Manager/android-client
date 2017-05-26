@@ -19,7 +19,7 @@
     <string name="title_connected_to">connected: </string>
     <string name="title_not_connected">not connected</string>
 
-    <!--  DeviceListActivity -->
+    <!--  DeviceListActivity(블루투스 장비 검색할 시) -->
     <string name="scanning">scanning for devices...</string>
     <string name="select_device">select a device to connect</string>
     <string name="none_paired">No devices have been paired</string>
@@ -32,22 +32,22 @@
     <string name="connect">Connect a device</string>
     <string name="discoverable">Make discoverable</string>
 
-    <!-- EmbeddedCommunicaionModule/EmbeddedSystemFinder -->
+    <!-- EmbeddedCommunicaionModule/EmbeddedSystemFinder(안드로이드 디바이스 블루투스 지원 체크할 시) -->
     <string name="notAvailalbeMessage">Your device not supported bluetooth.</string>
     <string name="okIwillBuyNewProduct">Ok</string>
 
-    <!-- EmbeddedCommunicaionModule/BluetoothDeviceSelectorProcesser -->
+    <!-- EmbeddedCommunicaionModule/BluetoothDeviceSelectorProcesser(블루투스 장비 검색할 시) -->
     <string name="waitWhileConnecting">Connecting...</string>
     <string name="cannotConnectDeviceTitle">Problem</string>
     <string name="cannotConnectDeviceMessage">Cannot connect to target device.</string>
     <string name="okJesus">Ok</string>
 
-    <!-- ShareYourMemoryModule/UploadSelectedVideo -->
+    <!-- ShareYourMemoryModule/UploadSelectedVideo(비디오 영상 업로드할 시) -->
     <string name="iHateYouTitle">Error</string>
     <string name="iHateYouMessage">File Load Failed</string>
     <string name="meToo">Ok</string>
 
-    <!-- MakeNewMemoryModule/MakeNewMemoryManagerProcesser -->
+    <!-- MakeNewMemoryModule/MakeNewMemoryManagerProcesser(영상 촬영중 하드웨어 장비 간 연결이 끊겼을시) -->
     <string name="bluetoothDeviceConnectionRefused">Lost connection with embedded device.</string>
     <string name="ohShit">Ok</string>
 </resources>

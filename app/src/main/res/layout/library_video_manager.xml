@@ -1,0 +1,25 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    >
+    <Toolbar
+        android:layout_width="fill_parent"
+        android:layout_height="47dp">
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="13.5dp"
+            android:src="@drawable/shape_5"
+            />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:textColor="#222222"
+            android:letterSpacing="-0.02"
+            android:text="Library"
+            android:layout_gravity="center"
+            />
+    </Toolbar>
+</RelativeLayout>
