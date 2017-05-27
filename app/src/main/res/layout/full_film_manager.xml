@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:fitsSystemWindows="true">
+
 
     <GridView
         android:id="@+id/gridFullFilm"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
+        android:layout_height="wrap_content"
         android:columnWidth="160dp"
         android:horizontalSpacing="10.5dp"
         android:verticalSpacing="10.5dp"
@@ -15,7 +18,20 @@
         android:layout_marginTop="15dp"
         >
 
-
     </GridView>
 
-</LinearLayout>
+
+    <android.support.design.widget.FloatingActionButton
+        android:layout_width="69dp"
+        android:layout_height="69dp"
+        android:layout_gravity="center|bottom"
+        android:src="@drawable/shape_6"
+        android:id="@+id/floatingActionBtnNewMemory"
+        android:layout_marginBottom="13dp"
+
+        android:scaleType="fitCenter"
+
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"/>
+
+</RelativeLayout>

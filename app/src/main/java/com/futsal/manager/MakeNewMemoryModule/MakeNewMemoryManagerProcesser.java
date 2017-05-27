@@ -81,7 +81,9 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                 phoneDeviceCamera.setParameters(phoneDeviceCameraParameters);
             }
             makeNewMemoryOpencvManager = new MakeNewMemoryOpencvManager(makeNewMmeoryManager, phoneDeviceCameraParameters);
-            makeNewMemoryBluetoothManager = new MakeNewMemoryBluetoothManager(makeNewMmeoryManager);
+            if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                makeNewMemoryBluetoothManager = new MakeNewMemoryBluetoothManager(makeNewMmeoryManager);
+            }
             makeNewMemoryManagerProcesserMainLoop = new Thread(this);
         }
         catch (Exception err) {
@@ -177,7 +179,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         super.run();
         while(running) {
             try {
-                if(BLUETOOTH_CONNECTION_FAILURE != true) {
+                if(BLUETOOTH_CONNECTION_FAILURE != true && EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
                     String bluetoothSendMessageData = PointToString(makeNewMemoryOpencvManager.GetLastBallDetectedPosition());
                     makeNewMemoryBluetoothManager.SendBluetoothOrder(bluetoothSendMessageData);
                 }

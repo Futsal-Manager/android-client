@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
+import android.view.Window;
 import android.widget.TabHost;
 
 import com.futsal.manager.DefineManager;
@@ -19,11 +21,16 @@ public class LibraryVideoManager extends Activity {
     TabHost tabHostLibrary;
     TabHost.TabSpec fullFilmTab, highLightFilmTab;
 
+    Window libraryVideoManagerWindow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.library_video_manager);
+
+        libraryVideoManagerWindow = getWindow();
+        libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
         tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
 

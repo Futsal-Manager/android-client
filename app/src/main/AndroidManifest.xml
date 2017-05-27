@@ -140,6 +140,7 @@
         </activity>
 
         <activity android:name=".ShowVideoModule.FullFilmManager"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:screenOrientation="portrait"
             >
 

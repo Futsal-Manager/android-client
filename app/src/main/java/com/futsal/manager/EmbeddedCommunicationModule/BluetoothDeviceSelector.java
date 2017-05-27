@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.MakeNewMemoryModule.MakeNewMemoryManager;
 import com.futsal.manager.R;
 
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
@@ -25,7 +26,7 @@ public class BluetoothDeviceSelector extends Activity {
     ListView listOfBluetoothDevices;
     ArrayAdapter<String> eachListOfBluetoothDevicesAdapter;
     String[] availableDeviceList;
-    Button btnResearch;
+    Button btnResearch, btnSkip;
     BluetoothDeviceSelectorProcesser bluetoothDeviceSelectorProcesser;
 
     @Override
@@ -57,6 +58,15 @@ public class BluetoothDeviceSelector extends Activity {
                 finish();
             }
         });
+
+        btnSkip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent startMakeNewMemory = new Intent(getApplicationContext(), MakeNewMemoryManager.class);
+                startActivity(startMakeNewMemory);
+                finish();
+            }
+        });
     }
 
     void InitLayout() {
@@ -64,6 +74,7 @@ public class BluetoothDeviceSelector extends Activity {
 
         listOfBluetoothDevices = (ListView)findViewById(R.id.listOfBluetoothDevices);
         btnResearch = (Button)findViewById(R.id.btnResearch);
+        btnSkip = (Button)findViewById(R.id.btnSkip);
         eachListOfBluetoothDevicesAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, availableDeviceList);
         bluetoothDeviceSelectorProcesser = new BluetoothDeviceSelectorProcesser(this);
 
