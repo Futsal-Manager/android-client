@@ -4,10 +4,14 @@
     >
     <Toolbar
         android:layout_width="fill_parent"
-        android:layout_height="47dp">
+        android:layout_height="47dp"
+        android:id="@+id/toolbarLibrary"
+        >
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="13.5dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="13.5dp"
+            android:layout_width="19.5dp"
+            android:layout_height="20dp"
             android:src="@drawable/shape_5"
             />
 
@@ -22,4 +26,32 @@
             android:layout_gravity="center"
             />
     </Toolbar>
+    <TabHost
+        android:layout_below="@+id/toolbarLibrary"
+        android:id="@+id/tabHostLibrary"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+
+                >
+
+            </TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
 </RelativeLayout>

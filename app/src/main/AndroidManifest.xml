@@ -138,6 +138,18 @@
             >
 
         </activity>
+
+        <activity android:name=".ShowVideoModule.FullFilmManager"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
+
+        <activity android:name=".ShowVideoModule.HighLightFilmManager"
+            android:screenOrientation="portrait"
+            >
+
+        </activity>
     </application>
 
 </manifest>

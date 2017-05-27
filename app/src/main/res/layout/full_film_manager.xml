@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <GridView
+        android:id="@+id/gridFullFilm"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:columnWidth="160dp"
+        android:horizontalSpacing="10.5dp"
+        android:verticalSpacing="10.5dp"
+        android:numColumns="2"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        >
+
+
+    </GridView>
+
+</LinearLayout>
