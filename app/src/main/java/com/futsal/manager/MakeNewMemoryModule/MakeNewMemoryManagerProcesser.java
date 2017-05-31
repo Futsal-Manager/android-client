@@ -8,8 +8,10 @@ import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.os.SystemClock;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
@@ -35,6 +37,7 @@ import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
 import static com.futsal.manager.DefineManager.SCREEN_WIDTH;
 import static com.futsal.manager.DefineManager.VIDEO_RECORD_BIT_RATE;
+import static com.futsal.manager.DefineManager.VIDEO_RECORD_TIME_DATA;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -51,11 +54,16 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
     MakeNewMemoryBluetoothManager makeNewMemoryBluetoothManager;
     Thread makeNewMemoryManagerProcesserMainLoop;
     MediaRecorder mediaRecording;
-    boolean running, showEmbeddedSystemWarningMessage;
+    boolean running, showEmbeddedSystemWarningMessage, isRecording;
 
-    public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView) {
+    long startHTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updatedTime = 0L;
+    TextView txtRecordingTime;
+
+
+    public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView, TextView txtRecordingTime) {
         this.makeNewMmeoryManager = makeNewMmeoryManager;
         this.cameraSurfaceView = cameraSurfaceView;
+        this.txtRecordingTime = txtRecordingTime;
 
         InitLayout();
     }
@@ -89,6 +97,10 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         catch (Exception err) {
             LogManager.PrintLog("MakeNewMemoryManagerProcesser", "InitLayout", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
         }
+    }
+
+    public void SetIsRecording(boolean isRecording) {
+        this.isRecording = isRecording;
     }
 
     @Override
@@ -179,6 +191,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         super.run();
         while(running) {
             try {
+                CalculateRecordTime();
                 if(BLUETOOTH_CONNECTION_FAILURE != true && EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
                     String bluetoothSendMessageData = PointToString(makeNewMemoryOpencvManager.GetLastBallDetectedPosition());
                     makeNewMemoryBluetoothManager.SendBluetoothOrder(bluetoothSendMessageData);
@@ -199,12 +212,35 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         }
     }
 
+    void CalculateRecordTime() {
+        if(isRecording) {
+            timeInMilliseconds = SystemClock.uptimeMillis() - startHTime;
+
+            updatedTime = timeSwapBuff + timeInMilliseconds;
+
+            int secs = (int) (updatedTime / 1000);
+            int mins = secs / 60;
+            int hours = secs / 3600;
+            secs = secs % 60;
+
+            Message handlerMessage = videoRecordingTimeHandler.obtainMessage();
+            handlerMessage.what = VIDEO_RECORD_TIME_DATA;
+            handlerMessage.obj = "" + String.format("%02d", hours) + ":" + String.format("%02d", mins) + ":" + String.format("%02d", secs);
+            videoRecordingTimeHandler.sendMessage(handlerMessage);
+            //LogManager.PrintLog("MakeNewMemoryManagerProcesser", "CalculateRecordTime", "Recording time: " + hours + ":" + mins + ":" + secs, LOG_LEVEL_INFO);
+        }
+    }
+
     public void StartRecording() {
         StartRecordMedia();
+        isRecording = true;
+        startHTime = SystemClock.uptimeMillis();
     }
 
     public void StopRecording() {
         StopRecordMedia();
+        //timeSwapBuff += timeInMilliseconds;
+        isRecording = false;
     }
 
     public void StopRecordMedia() {
@@ -302,6 +338,23 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         }
         return savePath;
     }
+
+    final Handler videoRecordingTimeHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case VIDEO_RECORD_TIME_DATA:
+                    if(txtRecordingTime != null) {
+                        txtRecordingTime.setText(msg.obj.toString());
+                    }
+                    break;
+                default:
+                    break;
+            }
+            super.handleMessage(msg);
+        }
+    };
 }
 
 

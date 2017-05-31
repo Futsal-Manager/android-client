@@ -125,7 +125,7 @@ public class MakeNewMemoryManager extends Activity {
         surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
         txtRecordingTime = (TextView) findViewById(R.id.txtRecordingTime);
 
-        makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo);
+        makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo, txtRecordingTime);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
     }
 
