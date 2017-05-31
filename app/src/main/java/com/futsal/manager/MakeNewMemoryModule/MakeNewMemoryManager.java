@@ -8,6 +8,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
@@ -39,6 +40,7 @@ public class MakeNewMemoryManager extends Activity {
     SurfaceView surfaceRecordVideo;
     MakeNewMemoryManagerProcesser makeNewMemoryManagerProcesser;
     MakeNewMemorySettingManager makeNewMemorySettingManager;
+    TextView txtRecordingTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +57,14 @@ public class MakeNewMemoryManager extends Activity {
                 if(isRecording) {
                     //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_1);
                     btnImageRecord.setImageResource(R.drawable.shape_2_copy_1);
+                    txtRecordingTime.setTextColor(getResources().getColor(R.color.red));
                     LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "start recording", DefineManager.LOG_LEVEL_INFO);
                     makeNewMemoryManagerProcesser.StartRecording();
                     UselessDelay(1000);
                 }
                 else {
                     //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_3);
+                    txtRecordingTime.setTextColor(getResources().getColor(R.color.white));
                     btnImageRecord.setImageResource(R.drawable.shape_2_copy_3);
                     makeNewMemoryManagerProcesser.StopRecording();
                 }
@@ -78,7 +82,7 @@ public class MakeNewMemoryManager extends Activity {
             @Override
             public void onClick(View v) {
                 if(!isRecording) {
-                    btnImageSetting.setBackgroundResource(R.drawable.after_setting);
+                    //btnImageSetting.setBackgroundResource(R.drawable.after_setting);
                     CloseSettingMenuChecker();
                     makeNewMemorySettingManager.show();
                 }
@@ -119,6 +123,7 @@ public class MakeNewMemoryManager extends Activity {
         btnImagePictures = (ImageButton) findViewById(R.id.btnImagePictures);
         btnImageSetting = (ImageButton) findViewById(R.id.btnImageSetting);
         surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
+        txtRecordingTime = (TextView) findViewById(R.id.txtRecordingTime);
 
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);

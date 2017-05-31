@@ -42,7 +42,7 @@ public class MakeNewMemorySettingManager extends Dialog {
     @Override
     public void dismiss() {
         LogManager.PrintLog("MakeNewMemorySettingManager", "dismiss", "Closing dialog", DefineManager.LOG_LEVEL_DEBUG);
-        btnImageSetting.setBackgroundResource(R.drawable.before_setting);
+        //btnImageSetting.setBackgroundResource(R.drawable.before_setting);
         super.dismiss();
     }
 
