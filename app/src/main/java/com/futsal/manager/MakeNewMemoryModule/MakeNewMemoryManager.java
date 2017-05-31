@@ -53,12 +53,15 @@ public class MakeNewMemoryManager extends Activity {
             public void onClick(View v) {
                 isRecording = !isRecording;
                 if(isRecording) {
-                    btnImageRecord.setBackgroundResource(R.drawable.after_record);
+                    //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_1);
+                    btnImageRecord.setImageResource(R.drawable.shape_2_copy_1);
+                    LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "start recording", DefineManager.LOG_LEVEL_INFO);
                     makeNewMemoryManagerProcesser.StartRecording();
                     UselessDelay(1000);
                 }
                 else {
-                    btnImageRecord.setBackgroundResource(R.drawable.before_record);
+                    //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_3);
+                    btnImageRecord.setImageResource(R.drawable.shape_2_copy_3);
                     makeNewMemoryManagerProcesser.StopRecording();
                 }
             }

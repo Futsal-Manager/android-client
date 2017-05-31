@@ -1,57 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     >
 
-    <FrameLayout
+    <SurfaceView
+        android:id="@+id/surfaceRecordVideo"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        />
+
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="fill_parent"
-        android:layout_weight="1">
-        <SurfaceView
-            android:id="@+id/surfaceRecordVideo"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            />
-    </FrameLayout>
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="#ff4e2b"
+        android:letterSpacing="-0.02"
+        android:gravity="center"
+        android:text="00:00:52"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/textView" />
 
-    <RelativeLayout
+    <ImageButton
+        android:layout_marginTop="17dp"
+        android:layout_marginLeft="20dp"
+        android:layout_width="20dp"
+        android:layout_height="20.5dp"
+        android:src="@drawable/shape_1"
+        android:id="@+id/btnImageSetting"
+        android:background="@null"
+        />
+
+    <ImageButton
         android:layout_width="60dp"
-        android:layout_height="fill_parent"
-        android:background="@color/white"
-        >
+        android:layout_height="60dp"
+        android:src="@drawable/shape_2_copy_3"
+        android:scaleType="fitXY"
+        android:id="@+id/btnImageRecord"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="20dp"
+        android:background="@null"
+        />
 
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:src="@drawable/before_record"
-            android:scaleType="fitXY"
-            android:id="@+id/btnImageRecord"
-            android:layout_centerVertical="true"
-            android:background="@color/white"
-            />
+    <ImageButton
+        android:layout_width="36.5dp"
+        android:layout_height="36.5dp"
+        android:id="@+id/btnImagePictures"
+        android:src="@drawable/shape_3"
+        android:scaleType="fitXY"
+        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="31.5dp"
+        android:background="@null"/>
 
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/btnImagePictures"
-            android:layout_alignParentTop="true"
-            android:src="@drawable/gallery"
-            android:scaleType="fitXY"
-            android:background="@color/white"
-            />
-
-        <ImageButton
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:id="@+id/btnImageSetting"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/before_setting"
-            android:scaleType="fitXY"
-            android:background="@color/white"
-            />
-
-    </RelativeLayout>
-
-</LinearLayout>
+</RelativeLayout>
