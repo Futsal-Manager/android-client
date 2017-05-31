@@ -107,8 +107,8 @@ public class MakeNewMemoryManager extends Activity {
             startActivity(videoGalleryOpen);*/
 
             Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-            intent.setDataAndType(Uri.fromFile(new File(openPath)), "*/*");
-            startActivity(Intent.createChooser(intent, "Open folder"));
+            intent.setDataAndType(Uri.fromFile(new File(openPath)), "video/mp4");
+            startActivity(Intent.createChooser(intent, "Open Video"));
         }
         catch (Exception err) {
             LogManager.PrintLog("MakeNewMemoryManager", "OpenVideoListGallery", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
