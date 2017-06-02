@@ -21,13 +21,22 @@
             android:layout_marginLeft="0dp"
             android:layout_marginTop="120dp"
             android:background="#77000000"
-            android:layout_width="160dp"
-            android:layout_height="40dp">
+            android:layout_width="165dp"
+            android:layout_height="35dp">
+
+            <ImageView
+                android:layout_width="16.5dp"
+                android:layout_height="10dp"
+                android:src="@drawable/shape_8"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12.5dp"
+                android:background="@null"
+                />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="14sp"
+                android:textSize="11sp"
                 android:textColor="#ccffffff"
                 android:letterSpacing="-0.02"
                 android:layout_gravity="center"
@@ -35,7 +44,43 @@
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:id="@+id/txtVideoName" />
+
+            <RelativeLayout
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:background="@color/darkGray"
+                >
+                <ImageView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:background="@null"
+                    android:src="@drawable/shape_11"
+                    android:scaleType="fitCenter"
+                    />
+            </RelativeLayout>
         </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="7dp"
+            android:layout_marginRight="4.5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="#ffffff"
+            android:gravity="center_horizontal"
+            android:text="02’ 32’ 00’"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:id="@+id/textView" />
+
+        <ImageView
+            android:layout_width="17.5dp"
+            android:layout_height="21dp"
+            android:src="@drawable/polygon_1"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
     </RelativeLayout>
 
 </RelativeLayout>

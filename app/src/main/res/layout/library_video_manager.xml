@@ -7,12 +7,14 @@
         android:layout_height="47dp"
         android:id="@+id/toolbarLibrary"
         >
-        <ImageView
+        <ImageButton
             android:layout_marginLeft="20dp"
             android:layout_marginTop="13.5dp"
             android:layout_width="19.5dp"
             android:layout_height="20dp"
             android:src="@drawable/shape_5"
+            android:id="@+id/imgBtnProfile"
+            android:background="@null"
             />
 
 
@@ -25,6 +27,7 @@
             android:text="Library"
             android:layout_gravity="center"
             />
+
     </Toolbar>
     <TabHost
         android:layout_below="@+id/toolbarLibrary"
@@ -54,4 +57,16 @@
             </FrameLayout>
         </LinearLayout>
     </TabHost>
+
+    <ImageButton
+
+        android:layout_width="20.5dp"
+        android:layout_height="19.5dp"
+        android:background="@null"
+        android:src="@drawable/shape_9"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="13.5dp"
+        android:id="@+id/imgBtnTrash"
+        android:layout_above="@+id/tabHostLibrary"
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>
