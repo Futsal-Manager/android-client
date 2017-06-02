@@ -1,8 +1,11 @@
 package com.futsal.manager.ShowVideoModule;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.media.ThumbnailUtils;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.view.View;
@@ -16,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -26,6 +30,7 @@ public class FullFilmManager extends Activity {
     GridView fullFilmGridView;
     List<EachGridViewItemModel> fullFilmList;
     FloatingActionButton floatingActionBtnNewMemory;
+    File[] listOfSavedFiles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,18 +40,21 @@ public class FullFilmManager extends Activity {
         fullFilmGridView = (GridView)findViewById(R.id.gridFullFilm);
         floatingActionBtnNewMemory = (FloatingActionButton)findViewById(R.id.floatingActionBtnNewMemory);
 
+        listOfSavedFiles = GetFileList(GetFilePath());
+
         fullFilmList = new ArrayList<EachGridViewItemModel>();
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
-        fullFilmList.add(new EachGridViewItemModel());
+
+        for(File indexOfSavedFile : listOfSavedFiles) {
+            EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
+            indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
+            indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
+            indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
+            fullFilmList.add(indexOfSavedFileItemModel);
+        }
+
+        for(EachGridViewItemModel indexOfFullFilm : fullFilmList) {
+            LogManager.PrintLog("FullFilmManager", "onCreate", "fileName: " + indexOfFullFilm.GetVideoName(), LOG_LEVEL_DEBUG);
+        }
 
         EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
 
@@ -58,8 +66,35 @@ public class FullFilmManager extends Activity {
                 Snackbar.make(v, "Make New Memory", Snackbar.LENGTH_LONG).show();
             }
         });
+    }
 
-        GetFileList(GetFilePath());
+    Bitmap GetVideoThumbnailImage(String videoSavedPath) {
+        try {
+            LogManager.PrintLog("FullFilmManager", "GetVideoThumbnailImage", "thumbnail video path: " + videoSavedPath, LOG_LEVEL_DEBUG);
+            return ThumbnailUtils.createVideoThumbnail(videoSavedPath, MediaStore.Video.Thumbnails.MICRO_KIND);
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("FullFilmManager", "GetVideoThumbnailImage", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            return null;
+        }
+    }
+
+    String ParseFileName(File videoFile) {
+        String originFileName = videoFile.getName();
+        if(originFileName.contains("FutsalManager") && originFileName.length() == 29) {
+            String dateString = originFileName.split("FutsalManager")[1];
+            String year = dateString.substring(0, 2);
+            String month = dateString.substring(2, 4);
+            String day = dateString.substring(4, 6);
+            String hour = dateString.substring(6, 8);
+            String min = dateString.substring(8, 10);
+            String fileNameParsed = "20" + year + "-" + month + "-" + day + " " + hour + ":" + min;
+            LogManager.PrintLog("FullFilmManager", "ParseFileName", "parsed: " + fileNameParsed, LOG_LEVEL_DEBUG);
+            return fileNameParsed;
+        }
+        else {
+            return "Other Video File";
+        }
     }
 
     File[] GetFileList(String path) {

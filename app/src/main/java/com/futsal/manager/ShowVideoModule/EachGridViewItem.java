@@ -1,6 +1,7 @@
 package com.futsal.manager.ShowVideoModule;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.futsal.manager.DefineManager;
+import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
 import java.util.List;
@@ -50,6 +53,15 @@ public class EachGridViewItem extends BaseAdapter {
         }
         ImageView imgVideoThumbnail = (ImageView) convertView.findViewById(R.id.imgVideoThumbnail);
         TextView txtVideoName = (TextView) convertView.findViewById(R.id.txtVideoName);
+
+        String fileName = gridViewItemData.get(position).GetVideoName();
+        LogManager.PrintLog("EachGridViewItem", "getView", "file name: " + fileName + " pos: " + position, DefineManager.LOG_LEVEL_INFO);
+        txtVideoName.setText(fileName);
+
+        Bitmap videoThumbnailImage = gridViewItemData.get(position).GetThumbnailImage();
+        if(videoThumbnailImage != null) {
+            imgVideoThumbnail.setImageBitmap(videoThumbnailImage);
+        }
         return convertView;
     }
 }
