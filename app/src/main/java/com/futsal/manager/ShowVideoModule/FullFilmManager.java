@@ -23,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import static com.futsal.manager.DefineManager.LIBRARY_TYPE_EDIT;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 
@@ -55,6 +56,7 @@ public class FullFilmManager extends Activity {
             indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
             indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
             indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
+            indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
 
             fullFilmList.add(indexOfSavedFileItemModel);
         }
@@ -79,8 +81,24 @@ public class FullFilmManager extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 LogManager.PrintLog("FullFilmManager", "onItemClick", "Item selected pos: " + position, LOG_LEVEL_DEBUG);
+                EachGridViewItemModel eachGridViewItemModel = fullFilmList.get(position);
+
+                PlayVideo(eachGridViewItemModel.GetVideoOriginName());
             }
         });
+    }
+
+    void PlayVideo(String videoPath) {
+
+        File videoFile = new File(videoPath);
+        videoFile.setReadable(true, false);
+        Uri intentUri = Uri.fromFile(videoFile);
+
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.setDataAndType(intentUri, "video/mp4");
+        startActivity(intent);
     }
 
     String GetVideoDurationTime(String videoSavedPath) {

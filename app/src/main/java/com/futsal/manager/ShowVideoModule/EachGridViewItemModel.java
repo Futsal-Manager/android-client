@@ -11,6 +11,7 @@ public class EachGridViewItemModel {
     String videoName, videoOriginName, videoDurationTime;
     Bitmap thumbnailImage;
     boolean isItemSelected;
+    int subBtnType;
 
     public void SetVideoName(String videoName) {
         this.videoName = videoName;
@@ -32,6 +33,10 @@ public class EachGridViewItemModel {
         this.isItemSelected = isItemSelected;
     }
 
+    public void SetSubBtnType(int subBtnType) {
+        this.subBtnType = subBtnType;
+    }
+
     public String GetVideoName() {
         return videoName;
     }
@@ -50,5 +55,9 @@ public class EachGridViewItemModel {
 
     public boolean GetIsItemSelected() {
         return isItemSelected;
+    }
+
+    public int GetSubBtnType() {
+        return subBtnType;
     }
 }

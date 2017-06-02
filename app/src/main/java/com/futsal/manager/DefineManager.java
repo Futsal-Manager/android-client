@@ -49,7 +49,9 @@ public class DefineManager {
 
                             ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT = 1, SEARCH_EMBEDDED_SYSTEM = 2,
 
-                            VIDEO_RECORD_TIME_DATA = 0;
+                            VIDEO_RECORD_TIME_DATA = 0,
+
+                            LIBRARY_TYPE_EDIT = 0, LIBRARY_TYPE_SHARE = 1, LIBRARY_TYPE_CHECK = 2, LIBRARY_TYPE_NOT_CHECK = 3;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
 
