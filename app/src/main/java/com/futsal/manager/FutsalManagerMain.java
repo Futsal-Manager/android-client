@@ -38,8 +38,8 @@ public class FutsalManagerMain extends AppCompatActivity {
         recyFunctionList.setLayoutManager(recyFunctionListLayoutManager);
 
         eachCardViewItems = new ArrayList<>();
-        eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "MAKE NEW VIDEO"));
-        eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "SHOW VIDEO"));
+        //eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "MAKE NEW VIDEO"));
+        //eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "SHOW VIDEO"));
         eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "DEV OPTION"));
         eachCardViewItems.add(new EachCardViewItems(R.mipmap.ic_launcher, "LIBRARY"));
 

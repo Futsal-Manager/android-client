@@ -17,11 +17,9 @@ import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.DevModule.DevelopModeManager;
-import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 import com.futsal.manager.ShowVideoModule.LibraryVideoManager;
-import com.futsal.manager.ShowVideoModule.ServerSavedVideoListManager;
 
 import java.util.List;
 
@@ -72,7 +70,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                 Snackbar.make(v, item.getTitle(), Snackbar.LENGTH_SHORT).show();
                 if(mode == CALLED_BY_FUTSAL_MAIN_ACTIVITY) {
                     switch (position) {
-                        case DefineManager.MAKE_NEW_VIDEO_ITEM:
+                        /*case DefineManager.MAKE_NEW_VIDEO_ITEM:
                             Intent recordVideoLayout = new Intent(context, EmbeddedSystemFinder.class);
                             recordVideoLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(recordVideoLayout);
@@ -81,7 +79,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
                             Intent serverSavedVideoListLayout = new Intent(context, ServerSavedVideoListManager.class);
                             serverSavedVideoListLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(serverSavedVideoListLayout);
-                            break;
+                            break;*/
                         case DEV_OPTION_ITEM:
                             Intent developOptionLayout = new Intent(context, DevelopModeManager.class);
                             developOptionLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

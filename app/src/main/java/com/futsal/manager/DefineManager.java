@@ -17,7 +17,7 @@ import java.util.UUID;
 public class DefineManager {
     public static final int LOG_LEVEL_VERBOSE = 0, LOG_LEVEL_DEBUG = 1, LOG_LEVEL_INFO = 2, LOG_LEVEL_WARN = 3, LOG_LEVEL_ERROR = 4,
 
-                            MAKE_NEW_VIDEO_ITEM = 0, SHOW_VIDEO_ITEM = 1, DEV_OPTION_ITEM = 2, LIBRARY_ITEM = 3,
+                            MAKE_NEW_VIDEO_ITEM = 0, SHOW_VIDEO_ITEM = 1, DEV_OPTION_ITEM = 0, LIBRARY_ITEM = 1,
 
                             CALLED_BY_FUTSAL_MAIN_ACTIVITY = 0, CALLED_BY_SERVER_SAVED_LIST_ACTIVITY = 1,
 
