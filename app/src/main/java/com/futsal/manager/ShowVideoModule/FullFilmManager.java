@@ -11,6 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
@@ -71,6 +72,13 @@ public class FullFilmManager extends Activity {
             public void onClick(View v) {
                 Intent recordVideoLayout = new Intent(getApplicationContext(), EmbeddedSystemFinder.class);
                 startActivity(recordVideoLayout);
+            }
+        });
+
+        fullFilmGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                LogManager.PrintLog("FullFilmManager", "onItemClick", "Item selected pos: " + position, LOG_LEVEL_DEBUG);
             }
         });
     }
