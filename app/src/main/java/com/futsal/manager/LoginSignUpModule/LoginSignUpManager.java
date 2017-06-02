@@ -11,10 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.futsal.manager.FutsalManagerMain;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.NetworkModule.CommunicationWithServer;
 import com.futsal.manager.R;
+import com.futsal.manager.ShowVideoModule.LibraryVideoManager;
 
 import static com.futsal.manager.DefineManager.LOGIN_FAILURE;
 import static com.futsal.manager.DefineManager.LOGIN_SUCCESS;
@@ -42,7 +42,7 @@ public class LoginSignUpManager extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_signup_manager);
 
-        moveToMainLayout = new Intent(this, FutsalManagerMain.class);
+        moveToMainLayout = new Intent(this, LibraryVideoManager.class);
         communicationWithServer = new CommunicationWithServer(getApplicationContext());
 
         loginSignUpManager = this;

@@ -5,10 +5,13 @@ import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 import android.view.Window;
+import android.widget.ImageButton;
 import android.widget.TabHost;
 
 import com.futsal.manager.DefineManager;
+import com.futsal.manager.DevModule.DevelopModeManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
@@ -22,6 +25,7 @@ public class LibraryVideoManager extends Activity {
     TabHost.TabSpec fullFilmTab, highLightFilmTab;
     LocalActivityManager localActivityManager;
     Window libraryVideoManagerWindow;
+    ImageButton imgBtnProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +37,7 @@ public class LibraryVideoManager extends Activity {
         libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
         tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
+        imgBtnProfile = (ImageButton) findViewById(R.id.imgBtnProfile);
 
         fullFilmTab = tabHostLibrary.newTabSpec("Full Film Tab");
         highLightFilmTab = tabHostLibrary.newTabSpec("High Light Tab");
@@ -59,6 +64,17 @@ public class LibraryVideoManager extends Activity {
             @Override
             public void onTabChanged(String tabId) {
                 localActivityManager.dispatchResume();
+            }
+        });
+
+        imgBtnProfile.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+
+                Intent developOptionLayout = new Intent(getApplicationContext(), DevelopModeManager.class);
+                developOptionLayout.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(developOptionLayout);
+                return false;
             }
         });
     }
