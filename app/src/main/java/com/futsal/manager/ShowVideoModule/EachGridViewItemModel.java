@@ -8,7 +8,7 @@ import android.graphics.Bitmap;
 
 public class EachGridViewItemModel {
 
-    String videoName, videoOriginName;
+    String videoName, videoOriginName, videoDurationTime;
     Bitmap thumbnailImage;
     boolean isItemSelected;
 
@@ -18,6 +18,10 @@ public class EachGridViewItemModel {
 
     public void SetVideoOriginName(String videoOriginName) {
         this.videoOriginName = videoOriginName;
+    }
+
+    public void SetVideoDurationTime(String videoDurationTime) {
+        this.videoDurationTime = videoDurationTime;
     }
 
     public void SetThumnailImage(Bitmap thumbnailImage) {
@@ -34,6 +38,10 @@ public class EachGridViewItemModel {
 
     public String GetVideoOriginName() {
         return videoOriginName;
+    }
+
+    public String GetVideoDurationTime() {
+        return videoDurationTime;
     }
 
     public Bitmap GetThumbnailImage() {

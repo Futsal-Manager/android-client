@@ -53,6 +53,7 @@ public class EachGridViewItem extends BaseAdapter {
         }
         ImageView imgVideoThumbnail = (ImageView) convertView.findViewById(R.id.imgVideoThumbnail);
         TextView txtVideoName = (TextView) convertView.findViewById(R.id.txtVideoName);
+        TextView txtVideoTime = (TextView) convertView.findViewById(R.id.txtVideoTime);
 
         String fileName = gridViewItemData.get(position).GetVideoName();
         LogManager.PrintLog("EachGridViewItem", "getView", "file name: " + fileName + " pos: " + position, DefineManager.LOG_LEVEL_INFO);
@@ -62,6 +63,8 @@ public class EachGridViewItem extends BaseAdapter {
         if(videoThumbnailImage != null) {
             imgVideoThumbnail.setImageBitmap(videoThumbnailImage);
         }
+        String videoDurationTime = gridViewItemData.get(position).GetVideoDurationTime();
+        txtVideoTime.setText(videoDurationTime);
         return convertView;
     }
 }

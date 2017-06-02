@@ -1,22 +1,26 @@
 package com.futsal.manager.ShowVideoModule;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaPlayer;
 import android.media.ThumbnailUtils;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.view.View;
 import android.widget.GridView;
 
+import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
@@ -49,6 +53,8 @@ public class FullFilmManager extends Activity {
             indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
             indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
             indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
+            indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
+
             fullFilmList.add(indexOfSavedFileItemModel);
         }
 
@@ -63,9 +69,22 @@ public class FullFilmManager extends Activity {
         floatingActionBtnNewMemory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Snackbar.make(v, "Make New Memory", Snackbar.LENGTH_LONG).show();
+                Intent recordVideoLayout = new Intent(getApplicationContext(), EmbeddedSystemFinder.class);
+                startActivity(recordVideoLayout);
             }
         });
+    }
+
+    String GetVideoDurationTime(String videoSavedPath) {
+        MediaPlayer mp = MediaPlayer.create(this, Uri.parse(videoSavedPath));
+        int duration = mp.getDuration();
+        mp.release();
+/*convert millis to appropriate time*/
+        return String.format("%02d' %02d' %02d'",
+                TimeUnit.MILLISECONDS.toHours(duration),
+                TimeUnit.MILLISECONDS.toMinutes(duration),
+                TimeUnit.MILLISECONDS.toSeconds(duration)
+        );
     }
 
     Bitmap GetVideoThumbnailImage(String videoSavedPath) {
