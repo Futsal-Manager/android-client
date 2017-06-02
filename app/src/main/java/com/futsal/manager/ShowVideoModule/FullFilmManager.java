@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_EDIT;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -46,28 +47,7 @@ public class FullFilmManager extends Activity {
         fullFilmGridView = (GridView)findViewById(R.id.gridFullFilm);
         floatingActionBtnNewMemory = (FloatingActionButton)findViewById(R.id.floatingActionBtnNewMemory);
 
-        listOfSavedFiles = GetFileList(GetFilePath());
-
-        fullFilmList = new ArrayList<EachGridViewItemModel>();
-
-        for(File indexOfSavedFile : listOfSavedFiles) {
-            EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
-            indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
-            indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
-            indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
-            indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
-            indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
-
-            fullFilmList.add(indexOfSavedFileItemModel);
-        }
-
-        for(EachGridViewItemModel indexOfFullFilm : fullFilmList) {
-            LogManager.PrintLog("FullFilmManager", "onCreate", "fileName: " + indexOfFullFilm.GetVideoName(), LOG_LEVEL_DEBUG);
-        }
-
-        EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
-
-        fullFilmGridView.setAdapter(fullFilmGridViewAdapater);
+        InitLayout();
 
         floatingActionBtnNewMemory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,6 +66,42 @@ public class FullFilmManager extends Activity {
                 PlayVideo(eachGridViewItemModel.GetVideoOriginName());
             }
         });
+    }
+
+    void InitLayout() {
+
+        listOfSavedFiles = GetFileList(GetFilePath());
+
+        fullFilmList = new ArrayList<EachGridViewItemModel>();
+
+        for(File indexOfSavedFile : listOfSavedFiles) {
+            EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
+            indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
+            indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
+            indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
+            indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
+            indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
+
+            fullFilmList.add(indexOfSavedFileItemModel);
+        }
+
+        EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
+
+        fullFilmGridView.setAdapter(fullFilmGridViewAdapater);
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        InitLayout();
+        LogManager.PrintLog("FullFilmManager", "onResume", "update video list", LOG_LEVEL_INFO);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        LogManager.PrintLog("FullFilmManager", "onPause", "test", LOG_LEVEL_INFO);
     }
 
     void PlayVideo(String videoPath) {

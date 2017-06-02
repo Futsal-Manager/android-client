@@ -11,9 +11,11 @@ import android.widget.EditText;
 
 import com.futsal.manager.FutsalManagerMain;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.NetworkModule.CommunicationWithServer;
 import com.futsal.manager.R;
 
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
 
@@ -26,6 +28,7 @@ public class LoginSignUpManager extends Activity {
     Button btnLogIn;
     EditText etxtEmail, etxtPassword;
     Intent moveToMainLayout;
+    CommunicationWithServer communicationWithServer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public class LoginSignUpManager extends Activity {
         setContentView(R.layout.login_signup_manager);
 
         moveToMainLayout = new Intent(this, FutsalManagerMain.class);
+        communicationWithServer = new CommunicationWithServer(getApplicationContext());
 
         btnLogIn = (Button)findViewById(R.id.btnLogIn);
         etxtEmail = (EditText) findViewById(R.id.etxtEmail);
@@ -64,7 +68,22 @@ public class LoginSignUpManager extends Activity {
         @Override
         protected Void doInBackground(Void... params) {
             try{
-                Thread.sleep(2000);
+                communicationWithServer.AuthLogin(TEST_ACCOUNT, TEST_ACCOUNT_PASSWORD);
+                Runnable waitForLogin = new Runnable() {
+                    @Override
+                    public void run() {
+                        LogManager.PrintLog("LoginSignUpManager", "run", "sigining", LOG_LEVEL_INFO);
+                        while(!communicationWithServer.GetLoginStatus()) {
+                            try {
+                                Thread.sleep(1);
+                            }
+                            catch (Exception err) {
+                                LogManager.PrintLog("LoginSignUpManager", "run", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                                break;
+                            }
+                        }
+                    }
+                };
             }
             catch (Exception err) {
                 LogManager.PrintLog("LoginOrSignUpProcess", "doInBackground", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);

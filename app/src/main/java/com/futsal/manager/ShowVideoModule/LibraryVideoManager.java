@@ -20,7 +20,7 @@ public class LibraryVideoManager extends Activity {
 
     TabHost tabHostLibrary;
     TabHost.TabSpec fullFilmTab, highLightFilmTab;
-
+    LocalActivityManager localActivityManager;
     Window libraryVideoManagerWindow;
 
     @Override
@@ -45,7 +45,7 @@ public class LibraryVideoManager extends Activity {
 
         try {
 
-            LocalActivityManager localActivityManager = new LocalActivityManager(this, false);
+            localActivityManager = new LocalActivityManager(this, true);
             localActivityManager.dispatchCreate(savedInstanceState);
             tabHostLibrary.setup(localActivityManager);
             tabHostLibrary.addTab(fullFilmTab);
@@ -54,5 +54,12 @@ public class LibraryVideoManager extends Activity {
         catch (Exception err) {
             LogManager.PrintLog("LibraryVideoManager", "onCreate", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
         }
+
+        tabHostLibrary.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                localActivityManager.dispatchResume();
+            }
+        });
     }
 }
