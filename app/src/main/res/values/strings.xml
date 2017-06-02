@@ -50,4 +50,9 @@
     <!-- MakeNewMemoryModule/MakeNewMemoryManagerProcesser(영상 촬영중 하드웨어 장비 간 연결이 끊겼을시) -->
     <string name="bluetoothDeviceConnectionRefused">Lost connection with embedded device.</string>
     <string name="ohShit">Ok</string>
+    
+    <!-- LoginSignUpManager -->
+    <string name="LoginFailureMessage">There was a problem signing in.</string>
+    <string name="omg">Ok</string>
+    <string name="loginChecking">Registering</string>
 </resources>

@@ -40,9 +40,12 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
+import static com.futsal.manager.DefineManager.LOGIN_FAILURE;
+import static com.futsal.manager.DefineManager.LOGIN_SUCCESS;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.NOT_LOGGED_IN;
 import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
@@ -58,6 +61,7 @@ public class CommunicationWithServer{
     static boolean DEBUG_MODE = false, loginStatus = false;
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
     List<String> fileUrlList;
+    int loginStatusVer2 = NOT_LOGGED_IN;
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -187,8 +191,47 @@ public class CommunicationWithServer{
         });
     }
 
+    public void AuthLoginVer2(String username, String password) {
+        Retrofit2NetworkInterface retrofit2NetworkInterface = createRetrofit().create(Retrofit2NetworkInterface.class);
+        AuthLoginRequest authLoginRequest = new AuthLoginRequest();
+        authLoginRequest.SetUsername(username);
+        authLoginRequest.SetPassword(password);
+
+        loginStatusVer2 = NOT_LOGGED_IN;
+
+        Call<AuthLoginResponse> calling = retrofit2NetworkInterface.AuthLoginProcess("application/json", authLoginRequest);
+        calling.enqueue(new Callback<AuthLoginResponse>() {
+            @Override
+            public void onResponse(Call<AuthLoginResponse> call, Response<AuthLoginResponse> response) {
+
+                Headers headers = response.headers();
+                String sid = response.headers().get("connect.sid");
+                Log.d(applicationContext.getString(R.string.app_name), "sid: " + sid);
+                Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body());
+                try {
+                    Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetMsg());
+                }
+                catch (Exception err) {
+                    Log.d(applicationContext.getString(R.string.app_name), "failed: " + err.getMessage());
+                }
+                loginStatusVer2 = LOGIN_SUCCESS;
+            }
+
+            @Override
+            public void onFailure(Call<AuthLoginResponse> call, Throwable t) {
+                Log.d(applicationContext.getString(R.string.app_name), "failed");
+                Log.d(applicationContext.getString(R.string.app_name), "Error: " + t.getMessage());
+                loginStatusVer2 = LOGIN_FAILURE;
+            }
+        });
+    }
+
     public boolean GetLoginStatus() {
         return loginStatus;
+    }
+
+    public int GetLoginStatusVer2() {
+        return loginStatusVer2;
     }
 
     public void AuthSignup(String username, String password) {

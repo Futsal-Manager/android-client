@@ -51,7 +51,9 @@ public class DefineManager {
 
                             VIDEO_RECORD_TIME_DATA = 0,
 
-                            LIBRARY_TYPE_EDIT = 0, LIBRARY_TYPE_SHARE = 1, LIBRARY_TYPE_CHECK = 2, LIBRARY_TYPE_NOT_CHECK = 3;
+                            LIBRARY_TYPE_EDIT = 0, LIBRARY_TYPE_SHARE = 1, LIBRARY_TYPE_CHECK = 2, LIBRARY_TYPE_NOT_CHECK = 3,
+
+                            NOT_LOGGED_IN = 0, LOGIN_FAILURE = 1, LOGIN_SUCCESS = 2;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
 
