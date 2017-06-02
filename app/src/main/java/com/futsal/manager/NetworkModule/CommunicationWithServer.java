@@ -262,6 +262,7 @@ public class CommunicationWithServer{
         else {
             calling = retrofit2NetworkInterface.FileList();
         }
+        fileUrlList = null;
         calling.enqueue(new Callback<FileResponse>() {
             @Override
             public void onResponse(Call<FileResponse> call, Response<FileResponse> response) {
@@ -298,6 +299,7 @@ public class CommunicationWithServer{
             @Override
             public void onFailure(Call<FileResponse> call, Throwable t) {
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
+                fileUrlList = new ArrayList<String>();
             }
         });
     }

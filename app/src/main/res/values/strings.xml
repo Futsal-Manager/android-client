@@ -55,4 +55,7 @@
     <string name="LoginFailureMessage">There was a problem signing in.</string>
     <string name="omg">Ok</string>
     <string name="loginChecking">Registering</string>
+
+    <!--HighLightFilmManager -->
+    <string name="loadingMyFileListFromServer">Loading...</string>
 </resources>
