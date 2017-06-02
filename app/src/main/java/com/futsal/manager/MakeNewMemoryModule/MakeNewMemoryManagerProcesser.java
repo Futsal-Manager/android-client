@@ -325,7 +325,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         hour = recordDateInfo.getHours();
         min = recordDateInfo.getMinutes();
         sec = recordDateInfo.getSeconds();
-        String dateInfo = "" + (year - 100) + "" + (month + 1) + "" + day + "" + hour + "" + min + "" + sec;
+        String dateInfo = "" + String.format("%02d", (year - 100)) + "" + String.format("%02d", (month + 1)) + "" + String.format("%02d", day)
+                + "" + String.format("%02d", hour) + "" + String.format("%02d", min) + "" + String.format("%02d", sec);
         //dateInfo = "";
         return dateInfo;
     }
