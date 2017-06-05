@@ -145,6 +145,7 @@ public class HighLightFilmManager extends Activity {
                     eachGridViewItemModel.SetVideoName(ParseFileName(eachFileName));
                     eachGridViewItemModel.SetVideoOriginName(eachFileName);
                     eachGridViewItemModel.SetSubBtnType(LIBRARY_TYPE_SHARE);
+                    eachGridViewItemModel.SetMediaScanContext(getApplicationContext());
 
                     highLightFilmList.add(eachGridViewItemModel);
                 }

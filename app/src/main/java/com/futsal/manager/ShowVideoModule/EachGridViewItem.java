@@ -1,7 +1,10 @@
 package com.futsal.manager.ShowVideoModule;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +24,8 @@ import static com.futsal.manager.DefineManager.LIBRARY_TYPE_EDIT;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_NOT_CHECK;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_SHARE;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -65,12 +70,21 @@ public class EachGridViewItem extends BaseAdapter {
         TextView txtVideoName = (TextView) convertView.findViewById(R.id.txtVideoName);
         TextView txtVideoTime = (TextView) convertView.findViewById(R.id.txtVideoTime);
 
-        EachGridViewItemModel indexOfGridViewItemData = gridViewItemData.get(position);
+        final EachGridViewItemModel indexOfGridViewItemData = gridViewItemData.get(position);
 
         layoutSubBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LogManager.PrintLog("EachGridViewItem", "onClick", "sub relative layout click", LOG_LEVEL_DEBUG);
+                switch (indexOfGridViewItemData.GetSubBtnType()) {
+                    case LIBRARY_TYPE_EDIT:
+                        break;
+                    case LIBRARY_TYPE_SHARE:
+                        ScanVideo("Share video", indexOfGridViewItemData.GetVideoOriginName(), indexOfGridViewItemData.GetMediaScanContext());
+                        break;
+                    default:
+                        break;
+                }
             }
         });
 
@@ -103,5 +117,33 @@ public class EachGridViewItem extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    public void ScanVideo(final String title, String videoSavedPath, final Context mediaScanContext) {
+        MediaScannerConnection.scanFile(mediaScanContext, new String[]{videoSavedPath},
+                null, new MediaScannerConnection.MediaScannerConnectionClient() {
+                    @Override
+                    public void onMediaScannerConnected() {
+
+                    }
+
+                    @Override
+                    public void onScanCompleted(String path, Uri uri) {
+                        try {
+                            LogManager.PrintLog("EachGridViewItem", "onScanCompleted", "path: " + path, LOG_LEVEL_INFO);
+                            Intent videoLinkShare = new Intent(Intent.ACTION_SEND);
+                            videoLinkShare.setType("text/plain");
+                            videoLinkShare.putExtra(Intent.EXTRA_SUBJECT, title);
+                            videoLinkShare.putExtra(Intent.EXTRA_TEXT, path);
+                            videoLinkShare = Intent.createChooser(videoLinkShare, "Choose one");
+                            videoLinkShare.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            videoLinkShare.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            mediaScanContext.startActivity(videoLinkShare);
+                        }
+                        catch (Exception err) {
+                            LogManager.PrintLog("EachGridViewItem", "onScanCompleted", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                        }
+                    }
+                });
     }
 }

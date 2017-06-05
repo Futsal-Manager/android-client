@@ -1,5 +1,6 @@
 package com.futsal.manager.ShowVideoModule;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 
 /**
@@ -12,6 +13,7 @@ public class EachGridViewItemModel {
     Bitmap thumbnailImage;
     boolean isItemSelected;
     int subBtnType;
+    Context mediaScanContext;
 
     public void SetVideoName(String videoName) {
         this.videoName = videoName;
@@ -37,6 +39,10 @@ public class EachGridViewItemModel {
         this.subBtnType = subBtnType;
     }
 
+    public void SetMediaScanContext(Context mediaScanContext) {
+        this.mediaScanContext = mediaScanContext;
+    }
+
     public String GetVideoName() {
         return videoName;
     }
@@ -59,5 +65,9 @@ public class EachGridViewItemModel {
 
     public int GetSubBtnType() {
         return subBtnType;
+    }
+
+    public Context GetMediaScanContext() {
+        return mediaScanContext;
     }
 }

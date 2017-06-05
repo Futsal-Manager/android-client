@@ -81,6 +81,7 @@ public class FullFilmManager extends Activity {
             indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
             indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
             indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
+            indexOfSavedFileItemModel.SetMediaScanContext(getApplicationContext());
 
             fullFilmList.add(indexOfSavedFileItemModel);
         }
