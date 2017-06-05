@@ -23,6 +23,7 @@ import static com.futsal.manager.DefineManager.LIBRARY_TYPE_SHARE;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.NOT_LOADED;
 import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
 
 /**
@@ -124,18 +125,17 @@ public class HighLightFilmManager extends Activity {
         protected Void doInBackground(Void... params) {
             try {
                 communicationWithServer.FileList();
-                while(true) {
+                while(communicationWithServer.GetFileStatus() == NOT_LOADED) {
                     try {
-                        serverSavedFileList = communicationWithServer.GetFileUrls();
-                        if(serverSavedFileList != null) {
-                            LogManager.PrintLog("HighLightFilmManager", "doInBackground", "File list loaded", LOG_LEVEL_INFO);
-                            break;
-                        }
                         Thread.sleep(1);
                     }
                     catch (Exception err) {
                         LogManager.PrintLog("HighLightFilmManager", "doInBackground", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
                     }
+                }
+                serverSavedFileList = communicationWithServer.GetFileUrls();
+                if(serverSavedFileList != null) {
+                    LogManager.PrintLog("HighLightFilmManager", "doInBackground", "File list loaded", LOG_LEVEL_INFO);
                 }
 
                 for(String eachFileName : serverSavedFileList) {

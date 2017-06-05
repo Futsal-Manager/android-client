@@ -40,11 +40,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.PartMap;
 
+import static com.futsal.manager.DefineManager.LOAD_FAILURE;
+import static com.futsal.manager.DefineManager.LOAD_SUCCESS;
 import static com.futsal.manager.DefineManager.LOGIN_FAILURE;
 import static com.futsal.manager.DefineManager.LOGIN_SUCCESS;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.NOT_LOADED;
 import static com.futsal.manager.DefineManager.NOT_LOGGED_IN;
 import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
@@ -61,7 +64,7 @@ public class CommunicationWithServer{
     static boolean DEBUG_MODE = false, loginStatus = false;
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
     List<String> fileUrlList;
-    int loginStatusVer2 = NOT_LOGGED_IN;
+    int loginStatusVer2 = NOT_LOGGED_IN, getFileStatusVer2 = NOT_LOADED;
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -263,6 +266,7 @@ public class CommunicationWithServer{
             calling = retrofit2NetworkInterface.FileList();
         }
         fileUrlList = null;
+        getFileStatusVer2 = NOT_LOADED;
         calling.enqueue(new Callback<FileResponse>() {
             @Override
             public void onResponse(Call<FileResponse> call, Response<FileResponse> response) {
@@ -281,9 +285,11 @@ public class CommunicationWithServer{
                 ArrayList<FileResponse.s3url> linkList = fileList;
                 fileUrlList = new ArrayList<String>();
                 LogManager.PrintLog("CommunicationWithServer", "FileList", "saving each file url", DefineManager.LOG_LEVEL_INFO);
-                for(FileResponse.s3url eachFileUrlIndex : linkList) {
-                    fileUrlList.add(eachFileUrlIndex.GetS3url());
-                    LogManager.PrintLog("CommunicationWithServer", "FileList", "each file url: " + eachFileUrlIndex.GetS3url(), DefineManager.LOG_LEVEL_INFO);
+                if(linkList != null) {
+                    for(FileResponse.s3url eachFileUrlIndex : linkList) {
+                        fileUrlList.add(eachFileUrlIndex.GetS3url());
+                        LogManager.PrintLog("CommunicationWithServer", "FileList", "each file url: " + eachFileUrlIndex.GetS3url(), DefineManager.LOG_LEVEL_INFO);
+                    }
                 }
                 //Log.d(applicationContext.getString(R.string.app_name), "url: " + linkList.get(0).GetS3url());
 
@@ -294,12 +300,14 @@ public class CommunicationWithServer{
                 catch (Exception err) {
                     LogManager.PrintLog("CommunicationWithServer", "FileList", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
                 }
+                getFileStatusVer2 = LOAD_SUCCESS;
             }
 
             @Override
             public void onFailure(Call<FileResponse> call, Throwable t) {
                 Log.d(applicationContext.getString(R.string.app_name), "failed");
                 fileUrlList = new ArrayList<String>();
+                getFileStatusVer2 = LOAD_FAILURE;
             }
         });
     }
@@ -310,6 +318,10 @@ public class CommunicationWithServer{
 
     public List<String> GetFileUrls() {
         return fileUrlList;
+    }
+
+    public int GetFileStatus() {
+        return getFileStatusVer2;
     }
 
     public void UploadFile(Uri fileSavedPath) {

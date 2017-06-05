@@ -34,7 +34,7 @@ public class LibraryVideoManager extends Activity {
         setContentView(R.layout.library_video_manager);
 
         libraryVideoManagerWindow = getWindow();
-        libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
+        libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
 
         tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
         imgBtnProfile = (ImageButton) findViewById(R.id.imgBtnProfile);

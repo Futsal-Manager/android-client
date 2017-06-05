@@ -19,6 +19,7 @@
     <uses-feature android:name="android.hardware.camera.front"/>
     <uses-feature android:name="android.hardware.camera.front.autofocus"/>
     <uses-feature android:name="android.hardware.camera2.full" />
+    <protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" />
 
     <application
         android:largeHeap="true"

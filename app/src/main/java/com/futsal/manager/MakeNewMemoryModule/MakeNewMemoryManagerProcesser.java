@@ -3,8 +3,11 @@ package com.futsal.manager.MakeNewMemoryModule;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.hardware.Camera;
 import android.media.MediaRecorder;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
@@ -253,7 +256,29 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         mediaRecording.reset();
         mediaRecording.release();
         mediaRecording = null;
-        //opencvCameraView.enableView();
+
+        /*makeNewMmeoryManager.sendBroadcast(new Intent(Intent.ACTION_MEDIA_MOUNTED, Uri
+                .parse("file://"
+                        + GetFilePath())));
+        //opencvCameraView.enableView();*/
+        MediaScanning();
+    }
+
+    void MediaScanning() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Intent mediaScanIntent = new Intent(
+                    Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+
+            File out = new File(GetFilePath());
+            Uri contentUri = Uri.fromFile(out);
+            mediaScanIntent.setData(contentUri);
+            makeNewMmeoryManager.sendBroadcast(mediaScanIntent);
+        } else {
+            makeNewMmeoryManager.sendBroadcast(new Intent(
+                    Intent.ACTION_MEDIA_MOUNTED,
+                    Uri.parse("file://"
+                            + GetFilePath())));
+        }
     }
 
     public void StartRecordMedia() {
