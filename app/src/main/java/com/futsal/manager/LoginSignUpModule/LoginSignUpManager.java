@@ -13,6 +13,7 @@ import com.futsal.manager.ShowVideoModule.LibraryVideoManager;
 
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
+import static com.futsal.manager.DefineManager.TEST_TEAM_NAME;
 
 /**
  * Created by stories2 on 2017. 4. 25..
@@ -21,7 +22,7 @@ import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
 public class LoginSignUpManager extends Activity {
 
     Button btnLogIn, btnSignUp;
-    EditText etxtEmail, etxtPassword;
+    EditText etxtEmail, etxtPassword, etxtTeam;
     Intent moveToMainLayout;
     CommunicationWithServer communicationWithServer;
     LoginOrSignUpProcess loginOrSignUpProcess;
@@ -42,9 +43,11 @@ public class LoginSignUpManager extends Activity {
         btnSignUp = (Button) findViewById(R.id.btnSignUp);
         etxtEmail = (EditText) findViewById(R.id.etxtEmail);
         etxtPassword = (EditText) findViewById(R.id.etxtPassword);
+        etxtTeam = (EditText) findViewById(R.id.etxtTeam);
 
         etxtEmail.setText(TEST_ACCOUNT);
         etxtPassword.setText(TEST_ACCOUNT_PASSWORD);
+        etxtTeam.setText(TEST_TEAM_NAME);
 
 //        loginOrSignUpProcess = new LoginOrSignUpProcess(loginSignUpManager);
 //        loginOrSignUpProcess.execute();
@@ -60,7 +63,8 @@ public class LoginSignUpManager extends Activity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                signUpProcess = new SignUpProcess(loginSignUpManager, communicationWithServer, etxtEmail.getText().toString(), etxtPassword.getText().toString());
+                signUpProcess = new SignUpProcess(loginSignUpManager, communicationWithServer,
+                        etxtEmail.getText().toString(), etxtPassword.getText().toString(), etxtTeam.getText().toString());
                 signUpProcess.execute();
             }
         });

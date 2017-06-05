@@ -32,6 +32,20 @@
             android:id="@+id/etxtPassword"/>
     </com.wrapp.floatlabelededittext.FloatLabeledEditText>
 
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        float:fletPaddingBottom="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Team"
+            android:inputType="text"
+            android:id="@+id/etxtTeam"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

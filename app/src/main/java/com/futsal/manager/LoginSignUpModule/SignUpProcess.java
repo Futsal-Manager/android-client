@@ -26,7 +26,7 @@ public class SignUpProcess extends AsyncTask<Void, Void, Void> {
     ProgressDialog signUpDialog;
     Activity loginSignUpManager;
     CommunicationWithServer communicationWithServer;
-    String userName, userPassword;
+    String userName, userPassword, team;
 
     public SignUpProcess() {
         super();
@@ -41,10 +41,23 @@ public class SignUpProcess extends AsyncTask<Void, Void, Void> {
         signUpDialog = new ProgressDialog(loginSignUpManager);
     }
 
+    public SignUpProcess(Activity loginSignUpManager, CommunicationWithServer communicationWithServer, String userName, String userPassword, String team) {
+        this.loginSignUpManager = loginSignUpManager;
+        this.communicationWithServer = communicationWithServer;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.team = team;
+
+        LogManager.PrintLog("SignUpProcess", "SignUpProcess", "Send data info: " + userName + " " + userPassword + " " + team, LOG_LEVEL_INFO);
+
+        signUpDialog = new ProgressDialog(loginSignUpManager);
+    }
+
     @Override
     protected Void doInBackground(Void... params) {
         LogManager.PrintLog("SignUpProcess", "doInBackground", "Start Auth Sign Up", LOG_LEVEL_INFO);
-        communicationWithServer.AuthSignup(userName, userPassword);
+        //communicationWithServer.AuthSignup(userName, userPassword);
+        communicationWithServer.AuthSignupVer2(userName, userPassword, team);
         while(communicationWithServer.GetSignUpStatusVer2() == NOT_SIGN_UP) {
             try {
                 Thread.sleep(1);
@@ -53,35 +66,7 @@ public class SignUpProcess extends AsyncTask<Void, Void, Void> {
                 LogManager.PrintLog("SignUpProcess", "doInBackground", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
             }
         }
-        if(communicationWithServer.GetLoginStatusVer2() == SIGN_UP_SUCCESS) {
 
-            LogManager.PrintLog("SignUpProcess", "doInBackground", "Sign Up success", LOG_LEVEL_INFO);
-            AlertDialog.Builder signUpSuccessMessageBuilder = new AlertDialog.Builder(loginSignUpManager);
-            signUpSuccessMessageBuilder.setMessage(loginSignUpManager.getString(R.string.signUpSuccessMessage));
-            signUpSuccessMessageBuilder.setPositiveButton(R.string.whatEver, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog signUpSuccessDialog = signUpSuccessMessageBuilder.create();
-            signUpSuccessDialog.show();
-        }
-        else if(communicationWithServer.GetLoginStatusVer2() == SIGN_UP_FAILURE){
-
-            LogManager.PrintLog("SignUpProcess", "doInBackground", "Sign Up fail", LOG_LEVEL_INFO);
-            AlertDialog.Builder signUpFailureSuccessMessageBuilder = new AlertDialog.Builder(loginSignUpManager);
-            signUpFailureSuccessMessageBuilder.setMessage(loginSignUpManager.getString(R.string.signUpFailureMessage));
-            signUpFailureSuccessMessageBuilder.setPositiveButton(R.string.whatEver, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            AlertDialog signUpFailureDialog = signUpFailureSuccessMessageBuilder.create();
-            signUpFailureDialog.show();
-
-        }
         return null;
     }
 
@@ -99,7 +84,35 @@ public class SignUpProcess extends AsyncTask<Void, Void, Void> {
         try {
             signUpDialog.dismiss();
 
+            if(communicationWithServer.GetSignUpStatusVer2() == SIGN_UP_SUCCESS) {
 
+                LogManager.PrintLog("SignUpProcess", "doInBackground", "Sign Up success", LOG_LEVEL_INFO);
+                AlertDialog.Builder signUpSuccessMessageBuilder = new AlertDialog.Builder(loginSignUpManager);
+                signUpSuccessMessageBuilder.setMessage(loginSignUpManager.getString(R.string.signUpSuccessMessage));
+                signUpSuccessMessageBuilder.setPositiveButton(R.string.whatEver, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog signUpSuccessDialog = signUpSuccessMessageBuilder.create();
+                signUpSuccessDialog.show();
+            }
+            else if(communicationWithServer.GetSignUpStatusVer2() == SIGN_UP_FAILURE){
+
+                LogManager.PrintLog("SignUpProcess", "doInBackground", "Sign Up fail", LOG_LEVEL_INFO);
+                AlertDialog.Builder signUpFailureSuccessMessageBuilder = new AlertDialog.Builder(loginSignUpManager);
+                signUpFailureSuccessMessageBuilder.setMessage(loginSignUpManager.getString(R.string.signUpFailureMessage));
+                signUpFailureSuccessMessageBuilder.setPositiveButton(R.string.whatEver, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                AlertDialog signUpFailureDialog = signUpFailureSuccessMessageBuilder.create();
+                signUpFailureDialog.show();
+
+            }
         }
         catch (Exception err) {
             LogManager.PrintLog("SignUpProcess", "onPostExecute", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);

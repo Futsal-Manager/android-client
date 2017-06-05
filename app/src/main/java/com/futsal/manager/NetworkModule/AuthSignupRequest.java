@@ -5,7 +5,7 @@ package com.futsal.manager.NetworkModule;
  */
 
 public class AuthSignupRequest {
-    String username, password;
+    String username, password, team;
 
     public void SetUsername(String username) {
         this.username = username;
@@ -15,11 +15,19 @@ public class AuthSignupRequest {
         this.password = password;
     }
 
+    public void SetTeam(String team) {
+        this.team = team;
+    }
+
     public String GetUsername() {
         return username;
     }
 
     public String GetPassword() {
         return password;
+    }
+
+    public String GetTeam() {
+        return team;
     }
 }

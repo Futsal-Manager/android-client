@@ -59,6 +59,7 @@ public class DefineManager {
 
                             NOT_SIGN_UP = 0, SIGN_UP_FAILURE = 1, SIGN_UP_SUCCESS = 2;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
+                        TEST_TEAM_NAME = "병욱이와 아이들",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
 
                         AVAILABLE_BLUETOOTH_NAME = "HC-06";

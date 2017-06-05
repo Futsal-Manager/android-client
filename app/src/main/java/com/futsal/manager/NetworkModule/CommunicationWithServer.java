@@ -275,6 +275,37 @@ public class CommunicationWithServer{
         });
     }
 
+    public void AuthSignupVer2(String username, String password, String team) {
+        signUpStatusVer2 = NOT_SIGN_UP;
+        Retrofit2NetworkInterface retrofit2NetworkInterface = retrofit.create(Retrofit2NetworkInterface.class);
+        AuthSignupRequest authSignupRequest = new AuthSignupRequest();
+        authSignupRequest.SetUsername(username);
+        authSignupRequest.SetPassword(password);
+        authSignupRequest.SetTeam(team);
+        Call<AuthSignupResponse> calling = retrofit2NetworkInterface.AuthSignup("application/json", authSignupRequest);
+        calling.enqueue(new Callback<AuthSignupResponse>() {
+            @Override
+            public void onResponse(Call<AuthSignupResponse> call, Response<AuthSignupResponse> response) {
+                Log.d(applicationContext.getString(R.string.app_name), "response: " + response);
+                try {
+                    LogManager.PrintLog("CommunicationWithServer", "AuthSignupVer2" , "res: " + response.body().GetRes(), LOG_LEVEL_INFO);
+                    signUpStatusVer2 = SIGN_UP_SUCCESS;
+                }
+                catch (Exception err) {
+                    LogManager.PrintLog("CommunicationWithServer", "AuthSignupVer2" , "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                    signUpStatusVer2 = SIGN_UP_FAILURE;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AuthSignupResponse> call, Throwable t) {
+                Log.d(applicationContext.getString(R.string.app_name), "Error: " + t.getMessage());
+
+                signUpStatusVer2 = SIGN_UP_FAILURE;
+            }
+        });
+    }
+
     public int GetSignUpStatusVer2() {
         return signUpStatusVer2;
     }
