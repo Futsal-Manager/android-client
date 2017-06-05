@@ -49,7 +49,10 @@ import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.NOT_LOADED;
 import static com.futsal.manager.DefineManager.NOT_LOGGED_IN;
+import static com.futsal.manager.DefineManager.NOT_SIGN_UP;
 import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
+import static com.futsal.manager.DefineManager.SIGN_UP_FAILURE;
+import static com.futsal.manager.DefineManager.SIGN_UP_SUCCESS;
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
 /**
@@ -64,7 +67,8 @@ public class CommunicationWithServer{
     static boolean DEBUG_MODE = false, loginStatus = false;
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
     List<String> fileUrlList;
-    int loginStatusVer2 = NOT_LOGGED_IN, getFileStatusVer2 = NOT_LOADED;
+    int loginStatusVer2 = NOT_LOGGED_IN, getFileStatusVer2 = NOT_LOADED,
+        signUpStatusVer2 = NOT_SIGN_UP;
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -211,13 +215,24 @@ public class CommunicationWithServer{
                 String sid = response.headers().get("connect.sid");
                 Log.d(applicationContext.getString(R.string.app_name), "sid: " + sid);
                 Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body());
+                /*if(sid == null) {
+                    loginStatusVer2 = LOGIN_FAILURE;
+                    return;
+                }*/
                 try {
                     Log.d(applicationContext.getString(R.string.app_name), "response: " + response.body().GetMsg());
+                    if(response.body().GetMsg().equals("success login")) {
+                        loginStatusVer2 = LOGIN_SUCCESS;
+                    }
+                    else {
+                        loginStatusVer2 = LOGIN_FAILURE;
+                    }
+                    return ;
                 }
                 catch (Exception err) {
                     Log.d(applicationContext.getString(R.string.app_name), "failed: " + err.getMessage());
                 }
-                loginStatusVer2 = LOGIN_SUCCESS;
+                //loginStatusVer2 = LOGIN_SUCCESS;
             }
 
             @Override
@@ -243,17 +258,25 @@ public class CommunicationWithServer{
         authSignupRequest.SetUsername(username);
         authSignupRequest.SetPassword(password);
         Call<AuthSignupResponse> calling = retrofit2NetworkInterface.AuthSignup("application/json", authSignupRequest);
+        signUpStatusVer2 = NOT_SIGN_UP;
         calling.enqueue(new Callback<AuthSignupResponse>() {
             @Override
             public void onResponse(Call<AuthSignupResponse> call, Response<AuthSignupResponse> response) {
                 Log.d(applicationContext.getString(R.string.app_name), "response: " + response);
+                signUpStatusVer2 = SIGN_UP_SUCCESS;
             }
 
             @Override
             public void onFailure(Call<AuthSignupResponse> call, Throwable t) {
                 Log.d(applicationContext.getString(R.string.app_name), "Error: " + t.getMessage());
+
+                signUpStatusVer2 = SIGN_UP_FAILURE;
             }
         });
+    }
+
+    public int GetSignUpStatusVer2() {
+        return signUpStatusVer2;
     }
 
     public void FileList() {

@@ -58,4 +58,10 @@
 
     <!--HighLightFilmManager -->
     <string name="loadingMyFileListFromServer">Loading...</string>
+
+    <!--SignUpProcess -->
+    <string name="signUpSuccessMessage">Membership registration was successful.</string>
+    <string name="signUpFailureMessage">There was a problem registering</string>
+    <string name="signingUp">Registering</string>
+    <string name="whatEver">Ok</string>
 </resources>
