@@ -61,6 +61,7 @@ public class DefineManager {
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         TEST_TEAM_NAME = "병욱이와 아이들",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
+                        VIDEO_SERVER_DOMAIN_NAME = "futsal-manager.s3.ap-northeast-2.amazonaws.com",
 
                         AVAILABLE_BLUETOOTH_NAME = "HC-06";
 

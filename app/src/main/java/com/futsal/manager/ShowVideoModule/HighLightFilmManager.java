@@ -24,7 +24,7 @@ import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.NOT_LOADED;
-import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
+import static com.futsal.manager.DefineManager.VIDEO_SERVER_DOMAIN_NAME;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -189,7 +189,8 @@ public class HighLightFilmManager extends Activity {
         }
 
         String ParseFileName(String originFileName) {
-            originFileName.replace("https://" + SERVER_DOMAIN_NAME + "/", "");
+            originFileName = originFileName.replace("https://" + VIDEO_SERVER_DOMAIN_NAME + "/", "");
+            LogManager.PrintLog("HighLightFilmManager", "ParseFileName", "replaced: " + originFileName, LOG_LEVEL_DEBUG);
             if(originFileName.contains("FutsalManager") && originFileName.length() == 29) {
                 String dateString = originFileName.split("FutsalManager")[1];
                 String year = dateString.substring(0, 2);
@@ -198,7 +199,7 @@ public class HighLightFilmManager extends Activity {
                 String hour = dateString.substring(6, 8);
                 String min = dateString.substring(8, 10);
                 String fileNameParsed = "20" + year + "-" + month + "-" + day + " " + hour + ":" + min;
-                LogManager.PrintLog("FullFilmManager", "ParseFileName", "parsed: " + fileNameParsed, LOG_LEVEL_DEBUG);
+                LogManager.PrintLog("HighLightFilmManager", "ParseFileName", "parsed: " + fileNameParsed, LOG_LEVEL_DEBUG);
                 return fileNameParsed;
             }
             else {
