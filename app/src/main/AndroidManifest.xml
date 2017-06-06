@@ -152,6 +152,20 @@
             >
 
         </activity>
+
+        <activity android:name=".LoginSignUpModule.LoginManager"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            >
+
+        </activity>
+
+        <activity android:name=".LoginSignUpModule.SignUpManager"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            >
+
+        </activity>
     </application>
 
 </manifest>

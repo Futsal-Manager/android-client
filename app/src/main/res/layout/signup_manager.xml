@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:float="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/darkGray"
+    >
+
+    <ImageView
+        android:layout_marginTop="146dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="199.5dp"
+        android:layout_height="102dp"
+        android:src="@drawable/text"
+        />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_marginTop="464dp"
+        android:layout_centerHorizontal="true"
+        android:text="Sign Up"
+        android:textColor="@color/red"
+        android:background="@color/black"
+        android:layout_width="265dp"
+        android:layout_height="48dp" />
+
+    <TextView
+        android:id="@+id/txtSignIn"
+        android:layout_marginTop="524.5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:letterSpacing="-0.03"
+        android:lineSpacingExtra="33sp"
+        android:layout_centerHorizontal="true"
+        android:text="Sign in"
+        />
+
+    <!-- add some padding -->
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="355.5dp"
+        android:layout_centerHorizontal="true"
+        float:fletPadding="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white"
+            android:inputType="text"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:hint="E-mail ID"
+            android:id="@+id/etxtEmail"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <!-- password input -->
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_marginTop="408dp"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        float:fletPaddingBottom="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/white"
+            android:inputType="textPassword"
+            android:id="@+id/etxtPassword"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+    <com.wrapp.floatlabelededittext.FloatLabeledEditText
+        android:layout_marginTop="304.5dp"
+        android:layout_width="265dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        float:fletPaddingBottom="10dp">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Team name"
+            android:textColor="@color/white"
+            android:singleLine="true"
+            android:imeOptions="actionDone"
+            android:textColorHint="@color/white"
+            android:inputType="text"
+            android:id="@+id/etxtTeam"/>
+    </com.wrapp.floatlabelededittext.FloatLabeledEditText>
+
+</RelativeLayout>

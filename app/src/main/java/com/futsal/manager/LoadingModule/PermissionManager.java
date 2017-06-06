@@ -14,7 +14,7 @@ import android.widget.LinearLayout;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
-import com.futsal.manager.LoginSignUpModule.LoginSignUpManager;
+import com.futsal.manager.LoginSignUpModule.LoginManager;
 import com.futsal.manager.R;
 
 import java.util.Arrays;
@@ -68,7 +68,7 @@ public class PermissionManager extends AppCompatActivity implements Animation.An
     }
 
     void MoveToMainActivity() {
-        Intent moveToMainActivityIntent = new Intent(this, LoginSignUpManager.class);
+        Intent moveToMainActivityIntent = new Intent(this, LoginManager.class);
         startActivity(moveToMainActivityIntent);
         finish();
     }

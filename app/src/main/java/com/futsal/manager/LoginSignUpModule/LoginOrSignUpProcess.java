@@ -16,8 +16,6 @@ import static com.futsal.manager.DefineManager.LOGIN_SUCCESS;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.NOT_LOGGED_IN;
-import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
-import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
 
 /**
  * Created by stories2 on 2017. 6. 5..
@@ -29,6 +27,7 @@ public class LoginOrSignUpProcess extends AsyncTask<Void, Void, Integer> {
     Activity loginOrSignUpProcessActivity;
     CommunicationWithServer communicationWithServer;
     Intent moveToMainLayout;
+    String userAccount, userPassword;
 
     public LoginOrSignUpProcess(Activity loginOrSignUpProcessActivity) {
         super();
@@ -46,12 +45,23 @@ public class LoginOrSignUpProcess extends AsyncTask<Void, Void, Integer> {
         this.moveToMainLayout = moveToMainLayout;
     }
 
+    public LoginOrSignUpProcess(Activity loginOrSignUpProcessActivity, CommunicationWithServer communicationWithServer, Intent moveToMainLayout,
+                                String userAccount, String userPassword) {
+        super();
+
+        loginOrSignUpProcess = new ProgressDialog(loginOrSignUpProcessActivity);
+        this.loginOrSignUpProcessActivity = loginOrSignUpProcessActivity;
+        this.communicationWithServer = communicationWithServer;
+        this.moveToMainLayout = moveToMainLayout;
+        this.userAccount = userAccount;
+        this.userPassword = userPassword;
+    }
 
     @Override
     protected Integer doInBackground(Void... params) {
 
         try{
-            communicationWithServer.AuthLoginVer2(TEST_ACCOUNT, TEST_ACCOUNT_PASSWORD);
+            communicationWithServer.AuthLoginVer2(userAccount, userPassword);
             LogManager.PrintLog("LoginSignUpManager", "doInBackground", "waiting server response", LOG_LEVEL_INFO);
             while(communicationWithServer.GetLoginStatusVer2() == NOT_LOGGED_IN) {
                 try {
