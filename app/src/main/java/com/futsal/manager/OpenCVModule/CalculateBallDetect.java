@@ -16,9 +16,13 @@ import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.BALL_DETECT_CUTLINE_Y;
 import static com.futsal.manager.DefineManager.BLUR_MODE_OPTION;
+import static com.futsal.manager.DefineManager.MAXIMUM_CIRCLE_RADIUS;
 import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_H;
 import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_S;
 import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_V;
@@ -41,7 +45,7 @@ public class CalculateBallDetect {
     List<MatOfPoint> listOfContour;
     int i, maxPoint;
     double max, contourArea;
-    Point xy, center;
+    Point xy, center, xyTemp;
     float[] radius;
     Moments M;
     MatOfPoint2f c;
@@ -59,6 +63,7 @@ public class CalculateBallDetect {
 
         xy = new Point();
         center = new Point();
+        xyTemp = new Point();
 
         M = new Moments();
 
@@ -94,7 +99,29 @@ public class CalculateBallDetect {
 
             if(!listOfContour.isEmpty()) {
 
-                c = Max(listOfContour);
+                Collections.sort(listOfContour, contourAreaCompare);
+                Collections.reverse(listOfContour);
+
+                for(MatOfPoint c2 : listOfContour) {
+                    c = MatOfPointToMatOfPoint2f(c2);
+                    radius = new float[listOfContour.size()];
+
+                    Imgproc.minEnclosingCircle(c, xyTemp, radius);
+
+                    M = Imgproc.moments(c);
+
+                    center.x = M.m10 / M.m00;
+                    center.y = M.m01 / M.m00;
+
+                    if(radius[0] > MINIMUM_CIRCLE_RADIUS && radius[0] < MAXIMUM_CIRCLE_RADIUS && center.y >= BALL_DETECT_CUTLINE_Y) {
+                        xy = xyTemp;
+                        Imgproc.circle(frame, xy, (int)radius[0], new Scalar(0, 255, 255), 2);
+                        LogManager.PrintLog("OpenCVModuleProcesser", "DetectCircleFromFrameImage", "Ball Position: " + xy.x + " " + xy.y, DefineManager.LOG_LEVEL_DEBUG);
+                        break;
+                    }
+                }
+
+                /*c = Max(listOfContour);
 
                 if(c != null) {
 
@@ -112,7 +139,7 @@ public class CalculateBallDetect {
                     }
 
                     LogManager.PrintLog("OpenCVModuleProcesser", "DetectCircleFromFrameImage", "Ball Position: " + xy.x + " " + xy.y, DefineManager.LOG_LEVEL_DEBUG);
-                }
+                }*/
 
                 listOfContour.clear();
             }
@@ -133,6 +160,21 @@ public class CalculateBallDetect {
         }
         return new MatOfPoint2f(matOfPoint.toArray());
     }
+
+    Comparator<MatOfPoint> contourAreaCompare = new Comparator<MatOfPoint>() {
+        @Override
+        public int compare(MatOfPoint o1, MatOfPoint o2) {
+            double contourAreaSizeO1 = Imgproc.contourArea(o1),
+                    contourAreaSizeO2 = Imgproc.contourArea(o2);
+            if(contourAreaSizeO1 > contourAreaSizeO2) {
+                return 1;
+            }
+            else if(contourAreaSizeO1 < contourAreaSizeO2) {
+                return -1;
+            }
+            return 0;
+        }
+    };
 
     public MatOfPoint2f Max(List<MatOfPoint> listOfContour) {
         max = NOT_AVAILABLE;

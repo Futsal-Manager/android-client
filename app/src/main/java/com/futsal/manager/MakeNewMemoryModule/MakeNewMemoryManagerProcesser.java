@@ -306,6 +306,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     mediaRecording.setVideoEncodingBitRate(VIDEO_RECORD_BIT_RATE);
                     mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
+                    mediaRecording.setOrientationHint(0);
+
                     //mediaRecording.setPreviewDisplay(surfaceHolderRecordVideo.getSurface());
                     mediaRecording.setOutputFile(savePath);// + GetVideoName());
 
@@ -314,6 +316,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     LogManager.PrintLog("MakeNewMemoryManagerProcesser", "InitStartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
                 }
                 try{
+                    phoneDeviceCamera.setDisplayOrientation(0);
                     phoneDeviceCamera.startPreview();
                     phoneDeviceCamera.unlock();
                     phoneDeviceCamera.setPreviewCallback(this);

@@ -34,7 +34,8 @@ public class DefineManager {
                             OpenCVModuleProcesser
                             Blur Process Parameter
                             */
-                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 10,
+                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 7, MAXIMUM_CIRCLE_RADIUS = 60,
+                            BALL_DETECT_CUTLINE_Y = 240,
 
                             /*
 

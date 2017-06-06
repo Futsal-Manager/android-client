@@ -1,9 +1,11 @@
 package com.futsal.manager.ShowVideoModule;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
+import android.media.MediaScannerConnection;
 import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.Bundle;
@@ -63,7 +65,8 @@ public class FullFilmManager extends Activity {
                 LogManager.PrintLog("FullFilmManager", "onItemClick", "Item selected pos: " + position, LOG_LEVEL_DEBUG);
                 EachGridViewItemModel eachGridViewItemModel = fullFilmList.get(position);
 
-                PlayVideo(eachGridViewItemModel.GetVideoOriginName());
+                ScanAndPlayVideo(eachGridViewItemModel.GetVideoOriginName(), getApplicationContext());
+                //PlayVideo(eachGridViewItemModel.GetVideoOriginName());
             }
         });
     }
@@ -116,6 +119,26 @@ public class FullFilmManager extends Activity {
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.setDataAndType(intentUri, "video/mp4");
         startActivity(intent);
+    }
+
+    public void ScanAndPlayVideo(String videoSavedPath, final Context mediaScanContext) {
+        MediaScannerConnection.scanFile(mediaScanContext, new String[]{videoSavedPath},
+                null, new MediaScannerConnection.MediaScannerConnectionClient() {
+                    @Override
+                    public void onMediaScannerConnected() {
+
+                    }
+
+                    @Override
+                    public void onScanCompleted(String path, Uri uri) {
+                        try {
+                            PlayVideo(path);
+                        }
+                        catch (Exception err) {
+                            LogManager.PrintLog("EachGridViewItem", "onScanCompleted", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                        }
+                    }
+                });
     }
 
     String GetVideoDurationTime(String videoSavedPath) {
