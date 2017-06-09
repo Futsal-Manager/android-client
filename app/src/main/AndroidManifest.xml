@@ -80,6 +80,7 @@
         </activity>
         <activity android:name=".LoadingModule.PermissionManager"
             android:screenOrientation="portrait"
+            android:hardwareAccelerated="false"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
             >
             <intent-filter>
