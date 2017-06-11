@@ -93,11 +93,15 @@ public class FullFilmManager extends Activity {
                 LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
             }
         }
+        try {
+            EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
 
-        EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
+            fullFilmGridView.setAdapter(fullFilmGridViewAdapater);
 
-        fullFilmGridView.setAdapter(fullFilmGridViewAdapater);
-
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
     }
 
     @Override

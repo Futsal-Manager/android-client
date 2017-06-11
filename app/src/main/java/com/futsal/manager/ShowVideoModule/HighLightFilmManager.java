@@ -136,18 +136,18 @@ public class HighLightFilmManager extends Activity {
                 serverSavedFileList = communicationWithServer.GetFileUrls();
                 if(serverSavedFileList != null) {
                     LogManager.PrintLog("HighLightFilmManager", "doInBackground", "File list loaded", LOG_LEVEL_INFO);
-                }
 
-                for(String eachFileName : serverSavedFileList) {
-                    LogManager.PrintLog("HighLightFilmManager", "doInBackground", "file url: " + eachFileName, LOG_LEVEL_DEBUG);
+                    for(String eachFileName : serverSavedFileList) {
+                        LogManager.PrintLog("HighLightFilmManager", "doInBackground", "file url: " + eachFileName, LOG_LEVEL_DEBUG);
 
-                    EachGridViewItemModel eachGridViewItemModel = new EachGridViewItemModel();
-                    eachGridViewItemModel.SetVideoName(ParseFileName(eachFileName));
-                    eachGridViewItemModel.SetVideoOriginName(eachFileName);
-                    eachGridViewItemModel.SetSubBtnType(LIBRARY_TYPE_SHARE);
-                    eachGridViewItemModel.SetMediaScanContext(getApplicationContext());
+                        EachGridViewItemModel eachGridViewItemModel = new EachGridViewItemModel();
+                        eachGridViewItemModel.SetVideoName(ParseFileName(eachFileName));
+                        eachGridViewItemModel.SetVideoOriginName(eachFileName);
+                        eachGridViewItemModel.SetSubBtnType(LIBRARY_TYPE_SHARE);
+                        eachGridViewItemModel.SetMediaScanContext(getApplicationContext());
 
-                    highLightFilmList.add(eachGridViewItemModel);
+                        highLightFilmList.add(eachGridViewItemModel);
+                    }
                 }
                 highLightGridViewAdapater = new EachGridViewItem(highLightFilmList, getApplicationContext(), R.layout.library_video_manager_item);
             }
