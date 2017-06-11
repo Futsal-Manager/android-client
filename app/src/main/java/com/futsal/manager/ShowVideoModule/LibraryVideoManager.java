@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.LocalActivityManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
@@ -20,6 +22,9 @@ import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.LoginSignUpModule.LoginManager;
 import com.futsal.manager.R;
 
+import static com.futsal.manager.DefineManager.CLOSE_VIDEO_UPLOAD_STATUS_VIEW;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.OPEN_VIDEO_UPLOAD_STATUS_VIEW;
 import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
 import static com.futsal.manager.DefineManager.TEST_TEAM_NAME;
 
@@ -39,7 +44,7 @@ public class LibraryVideoManager extends Activity {
     Button btnLogOut, btnVideoUploadCancel, btnVideoUploadViewClose;
     RelativeLayout userInfoLayout, layoutVideoUploadBig, layoutVideoUploadSmall;
     View layoutVideoUploadBigView, layoutVideoUploadSmallView;
-
+    LibraryVideoManagerProcess libraryVideoManagerProcess;
     boolean isVideoUploadingViewShowing;
 
     @Override
@@ -153,6 +158,12 @@ public class LibraryVideoManager extends Activity {
         });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        libraryVideoManagerProcess.CloseProcess();
+    }
+
     void CloseVideoUploadView() {
         if(isVideoUploadingViewShowing) {
             isVideoUploadingViewShowing = !isVideoUploadingViewShowing;
@@ -193,5 +204,38 @@ public class LibraryVideoManager extends Activity {
 
         txtUserName.setText(TEST_TEAM_NAME);
         txtUserEmail.setText(TEST_ACCOUNT);
+
+        libraryVideoManagerProcess = new LibraryVideoManagerProcess(videoUploadStatusView);
+        libraryVideoManagerProcess.execute();
+    }
+
+    final Handler videoUploadStatusView = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case CLOSE_VIDEO_UPLOAD_STATUS_VIEW:
+                    CloseUploadStatusView();
+                    break;
+                case OPEN_VIDEO_UPLOAD_STATUS_VIEW:
+                    ShowSmallUploadStatusView();
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
+
+    void ShowSmallUploadStatusView() {
+        layoutVideoUploadBig.setVisibility(View.INVISIBLE);
+        layoutVideoUploadSmall.setVisibility(View.VISIBLE);
+        LogManager.PrintLog("LibraryVideoManager", "ShowSmallUploadStatusView", "small view show", LOG_LEVEL_INFO);
+    }
+
+    void CloseUploadStatusView() {
+        layoutVideoUploadBig.setVisibility(View.INVISIBLE);
+        layoutVideoUploadSmall.setVisibility(View.INVISIBLE);
+        LogManager.PrintLog("LibraryVideoManager", "ShowSmallUploadStatusView", "all view closed", LOG_LEVEL_INFO);
     }
 }

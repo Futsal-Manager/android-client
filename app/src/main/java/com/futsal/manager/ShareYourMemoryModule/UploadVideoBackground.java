@@ -3,6 +3,7 @@ package com.futsal.manager.ShareYourMemoryModule;
 import android.app.Service;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 
@@ -13,9 +14,9 @@ import java.io.PrintWriter;
 
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
-import static com.futsal.manager.DefineManager.NO_ACTION;
 import static com.futsal.manager.DefineManager.VIDEO_EDIT_REQUEST_STATUS;
 import static com.futsal.manager.DefineManager.VIDEO_UPLOADED_FAILURE;
+import static com.futsal.manager.DefineManager.VIDEO_UPLOADING;
 
 /**
  * Created by stories2 on 2017. 6. 11..
@@ -38,15 +39,15 @@ public class UploadVideoBackground extends Service {
     public void onStart(Intent intent, int startId) {
         super.onStart(intent, startId);
         LogManager.PrintLog("UploadVideoBackground", "onStart", "Service started", LOG_LEVEL_INFO);
-        VIDEO_EDIT_REQUEST_STATUS = NO_ACTION;
+        //VIDEO_EDIT_REQUEST_STATUS = NO_ACTION;
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
-            VIDEO_EDIT_REQUEST_STATUS = NO_ACTION;
-            uploadVideoBackgroundProcess = new UploadVideoBackgroundProcess();
-            uploadVideoBackgroundProcess.execute();
+            VIDEO_EDIT_REQUEST_STATUS = VIDEO_UPLOADING;
+            uploadVideoBackgroundProcess = new UploadVideoBackgroundProcess(getApplicationContext());
+            uploadVideoBackgroundProcess.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             LogManager.PrintLog("UploadVideoBackground", "onStartCommand", "processing", LOG_LEVEL_INFO);
         }
         catch (Exception err) {
