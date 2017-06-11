@@ -64,4 +64,9 @@
     <string name="signUpFailureMessage">There was a problem registering</string>
     <string name="signingUp">Registering</string>
     <string name="whatEver">Ok</string>
+
+    <!--LibraryVideoManager -->
+    <string name="UserName">NAME</string>
+    <string name="UserEmail">email@example.com</string>
+    <string name="BtnTxtLogOut">Log out</string>
 </resources>

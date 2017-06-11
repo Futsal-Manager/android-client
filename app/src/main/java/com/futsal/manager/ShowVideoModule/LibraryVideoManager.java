@@ -33,6 +33,8 @@ public class LibraryVideoManager extends Activity {
 
         setContentView(R.layout.library_video_manager);
 
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
+
         libraryVideoManagerWindow = getWindow();
         libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 

@@ -231,6 +231,7 @@ public class CommunicationWithServer{
                 }
                 catch (Exception err) {
                     Log.d(applicationContext.getString(R.string.app_name), "failed: " + err.getMessage());
+                    loginStatusVer2 = LOGIN_FAILURE;
                 }
                 //loginStatusVer2 = LOGIN_SUCCESS;
             }
