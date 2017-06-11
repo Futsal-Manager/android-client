@@ -46,7 +46,8 @@ public class UploadVideoBackground extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         try {
             VIDEO_EDIT_REQUEST_STATUS = VIDEO_UPLOADING;
-            uploadVideoBackgroundProcess = new UploadVideoBackgroundProcess(getApplicationContext());
+            String videoSavedPath = intent.getExtras().getString("videoSavedPath");
+            uploadVideoBackgroundProcess = new UploadVideoBackgroundProcess(getApplicationContext(), videoSavedPath);
             uploadVideoBackgroundProcess.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
             LogManager.PrintLog("UploadVideoBackground", "onStartCommand", "processing", LOG_LEVEL_INFO);
         }

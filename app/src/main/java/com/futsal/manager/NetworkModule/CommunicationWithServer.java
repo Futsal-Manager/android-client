@@ -50,9 +50,13 @@ import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.NOT_LOADED;
 import static com.futsal.manager.DefineManager.NOT_LOGGED_IN;
 import static com.futsal.manager.DefineManager.NOT_SIGN_UP;
+import static com.futsal.manager.DefineManager.NO_ACTION;
 import static com.futsal.manager.DefineManager.SERVER_DOMAIN_NAME;
 import static com.futsal.manager.DefineManager.SIGN_UP_FAILURE;
 import static com.futsal.manager.DefineManager.SIGN_UP_SUCCESS;
+import static com.futsal.manager.DefineManager.VIDEO_UPLOADED_FAILURE;
+import static com.futsal.manager.DefineManager.VIDEO_UPLOADED_SUCCESSFULLY;
+import static com.futsal.manager.DefineManager.VIDEO_UPLOADING;
 import static com.futsal.manager.NetworkModule.Retrofit2NetworkInterface.retrofit;
 
 /**
@@ -68,7 +72,7 @@ public class CommunicationWithServer{
     String hardCoding = "connect.sid=s:JTB7Mndgcy0NUnxK8VUSWoV6r-TZgpFX.TD5FeoFJMNYbbpAGc9soY5IkoIsJex5hHDAoLHZAVsw", fileUrl;
     List<String> fileUrlList;
     int loginStatusVer2 = NOT_LOGGED_IN, getFileStatusVer2 = NOT_LOADED,
-        signUpStatusVer2 = NOT_SIGN_UP;
+        signUpStatusVer2 = NOT_SIGN_UP, uploadFileStatusVer2 = NO_ACTION;
 
     public CommunicationWithServer(Context applicationContext) {
         this.applicationContext = applicationContext;
@@ -479,6 +483,7 @@ public class CommunicationWithServer{
         LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Video Name?: " + savedVideoFile.getName(), LOG_LEVEL_DEBUG);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", savedVideoFile.getName(), reqFile);
         //RequestBody name = RequestBody.create(MediaType.parse("application/json"), "{\"file\":\"" + savedVideoFile.getPath().toString() + "\"}");
+        uploadFileStatusVer2 = VIDEO_UPLOADING;
         LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Video Upload Ready", LOG_LEVEL_INFO);
         try {
             Call<FileUploadResponse> calling = retrofit2NetworkInterface.FileUpload(fileUploadRequest, body, "chunked", "-1");
@@ -492,9 +497,11 @@ public class CommunicationWithServer{
                         LogManager.PrintLog("CommunicationWithServer", "onResponse", "Raw Response: " + response.message(), LOG_LEVEL_DEBUG);
                         if(response.headers().get("code").equals("200")) {
                             //Log.v("Upload", "success: " + response.body().GetRes());
+                            uploadFileStatusVer2 = VIDEO_UPLOADED_SUCCESSFULLY;
                             LogManager.PrintLog("CommunicationWithServer", "onResponse", "Upload Success: " + response.body().toString(), DefineManager.LOG_LEVEL_INFO);
                         }
                         else {
+                            uploadFileStatusVer2 = VIDEO_UPLOADED_FAILURE;
                             try{
                                 LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error Body: " + response.errorBody().string(), DefineManager.LOG_LEVEL_ERROR);
                             }
@@ -504,6 +511,7 @@ public class CommunicationWithServer{
                         }
                     }
                     catch (Exception err) {
+                        uploadFileStatusVer2 = VIDEO_UPLOADED_FAILURE;
                         LogManager.PrintLog("CommunicationWithServer", "onResponse", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
                         videoUploadStatus = true;
                     }
@@ -511,13 +519,19 @@ public class CommunicationWithServer{
 
                 @Override
                 public void onFailure(Call<FileUploadResponse> call, Throwable t) {
+                    uploadFileStatusVer2 = VIDEO_UPLOADED_FAILURE;
                     LogManager.PrintLog("CommunicationWithServer", "onFailure", "Error: " + t.getMessage(), LOG_LEVEL_ERROR);
                 }
             });
         }
         catch (Exception err) {
+            uploadFileStatusVer2 = VIDEO_UPLOADED_FAILURE;
             LogManager.PrintLog("CommunicationWithServer", "UploadFileTester3", "Upload Process Error: " + err.getMessage(), LOG_LEVEL_ERROR);
         }
+    }
+
+    public int GetUploadFileStatusVer2() {
+        return uploadFileStatusVer2;
     }
 
     public void UploadFileTester3(Uri fileSavedPath) {

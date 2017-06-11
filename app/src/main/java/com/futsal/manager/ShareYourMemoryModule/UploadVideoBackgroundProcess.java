@@ -5,6 +5,7 @@ import android.os.AsyncTask;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.NetworkModule.CommunicationWithServer;
 
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
@@ -18,11 +19,18 @@ import static com.futsal.manager.DefineManager.VIDEO_UPLOADING;
  */
 
 public class UploadVideoBackgroundProcess extends AsyncTask<Void, Void, Void> {
-    Context context;
 
-    public UploadVideoBackgroundProcess(Context context) {
+    CommunicationWithServer communicationWithServer;
+    Context context;
+    String fileSavedPath;
+
+    public UploadVideoBackgroundProcess(Context context, String fileSavedPath) {
         super();
         this.context = context;
+        this.fileSavedPath = fileSavedPath;
+
+        communicationWithServer = new CommunicationWithServer(context);
+
         if(context == null) {
             LogManager.PrintLog("UploadVideoBackgroundProcess", "UploadVideoBackgroundProcess", "context null", LOG_LEVEL_WARN);
         }
@@ -35,7 +43,12 @@ public class UploadVideoBackgroundProcess extends AsyncTask<Void, Void, Void> {
         try {
             VIDEO_EDIT_REQUEST_STATUS = VIDEO_UPLOADING;
             LogManager.PrintLog("UploadVideoBackgroundProcess", "doInBackground", "Start uploading", LOG_LEVEL_INFO);
-            Thread.sleep(30000);
+            communicationWithServer.UploadFileTester3(fileSavedPath);
+            while(communicationWithServer.GetUploadFileStatusVer2() != VIDEO_UPLOADING
+                    || communicationWithServer.GetLoginStatusVer2() != NO_ACTION) {
+                Thread.sleep(1);
+            }
+            //Thread.sleep(30000);
             LogManager.PrintLog("UploadVideoBackgroundProcess", "doInBackground", "End of uploading", LOG_LEVEL_INFO);
         }
         catch (Exception err) {

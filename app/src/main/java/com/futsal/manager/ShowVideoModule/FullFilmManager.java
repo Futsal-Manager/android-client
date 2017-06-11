@@ -80,7 +80,7 @@ public class FullFilmManager extends Activity {
         for(File indexOfSavedFile : listOfSavedFiles) {
             try {
                 EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
-                indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
+                indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getAbsolutePath());
                 indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
                 indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
                 indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));

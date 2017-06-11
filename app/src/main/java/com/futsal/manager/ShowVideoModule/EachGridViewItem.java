@@ -88,6 +88,8 @@ public class EachGridViewItem extends BaseAdapter {
                         Context context = indexOfGridViewItemData.GetMediaScanContext();
                         if(IsServiceRunning(context) != true && VIDEO_EDIT_REQUEST_STATUS == NO_ACTION) {
                             Intent videoUploadService = new Intent(context, UploadVideoBackground.class);
+                            LogManager.PrintLog("EachGridViewItem", "onClick", "video path: " + indexOfGridViewItemData.GetVideoOriginName(), LOG_LEVEL_INFO);
+                            videoUploadService.putExtra("videoSavedPath", indexOfGridViewItemData.GetVideoOriginName());
                             context.startService(videoUploadService);
                         }
                         else {
