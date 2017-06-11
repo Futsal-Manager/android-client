@@ -144,6 +144,28 @@
     </RelativeLayout>
     
     <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp">
+        <View
+            android:layout_marginTop="87dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#3e424b"
+            />
+        
+        <ImageView
+            android:layout_marginTop="94dp"
+            android:layout_marginRight="14dp"
+            android:layout_alignParentRight="true"
+            android:layout_width="12dp"
+            android:layout_height="12dp"
+            android:background="@null"
+            android:src="@drawable/rectangle_13_copy_2"
+            />
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:layout_width="240dp"
         android:layout_height="fill_parent"
         android:id="@+id/userInfoLayout"
