@@ -74,9 +74,8 @@ public class FullFilmManager extends Activity {
     void InitLayout() {
 
         try {
-            listOfSavedFiles = GetFileList(GetFilePath());
-
             fullFilmList = new ArrayList<EachGridViewItemModel>();
+            listOfSavedFiles = GetFileList(GetFilePath());
         }
         catch (Exception err) {
             LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
