@@ -23,7 +23,9 @@ import com.futsal.manager.R;
 import org.opencv.core.Point;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
 import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
@@ -35,6 +37,7 @@ import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
@@ -61,6 +64,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
 
     long startHTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updatedTime = 0L;
     TextView txtRecordingTime;
+    List<Camera.Size> cameraAvailableVideoResolution;
 
 
     public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView, TextView txtRecordingTime) {
@@ -80,6 +84,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
         cameraSurfaceHolder.addCallback(this);
         cameraSurfaceHolder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
+
+        cameraAvailableVideoResolution = new ArrayList<Camera.Size>();
 
         try {
             if(phoneDeviceCamera == null) {
@@ -101,6 +107,21 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         catch (Exception err) {
             LogManager.PrintLog("MakeNewMemoryManagerProcesser", "InitLayout", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
         }
+    }
+
+    public List<String> GetAvailableCameraResolution() {
+        List<String> listOfScreenResolution = new ArrayList<String>();
+        if(phoneDeviceCameraParameters != null) {
+            cameraAvailableVideoResolution = phoneDeviceCameraParameters.getSupportedVideoSizes();
+            for(Camera.Size indexOfPictureSize : cameraAvailableVideoResolution) {
+                LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "Available size: " + indexOfPictureSize.width + " X " + indexOfPictureSize.height, LOG_LEVEL_INFO);
+                listOfScreenResolution.add(indexOfPictureSize.width + " X " + indexOfPictureSize.height);
+            }
+        }
+        else {
+            LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "Phone parameters null", LOG_LEVEL_WARN);
+        }
+        return listOfScreenResolution;
     }
 
     public void SetIsRecording(boolean isRecording) {

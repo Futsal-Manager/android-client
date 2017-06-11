@@ -54,5 +54,27 @@
         android:layout_marginTop="20dp"
         android:layout_marginEnd="31.5dp"
         android:background="@null"/>
+    
+    <RelativeLayout
+        android:id="@+id/layoutCameraSetting"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <View
+            android:id="@+id/layoutCameraSettingView"
+            android:layout_width="125dp"
+            android:layout_height="fill_parent"
+            android:background="#77000000"
+            />
+
+        <ListView
+            android:id="@+id/listOfCameraResolution"
+            android:layout_marginLeft="21.5dp"
+            android:layout_marginTop="70dp"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            >
+
+        </ListView>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -7,7 +7,10 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
@@ -17,6 +20,8 @@ import com.futsal.manager.R;
 import org.opencv.android.OpenCVLoader;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -36,11 +41,16 @@ public class MakeNewMemoryManager extends Activity {
     }
 
     ImageButton btnImageRecord, btnImagePictures, btnImageSetting;
-    boolean isSettingShowed, isRecording;
+    boolean isSettingShowed, isRecording, isCameraResolutionSettingOpen;
     SurfaceView surfaceRecordVideo;
     MakeNewMemoryManagerProcesser makeNewMemoryManagerProcesser;
     MakeNewMemorySettingManager makeNewMemorySettingManager;
     TextView txtRecordingTime;
+    RelativeLayout layoutCameraSetting;
+    ListView listOfCameraResolution;
+    List<String> listOfAvailableCameraResolution;
+    ArrayAdapter<String> cameraResolutionListAdapter;
+    View layoutCameraSettingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,11 +91,39 @@ public class MakeNewMemoryManager extends Activity {
         btnImageSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isCameraResolutionSettingOpen != true) {
+                    isCameraResolutionSettingOpen = !isCameraResolutionSettingOpen;
+                    layoutCameraSetting.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        btnImageSetting.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
                 if(!isRecording) {
                     //btnImageSetting.setBackgroundResource(R.drawable.after_setting);
                     CloseSettingMenuChecker();
                     makeNewMemorySettingManager.show();
                 }
+                return false;
+            }
+        });
+
+        layoutCameraSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isCameraResolutionSettingOpen) {
+                    isCameraResolutionSettingOpen = !isCameraResolutionSettingOpen;
+                    layoutCameraSetting.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+
+        layoutCameraSettingView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
             }
         });
     }
@@ -118,15 +156,27 @@ public class MakeNewMemoryManager extends Activity {
     void InitLayout() {
         isSettingShowed = false;
         isRecording = false;
+        isCameraResolutionSettingOpen = false;
 
         btnImageRecord = (ImageButton) findViewById(R.id.btnImageRecord);
         btnImagePictures = (ImageButton) findViewById(R.id.btnImagePictures);
         btnImageSetting = (ImageButton) findViewById(R.id.btnImageSetting);
         surfaceRecordVideo = (SurfaceView)findViewById(R.id.surfaceRecordVideo);
         txtRecordingTime = (TextView) findViewById(R.id.txtRecordingTime);
+        layoutCameraSetting = (RelativeLayout)findViewById(R.id.layoutCameraSetting);
+        listOfCameraResolution = (ListView)findViewById(R.id.listOfCameraResolution);
+        layoutCameraSettingView = (View) findViewById(R.id.layoutCameraSettingView);
+
+        layoutCameraSetting.setVisibility(View.INVISIBLE);
 
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo, txtRecordingTime);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
+        listOfAvailableCameraResolution = new ArrayList<String>();
+
+        listOfAvailableCameraResolution = makeNewMemoryManagerProcesser.GetAvailableCameraResolution();
+
+        cameraResolutionListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listOfAvailableCameraResolution);
+        listOfCameraResolution.setAdapter(cameraResolutionListAdapter);
     }
 
     @Override
