@@ -169,6 +169,11 @@
             >
 
         </activity>
+        <service android:name=".ShareYourMemoryModule.UploadVideoBackground">
+            <intent-filter>
+                <action android:name="com.futsal.manager.UploadVideoBackground" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
