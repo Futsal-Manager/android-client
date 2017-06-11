@@ -102,6 +102,13 @@ public class LibraryVideoManager extends Activity {
                 finish();
             }
         });
+
+        userInfoLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     void InitLayout() {
