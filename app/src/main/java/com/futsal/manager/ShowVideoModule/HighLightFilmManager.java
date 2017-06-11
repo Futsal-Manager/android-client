@@ -65,7 +65,7 @@ public class HighLightFilmManager extends Activity {
 
         crawlFileListFromServerProcess = new CrawlFileListFromServerProcess(this, communicationWithServer, serverSavedFileList, highLightGridViewAdapater,
                  highLightGridView);
-        crawlFileListFromServerProcess.execute();
+        crawlFileListFromServerProcess.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         highLightGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

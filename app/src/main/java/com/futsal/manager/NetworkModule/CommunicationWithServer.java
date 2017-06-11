@@ -322,6 +322,7 @@ public class CommunicationWithServer{
         }
         fileUrlList = null;
         getFileStatusVer2 = NOT_LOADED;
+        LogManager.PrintLog("CommunicationWithServer", "FileList", "calling file list from server", LOG_LEVEL_INFO);
         calling.enqueue(new Callback<FileResponse>() {
             @Override
             public void onResponse(Call<FileResponse> call, Response<FileResponse> response) {

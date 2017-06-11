@@ -228,6 +228,7 @@ public class LibraryVideoManager extends Activity {
     };
 
     void ShowSmallUploadStatusView() {
+        isVideoUploadingViewShowing = false;
         layoutVideoUploadBig.setVisibility(View.INVISIBLE);
         layoutVideoUploadSmall.setVisibility(View.VISIBLE);
         LogManager.PrintLog("LibraryVideoManager", "ShowSmallUploadStatusView", "small view show", LOG_LEVEL_INFO);
