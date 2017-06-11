@@ -7,13 +7,21 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.view.Window;
+import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.DevModule.DevelopModeManager;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.LoginSignUpModule.LoginManager;
 import com.futsal.manager.R;
+
+import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
+import static com.futsal.manager.DefineManager.TEST_TEAM_NAME;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -26,6 +34,10 @@ public class LibraryVideoManager extends Activity {
     LocalActivityManager localActivityManager;
     Window libraryVideoManagerWindow;
     ImageButton imgBtnProfile;
+    ImageView imgExitUserInfo;
+    TextView txtUserName, txtUserEmail;
+    Button btnLogOut;
+    RelativeLayout userInfoLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,22 +45,10 @@ public class LibraryVideoManager extends Activity {
 
         setContentView(R.layout.library_video_manager);
 
-        //getActionBar().setDisplayHomeAsUpEnabled(true);
-
         libraryVideoManagerWindow = getWindow();
         libraryVideoManagerWindow.setStatusBarColor(ContextCompat.getColor(this, R.color.black));
 
-        tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
-        imgBtnProfile = (ImageButton) findViewById(R.id.imgBtnProfile);
-
-        fullFilmTab = tabHostLibrary.newTabSpec("Full Film Tab");
-        highLightFilmTab = tabHostLibrary.newTabSpec("High Light Tab");
-
-        fullFilmTab.setIndicator("Full Film");
-        highLightFilmTab.setIndicator("High Light Film");
-
-        fullFilmTab.setContent(new Intent(this, FullFilmManager.class));
-        highLightFilmTab.setContent(new Intent(this, HighLightFilmManager.class));
+        InitLayout();
 
         try {
 
@@ -69,6 +69,13 @@ public class LibraryVideoManager extends Activity {
             }
         });
 
+        imgBtnProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userInfoLayout.setVisibility(View.VISIBLE);
+            }
+        });
+
         imgBtnProfile.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -79,5 +86,46 @@ public class LibraryVideoManager extends Activity {
                 return false;
             }
         });
+
+        imgExitUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userInfoLayout.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        btnLogOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loginLayout = new Intent(getApplicationContext(), LoginManager.class);
+                startActivity(loginLayout);
+                finish();
+            }
+        });
+    }
+
+    void InitLayout() {
+
+        tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
+        imgBtnProfile = (ImageButton) findViewById(R.id.imgBtnProfile);
+        userInfoLayout = (RelativeLayout)findViewById(R.id.userInfoLayout);
+        imgExitUserInfo = (ImageView)findViewById(R.id.imgExitUserInfo);
+        txtUserName = (TextView)findViewById(R.id.txtUserName);
+        txtUserEmail = (TextView)findViewById(R.id.txtUserEmail);
+        btnLogOut = (Button)findViewById(R.id.btnLogOut);
+
+        fullFilmTab = tabHostLibrary.newTabSpec("Full Film Tab");
+        highLightFilmTab = tabHostLibrary.newTabSpec("High Light Tab");
+
+        fullFilmTab.setIndicator("Full Film");
+        highLightFilmTab.setIndicator("High Light Film");
+
+        fullFilmTab.setContent(new Intent(this, FullFilmManager.class));
+        highLightFilmTab.setContent(new Intent(this, HighLightFilmManager.class));
+
+        userInfoLayout.setVisibility(View.INVISIBLE);
+
+        txtUserName.setText(TEST_TEAM_NAME);
+        txtUserEmail.setText(TEST_ACCOUNT);
     }
 }
