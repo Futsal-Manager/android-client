@@ -82,9 +82,11 @@
     </RelativeLayout>
     
     <RelativeLayout
+        android:id="@+id/layoutVideoUploadBig"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
         <View
+            android:id="@+id/layoutVideoUploadBigView"
             android:layout_marginTop="87dp"
             android:layout_width="fill_parent"
             android:layout_height="110dp"
@@ -114,6 +116,7 @@
             android:text="@string/UploadingProcess"
             />
         <Button
+            android:id="@+id/btnVideoUploadCancel"
             android:layout_width="179.5dp"
             android:layout_height="35dp"
             android:background="@null"
@@ -124,6 +127,7 @@
             />
 
         <Button
+            android:id="@+id/btnVideoUploadViewClose"
             android:layout_alignParentRight="true"
             android:layout_width="179.5dp"
             android:layout_height="35dp"
@@ -144,9 +148,11 @@
     </RelativeLayout>
     
     <RelativeLayout
+        android:id="@+id/layoutVideoUploadSmall"
         android:layout_width="fill_parent"
         android:layout_height="40dp">
         <View
+            android:id="@+id/layoutVideoUploadSmallView"
             android:layout_marginTop="87dp"
             android:layout_alignParentRight="true"
             android:layout_width="40dp"
