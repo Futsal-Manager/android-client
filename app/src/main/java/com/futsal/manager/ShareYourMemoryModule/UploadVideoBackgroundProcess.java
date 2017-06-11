@@ -44,8 +44,8 @@ public class UploadVideoBackgroundProcess extends AsyncTask<Void, Void, Void> {
             VIDEO_EDIT_REQUEST_STATUS = VIDEO_UPLOADING;
             LogManager.PrintLog("UploadVideoBackgroundProcess", "doInBackground", "Start uploading", LOG_LEVEL_INFO);
             communicationWithServer.UploadFileTester3(fileSavedPath);
-            while(communicationWithServer.GetUploadFileStatusVer2() != VIDEO_UPLOADING
-                    || communicationWithServer.GetLoginStatusVer2() != NO_ACTION) {
+            while(communicationWithServer.GetUploadFileStatusVer2() == VIDEO_UPLOADING
+                    || communicationWithServer.GetUploadFileStatusVer2() == NO_ACTION) {
                 Thread.sleep(1);
             }
             //Thread.sleep(30000);

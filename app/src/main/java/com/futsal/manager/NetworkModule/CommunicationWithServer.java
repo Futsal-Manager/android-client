@@ -495,9 +495,15 @@ public class CommunicationWithServer{
                     videoUploadStatus = true;
                     try {
                         LogManager.PrintLog("CommunicationWithServer", "onResponse", "Raw Response: " + response.message(), LOG_LEVEL_DEBUG);
+                        if(response.message().contains("OK")) {
+                            uploadFileStatusVer2 = VIDEO_UPLOADED_SUCCESSFULLY;
+                            return;
+                        }
+                        else {
+                            uploadFileStatusVer2 = VIDEO_UPLOADED_FAILURE;
+                        }
                         if(response.headers().get("code").equals("200")) {
                             //Log.v("Upload", "success: " + response.body().GetRes());
-                            uploadFileStatusVer2 = VIDEO_UPLOADED_SUCCESSFULLY;
                             LogManager.PrintLog("CommunicationWithServer", "onResponse", "Upload Success: " + response.body().toString(), DefineManager.LOG_LEVEL_INFO);
                         }
                         else {
