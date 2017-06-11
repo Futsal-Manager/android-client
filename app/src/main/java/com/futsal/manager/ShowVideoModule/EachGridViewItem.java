@@ -1,5 +1,6 @@
 package com.futsal.manager.ShowVideoModule;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,9 +17,12 @@ import android.widget.TextView;
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
+import com.futsal.manager.ShareYourMemoryModule.UploadVideoBackground;
 
 import java.util.List;
 
+import static android.content.Context.ACTIVITY_SERVICE;
+import static com.futsal.manager.DefineManager.APP_DOMAIN;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_CHECK;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_EDIT;
 import static com.futsal.manager.DefineManager.LIBRARY_TYPE_NOT_CHECK;
@@ -26,6 +30,9 @@ import static com.futsal.manager.DefineManager.LIBRARY_TYPE_SHARE;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
+import static com.futsal.manager.DefineManager.NO_ACTION;
+import static com.futsal.manager.DefineManager.VIDEO_EDIT_REQUEST_STATUS;
 
 /**
  * Created by stories2 on 2017. 5. 27..
@@ -78,6 +85,14 @@ public class EachGridViewItem extends BaseAdapter {
                 LogManager.PrintLog("EachGridViewItem", "onClick", "sub relative layout click", LOG_LEVEL_DEBUG);
                 switch (indexOfGridViewItemData.GetSubBtnType()) {
                     case LIBRARY_TYPE_EDIT:
+                        Context context = indexOfGridViewItemData.GetMediaScanContext();
+                        if(IsServiceRunning(context) != true && VIDEO_EDIT_REQUEST_STATUS == NO_ACTION) {
+                            Intent videoUploadService = new Intent(context, UploadVideoBackground.class);
+                            context.startService(videoUploadService);
+                        }
+                        else {
+                            LogManager.PrintLog("EachGridViewItem", "onClick", "Service already running", LOG_LEVEL_WARN);
+                        }
                         break;
                     case LIBRARY_TYPE_SHARE:
                         ScanVideo("Share video", indexOfGridViewItemData.GetVideoOriginName(), indexOfGridViewItemData.GetMediaScanContext());
@@ -117,6 +132,16 @@ public class EachGridViewItem extends BaseAdapter {
         }
 
         return convertView;
+    }
+
+    boolean IsServiceRunning(Context context) {
+        ActivityManager manager = (ActivityManager) context.getSystemService(ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)){
+            if(APP_DOMAIN.equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void ScanVideo(final String title, String videoSavedPath, final Context mediaScanContext) {

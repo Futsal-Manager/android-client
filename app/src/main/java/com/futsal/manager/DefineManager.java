@@ -58,13 +58,17 @@ public class DefineManager {
 
                             NOT_LOADED = 0, LOAD_FAILURE = 1, LOAD_SUCCESS = 2,
 
-                            NOT_SIGN_UP = 0, SIGN_UP_FAILURE = 1, SIGN_UP_SUCCESS = 2;
+                            NOT_SIGN_UP = 0, SIGN_UP_FAILURE = 1, SIGN_UP_SUCCESS = 2,
+
+                            NO_ACTION = 0, VIDEO_UPLOADING = 1, VIDEO_UPLOADED_SUCCESSFULLY = 2, VIDEO_UPLOADED_FAILURE = 3;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         TEST_TEAM_NAME = "병욱이와 아이들",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
                         VIDEO_SERVER_DOMAIN_NAME = "futsal-manager.s3.ap-northeast-2.amazonaws.com",
 
-                        AVAILABLE_BLUETOOTH_NAME = "HC-06";
+                        AVAILABLE_BLUETOOTH_NAME = "HC-06",
+
+                        APP_DOMAIN = "com.futsal.manager";
 
     public static final boolean NOT_WORKING = false;
 
@@ -77,7 +81,9 @@ public class DefineManager {
 
                     PICTURE_RESOLUTION_SETTING = 1, RECORD_RESOLUTION_SETTING = 2,
 
-                    BLUETOOTH_SEND_SPEED = 250;
+                    BLUETOOTH_SEND_SPEED = 250,
+
+                    VIDEO_EDIT_REQUEST_STATUS = 0;
 
     public static int[][] AVAILABLE_SCREEN_RESOLUTION_LIST = new int[][]{
             {320, 240},
