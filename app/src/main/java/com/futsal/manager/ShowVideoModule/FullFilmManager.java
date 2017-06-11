@@ -78,15 +78,20 @@ public class FullFilmManager extends Activity {
         fullFilmList = new ArrayList<EachGridViewItemModel>();
 
         for(File indexOfSavedFile : listOfSavedFiles) {
-            EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
-            indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
-            indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
-            indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
-            indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
-            indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
-            indexOfSavedFileItemModel.SetMediaScanContext(getApplicationContext());
+            try {
+                EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
+                indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getName());
+                indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
+                indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
+                indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
+                indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
+                indexOfSavedFileItemModel.SetMediaScanContext(getApplicationContext());
 
-            fullFilmList.add(indexOfSavedFileItemModel);
+                fullFilmList.add(indexOfSavedFileItemModel);
+            }
+            catch (Exception err) {
+                LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            }
         }
 
         EachGridViewItem fullFilmGridViewAdapater = new EachGridViewItem(fullFilmList, getApplicationContext(), R.layout.library_video_manager_item);
@@ -142,15 +147,21 @@ public class FullFilmManager extends Activity {
     }
 
     String GetVideoDurationTime(String videoSavedPath) {
-        MediaPlayer mp = MediaPlayer.create(this, Uri.parse(videoSavedPath));
-        int duration = mp.getDuration();
-        mp.release();
+        try {
+            MediaPlayer mp = MediaPlayer.create(this, Uri.parse(videoSavedPath));
+            int duration = mp.getDuration();
+            mp.release();
 /*convert millis to appropriate time*/
-        return String.format("%02d' %02d' %02d'",
-                TimeUnit.MILLISECONDS.toHours(duration),
-                TimeUnit.MILLISECONDS.toMinutes(duration),
-                TimeUnit.MILLISECONDS.toSeconds(duration)
-        );
+            return String.format("%02d' %02d' %02d'",
+                    TimeUnit.MILLISECONDS.toHours(duration),
+                    TimeUnit.MILLISECONDS.toMinutes(duration),
+                    TimeUnit.MILLISECONDS.toSeconds(duration)
+            );
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("FullFilmManager", "GetVideoDurationTime", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+            return "Error!";
+        }
     }
 
     Bitmap GetVideoThumbnailImage(String videoSavedPath) {
