@@ -82,6 +82,68 @@
     </RelativeLayout>
     
     <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <View
+            android:layout_marginTop="87dp"
+            android:layout_width="fill_parent"
+            android:layout_height="110dp"
+            android:background="#3e424b"
+            />
+        <View
+            android:layout_marginTop="162dp"
+            android:layout_width="fill_parent"
+            android:layout_height="35dp"
+            android:background="#2e3138"
+            />
+        <ImageView
+            android:layout_marginTop="102.6dp"
+            android:layout_width="12.7dp"
+            android:layout_height="7.4dp"
+            android:layout_marginRight="20.1dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/rectangle_12_copy"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:layout_marginTop="100.5dp"
+            android:layout_centerHorizontal="true"
+            android:text="@string/UploadingProcess"
+            />
+        <Button
+            android:layout_width="179.5dp"
+            android:layout_height="35dp"
+            android:background="@null"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:text="Cancel"
+            android:layout_marginTop="162dp"
+            />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:layout_width="179.5dp"
+            android:layout_height="35dp"
+            android:background="@null"
+            android:textSize="12sp"
+            android:textColor="#999999"
+            android:text="Close"
+            android:layout_marginTop="162dp"
+            />
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="320dp"
+            android:layout_height="20dp"
+            android:indeterminateOnly="true"
+            android:layout_marginTop="142.5dp"
+            android:layout_centerHorizontal="true"
+            />
+    </RelativeLayout>
+    
+    <RelativeLayout
         android:layout_width="240dp"
         android:layout_height="fill_parent"
         android:id="@+id/userInfoLayout"

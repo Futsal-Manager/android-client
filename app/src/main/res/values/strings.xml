@@ -69,4 +69,5 @@
     <string name="UserName">NAME</string>
     <string name="UserEmail">email@example.com</string>
     <string name="BtnTxtLogOut">Log out</string>
+    <string name="UploadingProcess">Request highlights video editing...</string>
 </resources>
