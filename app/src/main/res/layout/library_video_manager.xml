@@ -99,6 +99,7 @@
             android:background="#2e3138"
             />
         <ImageView
+            android:id="@+id/imgVideoUploadMinimize"
             android:layout_marginTop="102.6dp"
             android:layout_width="12.7dp"
             android:layout_height="7.4dp"

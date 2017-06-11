@@ -34,10 +34,13 @@ public class LibraryVideoManager extends Activity {
     LocalActivityManager localActivityManager;
     Window libraryVideoManagerWindow;
     ImageButton imgBtnProfile;
-    ImageView imgExitUserInfo;
+    ImageView imgExitUserInfo, imgVideoUploadMinimize;
     TextView txtUserName, txtUserEmail;
-    Button btnLogOut;
-    RelativeLayout userInfoLayout;
+    Button btnLogOut, btnVideoUploadCancel, btnVideoUploadViewClose;
+    RelativeLayout userInfoLayout, layoutVideoUploadBig, layoutVideoUploadSmall;
+    View layoutVideoUploadBigView, layoutVideoUploadSmallView;
+
+    boolean isVideoUploadingViewShowing;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,6 +112,53 @@ public class LibraryVideoManager extends Activity {
 
             }
         });
+
+        layoutVideoUploadSmallView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(isVideoUploadingViewShowing != true) {
+                    isVideoUploadingViewShowing = !isVideoUploadingViewShowing;
+                    layoutVideoUploadSmall.setVisibility(View.INVISIBLE);
+                    layoutVideoUploadBig.setVisibility(View.VISIBLE);
+                }
+            }
+        });
+
+        imgVideoUploadMinimize.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseVideoUploadView();
+            }
+        });
+
+        layoutVideoUploadBigView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnVideoUploadCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        btnVideoUploadViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CloseVideoUploadView();
+            }
+        });
+    }
+
+    void CloseVideoUploadView() {
+        if(isVideoUploadingViewShowing) {
+            isVideoUploadingViewShowing = !isVideoUploadingViewShowing;
+            layoutVideoUploadSmall.setVisibility(View.VISIBLE);
+            layoutVideoUploadBig.setVisibility(View.INVISIBLE);
+        }
     }
 
     void InitLayout() {
@@ -116,13 +166,21 @@ public class LibraryVideoManager extends Activity {
         tabHostLibrary = (TabHost) findViewById(R.id.tabHostLibrary);
         imgBtnProfile = (ImageButton) findViewById(R.id.imgBtnProfile);
         userInfoLayout = (RelativeLayout)findViewById(R.id.userInfoLayout);
+        layoutVideoUploadBig = (RelativeLayout)findViewById(R.id.layoutVideoUploadBig);
+        layoutVideoUploadSmall = (RelativeLayout)findViewById(R.id.layoutVideoUploadSmall);
         imgExitUserInfo = (ImageView)findViewById(R.id.imgExitUserInfo);
+        imgVideoUploadMinimize = (ImageView)findViewById(R.id.imgVideoUploadMinimize);
         txtUserName = (TextView)findViewById(R.id.txtUserName);
         txtUserEmail = (TextView)findViewById(R.id.txtUserEmail);
         btnLogOut = (Button)findViewById(R.id.btnLogOut);
+        btnVideoUploadCancel = (Button)findViewById(R.id.btnVideoUploadCancel);
+        btnVideoUploadViewClose = (Button)findViewById(R.id.btnVideoUploadViewClose);
+        layoutVideoUploadBigView = (View)findViewById(R.id.layoutVideoUploadBigView);
+        layoutVideoUploadSmallView = (View)findViewById(R.id.layoutVideoUploadSmallView);
 
         fullFilmTab = tabHostLibrary.newTabSpec("Full Film Tab");
         highLightFilmTab = tabHostLibrary.newTabSpec("High Light Tab");
+        isVideoUploadingViewShowing = false;
 
         fullFilmTab.setIndicator("Full Film");
         highLightFilmTab.setIndicator("High Light Film");
@@ -131,6 +189,7 @@ public class LibraryVideoManager extends Activity {
         highLightFilmTab.setContent(new Intent(this, HighLightFilmManager.class));
 
         userInfoLayout.setVisibility(View.INVISIBLE);
+        layoutVideoUploadBig.setVisibility(View.INVISIBLE);
 
         txtUserName.setText(TEST_TEAM_NAME);
         txtUserEmail.setText(TEST_ACCOUNT);
