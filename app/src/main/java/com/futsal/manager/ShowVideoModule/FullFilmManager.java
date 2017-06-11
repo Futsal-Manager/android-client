@@ -73,24 +73,31 @@ public class FullFilmManager extends Activity {
 
     void InitLayout() {
 
-        listOfSavedFiles = GetFileList(GetFilePath());
+        try {
+            listOfSavedFiles = GetFileList(GetFilePath());
 
-        fullFilmList = new ArrayList<EachGridViewItemModel>();
+            fullFilmList = new ArrayList<EachGridViewItemModel>();
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
 
-        for(File indexOfSavedFile : listOfSavedFiles) {
-            try {
-                EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
-                indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getAbsolutePath());
-                indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
-                indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
-                indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
-                indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
-                indexOfSavedFileItemModel.SetMediaScanContext(getApplicationContext());
+        if(listOfSavedFiles != null) {
+            for(File indexOfSavedFile : listOfSavedFiles) {
+                try {
+                    EachGridViewItemModel indexOfSavedFileItemModel = new EachGridViewItemModel();
+                    indexOfSavedFileItemModel.SetVideoOriginName(indexOfSavedFile.getAbsolutePath());
+                    indexOfSavedFileItemModel.SetVideoName(ParseFileName(indexOfSavedFile));
+                    indexOfSavedFileItemModel.SetThumnailImage(GetVideoThumbnailImage(indexOfSavedFile.getAbsolutePath()));
+                    indexOfSavedFileItemModel.SetVideoDurationTime(GetVideoDurationTime(indexOfSavedFile.getAbsolutePath()));
+                    indexOfSavedFileItemModel.SetSubBtnType(LIBRARY_TYPE_EDIT);
+                    indexOfSavedFileItemModel.SetMediaScanContext(getApplicationContext());
 
-                fullFilmList.add(indexOfSavedFileItemModel);
-            }
-            catch (Exception err) {
-                LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                    fullFilmList.add(indexOfSavedFileItemModel);
+                }
+                catch (Exception err) {
+                    LogManager.PrintLog("FullFilmManager", "InitLayout", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+                }
             }
         }
         try {
