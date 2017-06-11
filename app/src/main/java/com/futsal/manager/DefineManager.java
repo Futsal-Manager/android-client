@@ -77,7 +77,7 @@ public class DefineManager {
 
                     PICTURE_RESOLUTION_SETTING = 1, RECORD_RESOLUTION_SETTING = 2,
 
-                    BLUETOOTH_SEND_SPEED = 500;
+                    BLUETOOTH_SEND_SPEED = 250;
 
     public static int[][] AVAILABLE_SCREEN_RESOLUTION_LIST = new int[][]{
             {320, 240},
