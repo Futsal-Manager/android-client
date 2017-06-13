@@ -77,7 +77,7 @@ public class DevelopModeManager extends Activity {
         etxtBitRate = (EditText)findViewById(R.id.etxtBitRate);
 
         DevLayoutInit devLayoutInit = new DevLayoutInit(this);
-        devLayoutInit.execute();
+        devLayoutInit.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
         InitLayoutListener();
     }

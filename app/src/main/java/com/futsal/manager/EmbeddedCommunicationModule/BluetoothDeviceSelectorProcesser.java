@@ -35,7 +35,7 @@ public class BluetoothDeviceSelectorProcesser {
         LogManager.PrintLog("BluetoothDeviceSelectorProcesser", "TryConnectToTargetDevice", "name: " + targetBluetoothDeviceItemModel.GetDeviceName()
         + " address: " + targetBluetoothDeviceItemModel.GetDeviceMacAddress(), LOG_LEVEL_DEBUG);
         BluetoothDeviceConnectionInit bluetoothDeviceConnectionInit = new BluetoothDeviceConnectionInit(bluetoothDeviceSelector, targetBluetoothDeviceItemModel);
-        bluetoothDeviceConnectionInit.execute();
+        bluetoothDeviceConnectionInit.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         return false;
     }
 

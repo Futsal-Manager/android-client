@@ -34,7 +34,7 @@ public class DefineManager {
                             OpenCVModuleProcesser
                             Blur Process Parameter
                             */
-                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 7, MAXIMUM_CIRCLE_RADIUS = 60,
+                            EACH_BLUR_BLOCK_SIZE = 11, NOT_AVAILABLE = -1, MINIMUM_CIRCLE_RADIUS = 3, MAXIMUM_CIRCLE_RADIUS = 60,
                             BALL_DETECT_CUTLINE_Y = 240,
 
                             /*
@@ -76,7 +76,7 @@ public class DefineManager {
 
     public static boolean BLUETOOTH_CONNECTION_FAILURE = false, BLUR_MODE_OPTION = false;
 
-    public static int MINIMUM_DETECT_COLOR_H = 0, MINIMUM_DETECT_COLOR_S = 150, MINIMUM_DETECT_COLOR_V = 150,
+    public static int MINIMUM_DETECT_COLOR_H = 10, MINIMUM_DETECT_COLOR_S = 150, MINIMUM_DETECT_COLOR_V = 150,
                     MAXIMUM_DETECT_COLOR_H = 25, MAXIMUM_DETECT_COLOR_S = 255, MAXIMUM_DETECT_COLOR_V = 255,
 
                     VIDEO_RECORD_BIT_RATE = 6000000,

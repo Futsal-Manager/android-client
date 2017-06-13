@@ -28,7 +28,7 @@ public class MakeNewMemoryBluetoothManager {
     public void SendBluetoothOrder(String ballPositionDataOrder) {
         if(BLUETOOTH_CONNECTION_FAILURE != true) {
             bluetoothOrderSender = new BluetoothOrderSender();
-            bluetoothOrderSender.execute(ballPositionDataOrder);
+            bluetoothOrderSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ballPositionDataOrder);
         }
     }
 
