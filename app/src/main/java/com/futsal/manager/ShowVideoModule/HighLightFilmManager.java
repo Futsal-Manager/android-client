@@ -11,8 +11,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
-import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinder;
 import com.futsal.manager.LogModule.LogManager;
+import com.futsal.manager.MakeNewMemoryModule.MakeNewMemoryManager;
 import com.futsal.manager.NetworkModule.CommunicationWithServer;
 import com.futsal.manager.R;
 
@@ -58,7 +58,7 @@ public class HighLightFilmManager extends Activity {
         floatingActionBtnNewMemory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent recordVideoLayout = new Intent(getApplicationContext(), EmbeddedSystemFinder.class);
+                Intent recordVideoLayout = new Intent(getApplicationContext(), MakeNewMemoryManager.class);
                 startActivity(recordVideoLayout);
             }
         });

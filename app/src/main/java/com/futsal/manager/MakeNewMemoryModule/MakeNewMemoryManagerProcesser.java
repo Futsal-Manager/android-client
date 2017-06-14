@@ -28,7 +28,6 @@ import java.util.Date;
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
-import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
@@ -217,7 +216,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         while(running) {
             try {
                 CalculateRecordTime();
-                if(BLUETOOTH_CONNECTION_FAILURE != true && EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                /*if(BLUETOOTH_CONNECTION_FAILURE != true && EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
                     String bluetoothSendMessageData = PointToString(makeNewMemoryOpencvManager.GetLastBallDetectedPosition());
                     makeNewMemoryBluetoothManager.SendBluetoothOrder(bluetoothSendMessageData);
                 }
@@ -228,7 +227,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                         mainLoopMessageHandler.sendMessage(bluetoothCrashMessage);
                         LogManager.PrintLog("MakeNewMemoryManagerProcesser", "run", "print warning message", LOG_LEVEL_INFO);
                     }
-                }
+                }*/
                 Thread.sleep(BLUETOOTH_SEND_SPEED);
             }
             catch (Exception err) {
