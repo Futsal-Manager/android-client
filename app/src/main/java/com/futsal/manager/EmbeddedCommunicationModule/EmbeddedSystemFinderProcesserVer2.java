@@ -153,7 +153,7 @@ public class EmbeddedSystemFinderProcesserVer2 {
     void EnableBluetoothModule() {
         LogManager.PrintLog("EmbeddedSystemFinderProcesserVer2", "EnableBluetoothModule", "Try enable ble", LOG_LEVEL_DEBUG);
         Intent enableBluetoothModuleIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-        enableBluetoothModuleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        //enableBluetoothModuleIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         embeddedSystemFinderVer2.startActivityForResult(enableBluetoothModuleIntent, ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT);
     }
 

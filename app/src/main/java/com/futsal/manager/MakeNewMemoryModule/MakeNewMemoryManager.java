@@ -27,6 +27,8 @@ import java.util.List;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.SEARCH_EMBEDDED_SYSTEM;
 
@@ -198,6 +200,12 @@ public class MakeNewMemoryManager extends Activity {
 
     @Override
     protected void onDestroy() {
+        try {
+            embeddedSystemFinderVer2.dismiss();
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("MakeNewMemoryManager", "onDestroy", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
         makeNewMemoryManagerProcesser.StopProcess();
         super.onDestroy();
     }
@@ -208,12 +216,15 @@ public class MakeNewMemoryManager extends Activity {
 
         switch (requestCode) {
             case ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT:
+                LogManager.PrintLog("MakeNewMemoryManager", "onActivityResult", "Bluetooth enable result code: " + resultCode, LOG_LEVEL_INFO);
                 if(resultCode == Activity.RESULT_OK) {
+                    LogManager.PrintLog("MakeNewMemoryManager", "onActivityResult", "Bluetooth enabled start searching", LOG_LEVEL_INFO);
                     embeddedSystemFinderVer2.BluetoothSearchingProcess();
                 }
                 else {
                     if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.isEnabled() != true) {
                         embeddedSystemFinderVer2.ShowWarningDialog();
+                        LogManager.PrintLog("MakeNewMemoryManager", "onActivityResult", "Bluetooth not enabled", LOG_LEVEL_WARN);
                     }
                     else {
                         LogManager.PrintLog("MakeNewMemoryManager", "onActivityResult", "Not expected result", LOG_LEVEL_WARN);
