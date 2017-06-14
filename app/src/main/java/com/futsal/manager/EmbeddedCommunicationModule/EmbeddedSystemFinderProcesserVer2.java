@@ -102,20 +102,24 @@ public class EmbeddedSystemFinderProcesserVer2 {
 
         if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER != null) {
             EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.clear();
-            if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.isEnabled()) {
-                GetPairedDevice();
-                SearchBluetoothDevice();
-            }
-            else {
-                EnableBluetoothModule();
-            }
+            BluetoothSearchingProcess();
         }
         else {
             ShowWarningDialog();
         }
     }
 
-    void ShowWarningDialog() {
+    void BluetoothSearchingProcess() {
+        if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.isEnabled()) {
+            GetPairedDevice();
+            SearchBluetoothDevice();
+        }
+        else {
+            EnableBluetoothModule();
+        }
+    }
+
+    public void ShowWarningDialog() {
         try {
             AlertDialog.Builder bluetoothNotAvailableDialogBuilder = new AlertDialog.Builder(embeddedSystemFinderVer2);
             bluetoothNotAvailableDialogBuilder.setMessage(embeddedSystemFinderVer2.getString(R.string.notAvailalbeMessage));

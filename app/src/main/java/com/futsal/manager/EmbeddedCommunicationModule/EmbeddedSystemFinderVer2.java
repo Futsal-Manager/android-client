@@ -27,10 +27,11 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
     TextView txtBluetoothStatus;
     ListView listOfBluetoothDevices;
     EmbeddedSystemFinderProcesserVer2 embeddedSystemFinderProcesserVer2;
-    Activity embeddedSystemFinderVer2;
+    Activity makeNewMemoryManager;
 
-    public EmbeddedSystemFinderVer2(Context context) {
-        super(context);
+    public EmbeddedSystemFinderVer2(Activity makeNewMemoryManager) {
+        super(makeNewMemoryManager);
+        this.makeNewMemoryManager = makeNewMemoryManager;
     }
 
     public EmbeddedSystemFinderVer2(Context context, int themeResId) {
@@ -68,12 +69,10 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
 
     void InitLayout() {
 
-        embeddedSystemFinderVer2 = getOwnerActivity();
-
         txtBluetoothStatus = (TextView)findViewById(R.id.txtBluetoothStatus);
         listOfBluetoothDevices = (ListView) findViewById(R.id.listOfBluetoothDevices);
 
-        embeddedSystemFinderProcesserVer2 = new EmbeddedSystemFinderProcesserVer2(embeddedSystemFinderVer2, bluetoothDeviceFinderLayoutHandler);
+        embeddedSystemFinderProcesserVer2 = new EmbeddedSystemFinderProcesserVer2(makeNewMemoryManager, bluetoothDeviceFinderLayoutHandler);
 
         if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
             try {
@@ -102,4 +101,22 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
             super.handleMessage(msg);
         }
     };
+
+    public void BluetoothSearchingProcess() {
+        try {
+            embeddedSystemFinderProcesserVer2.SearchBluetoothDevice();
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("EmbeddedSystemFinderVer2", "BluetoothSearchingProcess", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
+    }
+
+    public void ShowWarningDialog() {
+        try {
+            embeddedSystemFinderProcesserVer2.ShowWarningDialog();
+        }
+        catch (Exception err) {
+            LogManager.PrintLog("EmbeddedSystemFinderVer2", "ShowWarningDialog", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
+        }
+    }
 }

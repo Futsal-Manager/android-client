@@ -24,8 +24,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
+import static com.futsal.manager.DefineManager.ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
+import static com.futsal.manager.DefineManager.SEARCH_EMBEDDED_SYSTEM;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -197,6 +200,35 @@ public class MakeNewMemoryManager extends Activity {
     protected void onDestroy() {
         makeNewMemoryManagerProcesser.StopProcess();
         super.onDestroy();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case ENABLE_BLUETOOTH_MODULE_USER_ACCESS_ACCEPT:
+                if(resultCode == Activity.RESULT_OK) {
+                    embeddedSystemFinderVer2.BluetoothSearchingProcess();
+                }
+                else {
+                    if(EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER.isEnabled() != true) {
+                        embeddedSystemFinderVer2.ShowWarningDialog();
+                    }
+                    else {
+                        LogManager.PrintLog("MakeNewMemoryManager", "onActivityResult", "Not expected result", LOG_LEVEL_WARN);
+                    }
+                }
+                break;
+            case SEARCH_EMBEDDED_SYSTEM:
+                if(requestCode == Activity.RESULT_OK) {
+
+                }
+                else {
+
+                }
+                break;
+        }
     }
 
     void UselessDelay(int delayTime) {
