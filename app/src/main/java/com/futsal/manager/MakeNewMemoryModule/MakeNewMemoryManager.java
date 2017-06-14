@@ -14,6 +14,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.futsal.manager.DefineManager;
+import com.futsal.manager.EmbeddedCommunicationModule.EmbeddedSystemFinderVer2;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
@@ -22,6 +23,9 @@ import org.opencv.android.OpenCVLoader;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -51,6 +55,8 @@ public class MakeNewMemoryManager extends Activity {
     List<String> listOfAvailableCameraResolution;
     ArrayAdapter<String> cameraResolutionListAdapter;
     View layoutCameraSettingView;
+    EmbeddedSystemFinderVer2 embeddedSystemFinderVer2;
+    Activity makeNewMemoryManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +69,26 @@ public class MakeNewMemoryManager extends Activity {
         btnImageRecord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isRecording = !isRecording;
-                if(isRecording) {
-                    //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_1);
-                    btnImageRecord.setImageResource(R.drawable.shape_2_copy_1);
-                    txtRecordingTime.setTextColor(getResources().getColor(R.color.red));
-                    LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "start recording", DefineManager.LOG_LEVEL_INFO);
-                    makeNewMemoryManagerProcesser.StartRecording();
-                    UselessDelay(1000);
+                if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                    isRecording = !isRecording;
+                    if(isRecording) {
+                        //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_1);
+                        btnImageRecord.setImageResource(R.drawable.shape_2_copy_1);
+                        txtRecordingTime.setTextColor(getResources().getColor(R.color.red));
+                        LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "start recording", DefineManager.LOG_LEVEL_INFO);
+                        makeNewMemoryManagerProcesser.StartRecording();
+                        UselessDelay(1000);
+                    }
+                    else {
+                        //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_3);
+                        txtRecordingTime.setTextColor(getResources().getColor(R.color.white));
+                        btnImageRecord.setImageResource(R.drawable.shape_2_copy_3);
+                        makeNewMemoryManagerProcesser.StopRecording();
+                    }
                 }
                 else {
-                    //btnImageRecord.setBackgroundResource(R.drawable.shape_2_copy_3);
-                    txtRecordingTime.setTextColor(getResources().getColor(R.color.white));
-                    btnImageRecord.setImageResource(R.drawable.shape_2_copy_3);
-                    makeNewMemoryManagerProcesser.StopRecording();
+                    embeddedSystemFinderVer2.show();
+                    LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "Embedded system not connected", LOG_LEVEL_WARN);
                 }
             }
         });
@@ -157,6 +169,7 @@ public class MakeNewMemoryManager extends Activity {
         isSettingShowed = false;
         isRecording = false;
         isCameraResolutionSettingOpen = false;
+        makeNewMemoryManager = this;
 
         btnImageRecord = (ImageButton) findViewById(R.id.btnImageRecord);
         btnImagePictures = (ImageButton) findViewById(R.id.btnImagePictures);
@@ -172,6 +185,7 @@ public class MakeNewMemoryManager extends Activity {
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo, txtRecordingTime);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
         listOfAvailableCameraResolution = new ArrayList<String>();
+        embeddedSystemFinderVer2 = new EmbeddedSystemFinderVer2(makeNewMemoryManager);
 
         listOfAvailableCameraResolution = makeNewMemoryManagerProcesser.GetAvailableCameraResolution();
 
