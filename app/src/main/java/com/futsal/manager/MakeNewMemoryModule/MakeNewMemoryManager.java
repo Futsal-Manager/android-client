@@ -92,6 +92,7 @@ public class MakeNewMemoryManager extends Activity {
                     }
                 }
                 else {
+                    embeddedSystemFinderVer2 = new EmbeddedSystemFinderVer2(makeNewMemoryManager);
                     embeddedSystemFinderVer2.show();
                     LogManager.PrintLog("MakeNewMemoryManager", "onCreate", "Embedded system not connected", LOG_LEVEL_WARN);
                 }
@@ -190,7 +191,6 @@ public class MakeNewMemoryManager extends Activity {
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo, txtRecordingTime);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
         listOfAvailableCameraResolution = new ArrayList<String>();
-        embeddedSystemFinderVer2 = new EmbeddedSystemFinderVer2(makeNewMemoryManager);
 
         listOfAvailableCameraResolution = makeNewMemoryManagerProcesser.GetAvailableCameraResolution();
 

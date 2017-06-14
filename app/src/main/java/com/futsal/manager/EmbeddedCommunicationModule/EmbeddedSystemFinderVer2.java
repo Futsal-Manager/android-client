@@ -65,6 +65,8 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
         setContentView(R.layout.embedded_system_finder_ver2);
 
         InitLayout();
+
+        LogManager.PrintLog("EmbeddedSystemFinderVer2", "onCreate", "EmbeddedSystemFinderVer2 opened", LOG_LEVEL_INFO);
     }
 
     void InitLayout() {
