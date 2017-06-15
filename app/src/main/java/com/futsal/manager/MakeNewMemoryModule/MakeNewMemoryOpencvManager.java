@@ -38,7 +38,7 @@ public class MakeNewMemoryOpencvManager{
 
     public void EachFrameImageData(byte[] data, Camera camera) {
         try {
-            LogManager.PrintLog("MakeNewMemoryOpencvManager", "EachFrameImageData", "Before ball detecting", DefineManager.LOG_LEVEL_INFO);
+            //LogManager.PrintLog("MakeNewMemoryOpencvManager", "EachFrameImageData", "Before ball detecting", DefineManager.LOG_LEVEL_INFO);
             int width, height;
             width = phoneDeviceCameraParameters.getPreviewSize().width;
             height = phoneDeviceCameraParameters.getPreviewSize().height;
