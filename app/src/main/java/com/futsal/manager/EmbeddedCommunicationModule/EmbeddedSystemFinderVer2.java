@@ -6,7 +6,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -14,6 +16,9 @@ import android.widget.TextView;
 import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
+import static com.futsal.manager.DefineManager.DEVICE_CONNECTED;
+import static com.futsal.manager.DefineManager.DEVICE_NOT_CONNECTED;
+import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
@@ -31,6 +36,7 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
     Activity makeNewMemoryManager;
     ArrayAdapter<String> listOfEmbeddedSystem;
     String[] listOfEmbeddedSystemArray;
+    BluetoothDeviceSelectorProcesser bluetoothDeviceSelectorProcesser;
 
     public EmbeddedSystemFinderVer2(Activity makeNewMemoryManager) {
         super(makeNewMemoryManager);
@@ -70,6 +76,15 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
         InitLayout();
 
         LogManager.PrintLog("EmbeddedSystemFinderVer2", "onCreate", "EmbeddedSystemFinderVer2 opened", LOG_LEVEL_INFO);
+
+        listOfBluetoothDevices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                BluetoothDeviceItemModel bluetoothDeviceItemModel = EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.get(position);
+                LogManager.PrintLog("EmbeddedSystemFinderVer2", "onItemClick", "selected item info: " + bluetoothDeviceItemModel.GetDeviceName() + " " + bluetoothDeviceItemModel.GetDeviceMacAddress(), LOG_LEVEL_INFO);
+                bluetoothDeviceSelectorProcesser.TryConnectToTargetDevice(bluetoothDeviceItemModel);
+            }
+        });
     }
 
     void InitLayout() {
@@ -78,6 +93,7 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
         listOfBluetoothDevices = (ListView) findViewById(R.id.listOfBluetoothDevices);
 
         embeddedSystemFinderProcesserVer2 = new EmbeddedSystemFinderProcesserVer2(makeNewMemoryManager, bluetoothDeviceFinderLayoutHandler);
+        bluetoothDeviceSelectorProcesser = new BluetoothDeviceSelectorProcesser(makeNewMemoryManager, bluetoothDeviceFinderLayoutHandler);
 
         if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
             try {
@@ -101,6 +117,11 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
                     listOfEmbeddedSystemArray = embeddedSystemFinderProcesserVer2.GetFoundDeviceStringArray();
                     SetListView();
                     LogManager.PrintLog("EmbeddedSystemFinderVer2", "handleMessage", "new device founded", LOG_LEVEL_INFO);
+                    break;
+                case DEVICE_CONNECTED:
+                    dismiss();
+                    break;
+                case DEVICE_NOT_CONNECTED:
                     break;
                 default:
                     break;

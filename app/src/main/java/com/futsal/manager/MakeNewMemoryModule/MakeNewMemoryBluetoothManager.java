@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 
 /**
  * Created by stories2 on 2017. 5. 14..
@@ -26,9 +28,18 @@ public class MakeNewMemoryBluetoothManager {
     }
 
     public void SendBluetoothOrder(String ballPositionDataOrder) {
-        if(BLUETOOTH_CONNECTION_FAILURE != true) {
-            bluetoothOrderSender = new BluetoothOrderSender();
-            bluetoothOrderSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ballPositionDataOrder);
+        if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+            if(ballPositionDataOrder != null) {
+                LogManager.PrintLog("MakeNewMemoryBluetoothManager", "SendBluetoothOrder", "Starting sending process", LOG_LEVEL_INFO);
+                bluetoothOrderSender = new BluetoothOrderSender();
+                bluetoothOrderSender.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, ballPositionDataOrder);
+            }
+            else {
+                LogManager.PrintLog("MakeNewMemoryBluetoothManager", "SendBluetoothOrder", "ball position data = null", LOG_LEVEL_WARN);
+            }
+        }
+        else {
+            LogManager.PrintLog("MakeNewMemoryBluetoothManager", "SendBluetoothOrder", "EMBEDDED_SYSTEM_DEVICE_SOCKET = null", LOG_LEVEL_WARN);
         }
     }
 

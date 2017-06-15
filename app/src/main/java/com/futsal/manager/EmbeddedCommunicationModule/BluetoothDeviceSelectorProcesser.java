@@ -4,19 +4,21 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
-import com.futsal.manager.MakeNewMemoryModule.MakeNewMemoryManager;
 import com.futsal.manager.R;
 
+import static com.futsal.manager.DefineManager.DEVICE_CONNECTED;
+import static com.futsal.manager.DefineManager.DEVICE_NOT_CONNECTED;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
+import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.SERIAL_UUID;
 
 /**
@@ -26,9 +28,15 @@ import static com.futsal.manager.DefineManager.SERIAL_UUID;
 public class BluetoothDeviceSelectorProcesser {
 
     Activity bluetoothDeviceSelector;
+    Handler bluetoothDeviceFinderLayoutHandler;
 
     public BluetoothDeviceSelectorProcesser(Activity bluetoothDeviceSelector) {
         this.bluetoothDeviceSelector = bluetoothDeviceSelector;
+    }
+
+    public BluetoothDeviceSelectorProcesser(Activity bluetoothDeviceSelector, Handler bluetoothDeviceFinderLayoutHandler) {
+        this.bluetoothDeviceSelector = bluetoothDeviceSelector;
+        this.bluetoothDeviceFinderLayoutHandler = bluetoothDeviceFinderLayoutHandler;
     }
 
     public boolean TryConnectToTargetDevice(BluetoothDeviceItemModel targetBluetoothDeviceItemModel) {
@@ -89,11 +97,15 @@ public class BluetoothDeviceSelectorProcesser {
                 if(isProcessSuccessfullyEnded) {
                     LogManager.PrintLog("BluetoothDeviceConnectionInit", "onPostExecute", "Ok device is ready", LOG_LEVEL_INFO);
 
-                    Intent startMakeNewMemory = new Intent(bluetoothDeviceSelector, MakeNewMemoryManager.class);
+                    /*Intent startMakeNewMemory = new Intent(bluetoothDeviceSelector, MakeNewMemoryManager.class);
                     bluetoothDeviceSelector.startActivity(startMakeNewMemory);
-                    bluetoothDeviceSelector.finish();
+                    bluetoothDeviceSelector.finish();*/
+                    if(bluetoothDeviceFinderLayoutHandler != null) {
+                        bluetoothDeviceFinderLayoutHandler.sendEmptyMessage(DEVICE_CONNECTED);
+                    }
                 }
                 else {
+                    LogManager.PrintLog("BluetoothDeviceConnectionInit", "onPostExecute", "Error cannot connect to target device", LOG_LEVEL_WARN);
                     final AlertDialog.Builder bluetoothConnectionWarningDialog  = new AlertDialog.Builder(bluetoothDeviceSelector);
                     bluetoothConnectionWarningDialog.setMessage(bluetoothDeviceSelector.getString(R.string.cannotConnectDeviceTitle));
                     bluetoothConnectionWarningDialog.setTitle(bluetoothDeviceSelector.getString(R.string.cannotConnectDeviceMessage));
@@ -105,6 +117,9 @@ public class BluetoothDeviceSelectorProcesser {
                     });
                     bluetoothConnectionWarningDialog.setCancelable(true);
                     bluetoothConnectionWarningDialog.create().show();
+                    if(bluetoothDeviceFinderLayoutHandler != null) {
+                        bluetoothDeviceFinderLayoutHandler.sendEmptyMessage(DEVICE_NOT_CONNECTED);
+                    }
                 }
             }
             catch (Exception err) {

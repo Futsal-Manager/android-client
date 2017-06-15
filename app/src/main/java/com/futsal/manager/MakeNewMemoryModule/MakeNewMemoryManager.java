@@ -202,6 +202,11 @@ public class MakeNewMemoryManager extends Activity {
     protected void onDestroy() {
         try {
             embeddedSystemFinderVer2.dismiss();
+
+            if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                EMBEDDED_SYSTEM_DEVICE_SOCKET.close();
+                EMBEDDED_SYSTEM_DEVICE_SOCKET = null;
+            }
         }
         catch (Exception err) {
             LogManager.PrintLog("MakeNewMemoryManager", "onDestroy", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
