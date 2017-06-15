@@ -338,6 +338,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     LogManager.PrintLog("MakeNewMemoryManagerProcesser", "InitStartRecordMedia", "Error: " + err.getMessage(), DefineManager.LOG_LEVEL_ERROR);
                 }
                 try{
+                    phoneDeviceCamera.stopPreview();
+                    phoneDeviceCamera.setPreviewCallback(this);
                     phoneDeviceCamera.setDisplayOrientation(0);
                     phoneDeviceCamera.startPreview();
                     phoneDeviceCamera.unlock();
