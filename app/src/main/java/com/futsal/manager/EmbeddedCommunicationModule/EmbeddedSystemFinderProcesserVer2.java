@@ -188,4 +188,22 @@ public class EmbeddedSystemFinderProcesserVer2 {
             LogManager.PrintLog("EmbeddedSystemFinderProcesserVer2", "StopSearchDevices", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
         }
     }
+
+    String[] GetFoundDeviceStringArray() {
+        if(EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST != null) {
+            int length = EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.size(), i = 0;
+            String[] foundedDeviceList = new String[length];
+            for(BluetoothDeviceItemModel eachBluetoothDevice : EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST) {
+                String eachDeviceInfo = eachBluetoothDevice.GetDeviceName() + "\n" + eachBluetoothDevice.GetDeviceMacAddress() + "\n";
+                if(eachBluetoothDevice.GetIsAlreadyPaired()) {
+                    eachDeviceInfo += "*";
+                }
+                foundedDeviceList[i] = eachDeviceInfo;
+                i += 1;
+            }
+            return foundedDeviceList;
+
+        }
+        return new String[0];
+    }
 }

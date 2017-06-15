@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -28,6 +29,8 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
     ListView listOfBluetoothDevices;
     EmbeddedSystemFinderProcesserVer2 embeddedSystemFinderProcesserVer2;
     Activity makeNewMemoryManager;
+    ArrayAdapter<String> listOfEmbeddedSystem;
+    String[] listOfEmbeddedSystemArray;
 
     public EmbeddedSystemFinderVer2(Activity makeNewMemoryManager) {
         super(makeNewMemoryManager);
@@ -95,6 +98,8 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
         public void handleMessage(Message msg) {
             switch (msg.what) {
                 case NEW_DEVICE_FOUNDED:
+                    listOfEmbeddedSystemArray = embeddedSystemFinderProcesserVer2.GetFoundDeviceStringArray();
+                    SetListView();
                     LogManager.PrintLog("EmbeddedSystemFinderVer2", "handleMessage", "new device founded", LOG_LEVEL_INFO);
                     break;
                 default:
@@ -103,6 +108,11 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
             super.handleMessage(msg);
         }
     };
+
+    public void SetListView() {
+        listOfEmbeddedSystem = new ArrayAdapter<String>(makeNewMemoryManager, android.R.layout.simple_list_item_1, android.R.id.text1, listOfEmbeddedSystemArray);
+        listOfBluetoothDevices.setAdapter(listOfEmbeddedSystem);
+    }
 
     public void BluetoothSearchingProcess() {
         try {
