@@ -27,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import static com.futsal.manager.DefineManager.AUDIO_RECORD_BIT_RATE;
+import static com.futsal.manager.DefineManager.AUDIO_SAMPLING_RATE;
 import static com.futsal.manager.DefineManager.AVAILABLE_SCREEN_RESOLUTION_LIST;
 import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
@@ -325,6 +327,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
                     mediaRecording.setVideoSize(AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_WIDTH],
                             AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_HEIGHT]);
+                    mediaRecording.setAudioEncodingBitRate(AUDIO_RECORD_BIT_RATE);
+                    mediaRecording.setAudioSamplingRate(AUDIO_SAMPLING_RATE);
                     mediaRecording.setVideoEncodingBitRate(VIDEO_RECORD_BIT_RATE);
                     mediaRecording.setMaxFileSize(2048000000); // Set max file size 2G
 
