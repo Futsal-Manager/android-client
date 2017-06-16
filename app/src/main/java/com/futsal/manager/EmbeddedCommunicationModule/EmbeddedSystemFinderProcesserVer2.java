@@ -172,6 +172,7 @@ public class EmbeddedSystemFinderProcesserVer2 {
             if(deviceName != null) {
                 if(deviceName.contains(AVAILABLE_BLUETOOTH_NAME)) {
                     EMBEDDED_SYSTEM_BLUETOOTH_DEVICE_LIST.add(bluetoothDeviceItemModel);
+                    bluetoothDeviceFinderLayoutHandler.sendEmptyMessage(NEW_DEVICE_FOUNDED);
                 }
             }
         }

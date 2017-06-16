@@ -97,7 +97,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                 phoneDeviceCameraParameters.setPictureSize(AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_WIDTH],
                         AVAILABLE_SCREEN_RESOLUTION_LIST[PICTURE_RESOLUTION_SETTING][SCREEN_HEIGHT]);
                 phoneDeviceCameraParameters.setPreviewSize(CAMERA_WIDTH_RESOLUTION, CAMERA_HEIGHT_RESOLUTION);
-                phoneDeviceCameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+                //phoneDeviceCameraParameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
                 phoneDeviceCamera.setParameters(phoneDeviceCameraParameters);
             }
             makeNewMemoryOpencvManager = new MakeNewMemoryOpencvManager(makeNewMmeoryManager, phoneDeviceCameraParameters);
@@ -322,8 +322,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     mediaRecording.setAudioSource(MediaRecorder.AudioSource.MIC);
                     mediaRecording.setVideoSource(MediaRecorder.VideoSource.CAMERA);
                     mediaRecording.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-                    mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-                    mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.MPEG_4_SP);
+                    mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
+                    mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
                     //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
                     mediaRecording.setVideoSize(AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_WIDTH],
                             AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_HEIGHT]);

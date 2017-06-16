@@ -63,7 +63,7 @@ public class MakeNewMemoryOpencvManager{
             //lastBallDetectPosition = calculateBallDetect.GetBallPosition();
             frameImage.release();
             if(lastBallDetectPosition != null) {
-                LogManager.PrintLog("MakeNewMemoryOpencvManager", "EachFrameImageData", "last ball position: " + lastBallDetectPosition.x + " " + lastBallDetectPosition.y, DefineManager.LOG_LEVEL_INFO);
+                //LogManager.PrintLog("MakeNewMemoryOpencvManager", "EachFrameImageData", "last ball position: " + lastBallDetectPosition.x + " " + lastBallDetectPosition.y, DefineManager.LOG_LEVEL_INFO);
             }
 
             //LogManager.PrintLog("MakeNewMemoryOpencvManager", "EachFrameImageData",
