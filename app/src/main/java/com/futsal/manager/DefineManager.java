@@ -87,7 +87,7 @@ public class DefineManager {
 
                     PICTURE_RESOLUTION_SETTING = 1, RECORD_RESOLUTION_SETTING = 2,
 
-                    BLUETOOTH_SEND_SPEED = 250,
+                    BLUETOOTH_SEND_SPEED = 300,
 
                     VIDEO_EDIT_REQUEST_STATUS = 0;
 
