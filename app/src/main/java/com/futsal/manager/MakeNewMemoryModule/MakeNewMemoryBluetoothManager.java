@@ -52,9 +52,11 @@ public class MakeNewMemoryBluetoothManager {
         protected Void doInBackground(String... params) {
             LogManager.PrintLog("MakeNewMemoryBluetoothManager", "doInBackground", "Message: " + params[0], DefineManager.LOG_LEVEL_DEBUG);
             try {
-                OutputStream bluetoothSendMessage = EMBEDDED_SYSTEM_DEVICE_SOCKET.getOutputStream();
-                bluetoothSendMessage.write(params[0].getBytes());
-                bluetoothSendMessage.flush();
+                if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                    OutputStream bluetoothSendMessage = EMBEDDED_SYSTEM_DEVICE_SOCKET.getOutputStream();
+                    bluetoothSendMessage.write(params[0].getBytes());
+                    bluetoothSendMessage.flush();
+                }
             }
             catch (Exception err) {
                 LogManager.PrintLog("MakeNewMemoryBluetoothManager", "doInBackground", "Error: " + err.getMessage(), LOG_LEVEL_ERROR);
