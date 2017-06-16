@@ -1,6 +1,8 @@
 package com.futsal.manager.OpenCVModule;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Message;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
@@ -21,6 +23,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import static com.futsal.manager.DefineManager.BALL_DETECT_CUTLINE_Y;
+import static com.futsal.manager.DefineManager.BALL_POSITION_DATA;
 import static com.futsal.manager.DefineManager.BLUR_MODE_OPTION;
 import static com.futsal.manager.DefineManager.MAXIMUM_CIRCLE_RADIUS;
 import static com.futsal.manager.DefineManager.MAXIMUM_DETECT_COLOR_H;
@@ -50,6 +53,8 @@ public class CalculateBallDetect {
     Moments M;
     MatOfPoint2f c;
     Size resizeResolution;
+    Handler ballDetectionData;
+    Message ballPositionMessage;
 
     public CalculateBallDetect(Context context) {
         applicationContext = context;
@@ -73,6 +78,34 @@ public class CalculateBallDetect {
         listOfContour = new ArrayList<MatOfPoint>();
 
         resizeResolution = new Size(640, 480);
+    }
+
+    public CalculateBallDetect(Context context, Handler ballDetectionData) {
+        applicationContext = context;
+        this.ballDetectionData = ballDetectionData;
+
+        blurred = new Mat();
+        hsv = new Mat();
+        mask = new Mat();
+        hierarchy = new Mat();
+
+        c = new MatOfPoint2f();
+
+        xy = new Point();
+        center = new Point();
+        xyTemp = new Point();
+
+        M = new Moments();
+
+        orangeLower = new Scalar(MINIMUM_DETECT_COLOR_H, MINIMUM_DETECT_COLOR_S, MINIMUM_DETECT_COLOR_V);
+        orangeUpper = new Scalar(MAXIMUM_DETECT_COLOR_H, MAXIMUM_DETECT_COLOR_S, MAXIMUM_DETECT_COLOR_V);
+
+        listOfContour = new ArrayList<MatOfPoint>();
+
+        resizeResolution = new Size(640, 480);
+
+        ballPositionMessage = ballDetectionData.obtainMessage();
+        ballPositionMessage.what = BALL_POSITION_DATA;
     }
 
     public Mat DetectBallPositionVer2(Mat frame) {
@@ -113,10 +146,22 @@ public class CalculateBallDetect {
                     center.x = M.m10 / M.m00;
                     center.y = M.m01 / M.m00;
 
-                    if(radius[0] > MINIMUM_CIRCLE_RADIUS && radius[0] < MAXIMUM_CIRCLE_RADIUS && center.y >= BALL_DETECT_CUTLINE_Y) {
+                    if(radius[0] > MINIMUM_CIRCLE_RADIUS && radius[0] < MAXIMUM_CIRCLE_RADIUS && xyTemp.y >= BALL_DETECT_CUTLINE_Y) {
+
                         xy = xyTemp;
+
+                        if(ballDetectionData != null) {
+                            ballPositionMessage = null;
+                            ballPositionMessage = ballDetectionData.obtainMessage();
+                            ballPositionMessage.what = BALL_POSITION_DATA;
+                            ballPositionMessage.arg1 = (int)xyTemp.x;
+                            ballPositionMessage.arg2 = (int)xyTemp.y;
+                            ballDetectionData.sendMessage(ballPositionMessage);
+                        }
+
                         Imgproc.circle(frame, xy, (int)radius[0], new Scalar(0, 255, 255), 2);
-                        LogManager.PrintLog("OpenCVModuleProcesser", "DetectCircleFromFrameImage", "Ball Position: " + xy.x + " " + xy.y, DefineManager.LOG_LEVEL_DEBUG);
+                        LogManager.PrintLog("CalculateBallDetect", "DetectCircleFromFrameImage", "Ball Position: " + xy.x + " " + xy.y, DefineManager.LOG_LEVEL_DEBUG);
+                        LogManager.PrintLog("CalculateBallDetect", "DetectCircleFromFrameImage", "Temp Position: " + xyTemp.x + " " + xyTemp.y, DefineManager.LOG_LEVEL_DEBUG);
                         break;
                     }
                 }

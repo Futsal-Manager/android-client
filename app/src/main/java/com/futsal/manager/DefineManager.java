@@ -64,7 +64,9 @@ public class DefineManager {
 
                             CLOSE_VIDEO_UPLOAD_STATUS_VIEW = 0, OPEN_VIDEO_UPLOAD_STATUS_VIEW = 1,
 
-                            NEW_DEVICE_FOUNDED = 0, DEVICE_CONNECTED = 1, DEVICE_NOT_CONNECTED = 2;
+                            NEW_DEVICE_FOUNDED = 0, DEVICE_CONNECTED = 1, DEVICE_NOT_CONNECTED = 2,
+
+                            BALL_POSITION_DATA = 0;
     public static final String APP_NAME = "FutsalManager", TEST_ACCOUNT = "yoohoogun116@naver.com", TEST_ACCOUNT_PASSWORD = "rlagusdn123",
                         TEST_TEAM_NAME = "병욱이와 아이들",
                         SERVER_DOMAIN_NAME = "ec2-52-78-237-85.ap-northeast-2.compute.amazonaws.com",
