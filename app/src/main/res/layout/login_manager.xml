@@ -12,6 +12,13 @@
         android:src="@drawable/background_image"
         android:scaleType="fitXY"
         />
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:background="#b2000000"
+        />
     
     <ImageView
         android:layout_marginTop="146dp"
@@ -68,9 +75,13 @@
 
         <EditText
             android:drawableLeft="@drawable/email"
+            android:drawablePadding="17dp"
+            android:textSize="14sp"
+            android:textColor="#e5ffffff"
+            android:letterSpacing="-0.03"
+            android:lineSpacingExtra="31sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
             android:textColorHint="@color/white"
             android:inputType="text"
             android:singleLine="true"
@@ -89,10 +100,14 @@
 
         <EditText
             android:drawableLeft="@drawable/password"
+            android:drawablePadding="40dp"
+            android:textSize="14sp"
+            android:textColor="#e5ffffff"
+            android:letterSpacing="-0.03"
+            android:lineSpacingExtra="31sp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:textColor="@color/white"
             android:singleLine="true"
             android:imeOptions="actionDone"
             android:textColorHint="@color/white"

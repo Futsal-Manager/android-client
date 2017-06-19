@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    android:background="@color/dirtyWhite"
+    >
 
 
     <GridView
@@ -22,17 +24,18 @@
 
 
     <android.support.design.widget.FloatingActionButton
-        android:layout_width="69dp"
-        android:layout_height="69dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="15.5dp"
         android:layout_marginRight="15.5dp"
         android:layout_gravity="left|bottom"
-        android:src="@drawable/shape_6"
+        android:src="@drawable/floating"
         android:id="@+id/floatingActionBtnNewMemory"
         android:layout_marginBottom="13dp"
 
         android:scaleType="fitCenter"
-
+        app:fabSize="normal"
+        app:srcCompat="@drawable/floating"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>
 

@@ -9,4 +9,5 @@
     <color name="black">#000000</color>
     <color name="red">#ff4e2b</color>
     <color name="darkGray">#333333</color>
+    <color name="dirtyWhite">#f9f9f9</color>
 </resources>

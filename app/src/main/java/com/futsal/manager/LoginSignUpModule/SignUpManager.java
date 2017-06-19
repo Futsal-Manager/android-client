@@ -14,10 +14,6 @@ import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.NetworkModule.CommunicationWithServer;
 import com.futsal.manager.R;
 
-import static com.futsal.manager.DefineManager.TEST_ACCOUNT;
-import static com.futsal.manager.DefineManager.TEST_ACCOUNT_PASSWORD;
-import static com.futsal.manager.DefineManager.TEST_TEAM_NAME;
-
 /**
  * Created by stories2 on 2017. 6. 6..
  */
@@ -95,9 +91,9 @@ public class SignUpManager extends Activity {
 
         signUpManager = this;
 
-        etxtEmail.setText(TEST_ACCOUNT);
+        /*etxtEmail.setText(TEST_ACCOUNT);
         etxtPassword.setText(TEST_ACCOUNT_PASSWORD);
-        etxtTeam.setText(TEST_TEAM_NAME);
+        etxtTeam.setText(TEST_TEAM_NAME);*/
 
         communicationWithServer = new CommunicationWithServer(getApplicationContext());
     }
