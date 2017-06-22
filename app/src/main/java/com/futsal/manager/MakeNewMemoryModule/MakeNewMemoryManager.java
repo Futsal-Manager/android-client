@@ -171,6 +171,7 @@ public class MakeNewMemoryManager extends Activity {
         isRecording = false;
         isCameraResolutionSettingOpen = false;
         makeNewMemoryManager = this;
+        DefineManager.BLUETOOTH_CONNECTION_FAILURE = false;
 
         btnImageRecord = (ImageButton) findViewById(R.id.btnImageRecord);
         btnImagePictures = (ImageButton) findViewById(R.id.btnImagePictures);

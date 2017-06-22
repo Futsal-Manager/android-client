@@ -224,6 +224,9 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     }
                     else {
                         if(showEmbeddedSystemWarningMessage) {
+                            if(EMBEDDED_SYSTEM_DEVICE_SOCKET != null) {
+                                EMBEDDED_SYSTEM_DEVICE_SOCKET = null;
+                            }
                             showEmbeddedSystemWarningMessage = false;
                             Message bluetoothCrashMessage = mainLoopMessageHandler.obtainMessage();
                             mainLoopMessageHandler.sendMessage(bluetoothCrashMessage);
