@@ -34,6 +34,8 @@ import static com.futsal.manager.DefineManager.BLUETOOTH_CONNECTION_FAILURE;
 import static com.futsal.manager.DefineManager.BLUETOOTH_SEND_SPEED;
 import static com.futsal.manager.DefineManager.CAMERA_HEIGHT_RESOLUTION;
 import static com.futsal.manager.DefineManager.CAMERA_WIDTH_RESOLUTION;
+import static com.futsal.manager.DefineManager.DEFAULT_SCREEN_HEIGHT;
+import static com.futsal.manager.DefineManager.DEFAULT_SCREEN_WIDTH;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_BLUETOOTH_ADAPTER;
 import static com.futsal.manager.DefineManager.EMBEDDED_SYSTEM_DEVICE_SOCKET;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_DEBUG;
@@ -41,7 +43,6 @@ import static com.futsal.manager.DefineManager.LOG_LEVEL_ERROR;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_INFO;
 import static com.futsal.manager.DefineManager.LOG_LEVEL_WARN;
 import static com.futsal.manager.DefineManager.PICTURE_RESOLUTION_SETTING;
-import static com.futsal.manager.DefineManager.RECORD_RESOLUTION_SETTING;
 import static com.futsal.manager.DefineManager.SCREEN_HEIGHT;
 import static com.futsal.manager.DefineManager.SCREEN_WIDTH;
 import static com.futsal.manager.DefineManager.VIDEO_RECORD_BIT_RATE;
@@ -67,7 +68,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
     long startHTime = 0L, timeInMilliseconds = 0L, timeSwapBuff = 0L, updatedTime = 0L;
     TextView txtRecordingTime;
     List<Camera.Size> cameraAvailableVideoResolution;
-
+    int cameraResolutionWidth, cameraResolutionHeight;
 
     public MakeNewMemoryManagerProcesser(Activity makeNewMmeoryManager, SurfaceView cameraSurfaceView, TextView txtRecordingTime) {
         this.makeNewMmeoryManager = makeNewMmeoryManager;
@@ -82,6 +83,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         running = true;
         mediaRecording = null;
         showEmbeddedSystemWarningMessage = true;
+        cameraResolutionWidth = DEFAULT_SCREEN_WIDTH;
+        cameraResolutionHeight = DEFAULT_SCREEN_HEIGHT;
 
         cameraSurfaceHolder = cameraSurfaceView.getHolder();
         cameraSurfaceHolder.addCallback(this);
@@ -124,8 +127,14 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         return listOfScreenResolution;
     }
 
-    public List<MakeNewMemoryManagerCameraResolutionListItem> GetAvailableCameraResolutionVer2() {
-        List<MakeNewMemoryManagerCameraResolutionListItem> listOfScreenResolution = new ArrayList<MakeNewMemoryManagerCameraResolutionListItem>();
+    public void SetCameraResolution(int cameraResolutionWidth, int cameraResolutionHeight) {
+        this.cameraResolutionWidth = cameraResolutionWidth;
+        this.cameraResolutionHeight = cameraResolutionHeight;
+    }
+
+    public ArrayList<MakeNewMemoryManagerCameraResolutionListItem> GetAvailableCameraResolutionVer2() {
+        LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "updated resolution: " + cameraResolutionWidth + " X " + cameraResolutionHeight, LOG_LEVEL_INFO);
+        ArrayList<MakeNewMemoryManagerCameraResolutionListItem> listOfScreenResolution = new ArrayList<MakeNewMemoryManagerCameraResolutionListItem>();
         if(phoneDeviceCameraParameters != null) {
             cameraAvailableVideoResolution = phoneDeviceCameraParameters.getSupportedVideoSizes();
             for(Camera.Size indexOfPictureSize : cameraAvailableVideoResolution) {
@@ -134,7 +143,14 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                 indexOfCameraSize = new MakeNewMemoryManagerCameraResolutionListItem();
 
                 indexOfCameraSize.SetAvailableCameraVideoRecordResolution(indexOfPictureSize);
-                indexOfCameraSize.SetIsSelected(false);
+                if(indexOfPictureSize.width == cameraResolutionWidth && indexOfPictureSize.height == cameraResolutionHeight) {
+                    LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "Selected resolution: " + indexOfPictureSize.width + " X " + indexOfPictureSize.height, LOG_LEVEL_INFO);
+                    indexOfCameraSize.SetIsSelected(true);
+                }
+                else {
+                    indexOfCameraSize.SetIsSelected(false);
+
+                }
 
                 listOfScreenResolution.add(indexOfCameraSize);
             }
@@ -144,6 +160,8 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         }
         return listOfScreenResolution;
     }
+
+
 
     public void SetIsRecording(boolean isRecording) {
         this.isRecording = isRecording;
@@ -349,8 +367,7 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
                     mediaRecording.setAudioEncoder(MediaRecorder.AudioEncoder.AAC);
                     mediaRecording.setVideoEncoder(MediaRecorder.VideoEncoder.H264);
                     //mediaRecording.setProfile(CamcorderProfile.get(CamcorderProfile.QUALITY_HIGH));
-                    mediaRecording.setVideoSize(AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_WIDTH],
-                            AVAILABLE_SCREEN_RESOLUTION_LIST[RECORD_RESOLUTION_SETTING][SCREEN_HEIGHT]);
+                    mediaRecording.setVideoSize(cameraResolutionWidth, cameraResolutionHeight);
                     mediaRecording.setAudioEncodingBitRate(AUDIO_RECORD_BIT_RATE);
                     mediaRecording.setAudioSamplingRate(AUDIO_SAMPLING_RATE);
                     mediaRecording.setVideoEncodingBitRate(VIDEO_RECORD_BIT_RATE);

@@ -2,6 +2,7 @@ package com.futsal.manager.MakeNewMemoryModule;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Camera;
 import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
@@ -57,7 +58,7 @@ public class MakeNewMemoryManager extends Activity {
     RelativeLayout layoutCameraSetting;
     ListView listOfCameraResolution;
     List<String> listOfAvailableCameraResolution;
-    List<MakeNewMemoryManagerCameraResolutionListItem> listOfAvailableCameraResolutionVer2;
+    ArrayList<MakeNewMemoryManagerCameraResolutionListItem> listOfAvailableCameraResolutionVer2;
     ArrayAdapter<String> cameraResolutionListAdapter;
     View layoutCameraSettingView;
     EmbeddedSystemFinderVer2 embeddedSystemFinderVer2;
@@ -149,7 +150,19 @@ public class MakeNewMemoryManager extends Activity {
         listOfCameraResolution.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MakeNewMemoryManagerCameraResolutionListItem indexOfCameraResolution = listOfAvailableCameraResolutionVer2.get(position);
+                Camera.Size indexOfCameraRecordSize = indexOfCameraResolution.GetAvailableCameraVideoRecordResolution();
+                makeNewMemoryManagerProcesser.SetCameraResolution(indexOfCameraRecordSize.width, indexOfCameraRecordSize.height);
 
+                listOfAvailableCameraResolutionVer2.clear();
+                listOfAvailableCameraResolutionVer2 = null;
+                listOfAvailableCameraResolutionVer2 = new ArrayList<MakeNewMemoryManagerCameraResolutionListItem>();
+                listOfAvailableCameraResolutionVer2 = makeNewMemoryManagerProcesser.GetAvailableCameraResolutionVer2();
+
+                cameraResolutionListAdapterVer2.SetCameraResolutionList(listOfAvailableCameraResolutionVer2);
+
+                cameraResolutionListAdapterVer2.notifyDataSetChanged();
+                //cameraResolutionListAdapterVer2.notifyAll();
             }
         });
     }
@@ -204,7 +217,7 @@ public class MakeNewMemoryManager extends Activity {
 
         cameraResolutionListAdapterVer2 = new MakeNewMemoryManagerCameraResolutionListAdapter();
         for(MakeNewMemoryManagerCameraResolutionListItem indexOfCameraResolution : listOfAvailableCameraResolutionVer2) {
-            cameraResolutionListAdapterVer2.AddItem(indexOfCameraResolution.GetAvailableCameraVideoRecordResolution(), false);
+            cameraResolutionListAdapterVer2.AddItem(indexOfCameraResolution.GetAvailableCameraVideoRecordResolution(), indexOfCameraResolution.GetIsSelected());
         }
 
         //cameraResolutionListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listOfAvailableCameraResolution);

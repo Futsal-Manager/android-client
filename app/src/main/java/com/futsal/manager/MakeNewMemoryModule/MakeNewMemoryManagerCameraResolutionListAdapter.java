@@ -9,6 +9,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.futsal.manager.DefineManager;
+import com.futsal.manager.LogModule.LogManager;
 import com.futsal.manager.R;
 
 import java.util.ArrayList;
@@ -47,6 +49,8 @@ public class MakeNewMemoryManagerCameraResolutionListAdapter extends BaseAdapter
         String textOfScreenResolution = CameraSizeToString(indexOfScreenResoltuion.GetAvailableCameraVideoRecordResolution());
 
         txtVideoResolution.setText(textOfScreenResolution);
+
+        LogManager.PrintLog("MakeNewMemoryManagerCameraResolutionListAdapter", "getView", "" + textOfScreenResolution + " " + indexOfScreenResoltuion.GetIsSelected(), DefineManager.LOG_LEVEL_INFO);
 
         if(indexOfScreenResoltuion.GetIsSelected() == true) {
             txtVideoResolution.setTextColor(context.getResources().getColor(R.color.dirtyRed));
@@ -138,5 +142,9 @@ public class MakeNewMemoryManagerCameraResolutionListAdapter extends BaseAdapter
         makeNewMemoryManagerCameraResolutionListItem.SetIsSelected(isSelected);
 
         cameraResolutionList.add(makeNewMemoryManagerCameraResolutionListItem);
+    }
+
+    public void SetCameraResolutionList(ArrayList<MakeNewMemoryManagerCameraResolutionListItem> cameraResolutionList) {
+        this.cameraResolutionList = cameraResolutionList;
     }
 }
