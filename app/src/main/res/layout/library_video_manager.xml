@@ -184,6 +184,12 @@
             android:layout_height="fill_parent"
             android:background="#222222"
             />
+        <View
+            android:id="@+id/viewExit"
+            android:layout_toRightOf="@+id/userInfoView"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            />
         <ImageView
             android:layout_alignRight="@id/userInfoView"
             android:layout_marginTop="65dp"

@@ -43,7 +43,7 @@ public class LibraryVideoManager extends Activity {
     TextView txtUserName, txtUserEmail;
     Button btnLogOut, btnVideoUploadCancel, btnVideoUploadViewClose;
     RelativeLayout userInfoLayout, layoutVideoUploadBig, layoutVideoUploadSmall;
-    View layoutVideoUploadBigView, layoutVideoUploadSmallView;
+    View layoutVideoUploadBigView, layoutVideoUploadSmallView, viewExit;
     LibraryVideoManagerProcess libraryVideoManagerProcess;
     boolean isVideoUploadingViewShowing;
 
@@ -156,6 +156,13 @@ public class LibraryVideoManager extends Activity {
                 CloseVideoUploadView();
             }
         });
+
+        viewExit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                userInfoLayout.setVisibility(View.INVISIBLE);
+            }
+        });
     }
 
     @Override
@@ -188,6 +195,7 @@ public class LibraryVideoManager extends Activity {
         btnVideoUploadViewClose = (Button)findViewById(R.id.btnVideoUploadViewClose);
         layoutVideoUploadBigView = (View)findViewById(R.id.layoutVideoUploadBigView);
         layoutVideoUploadSmallView = (View)findViewById(R.id.layoutVideoUploadSmallView);
+        viewExit = (View) findViewById(R.id.viewExit);
 
         fullFilmTab = tabHostLibrary.newTabSpec("Full Film Tab");
         highLightFilmTab = tabHostLibrary.newTabSpec("High Light Tab");
