@@ -33,9 +33,10 @@
         android:id="@+id/floatingActionBtnNewMemory"
         android:layout_marginBottom="13dp"
 
-        android:scaleType="center"
+        android:scaleType="fitCenter"
         android:padding="0dp"
         app:fabSize="normal"
+        app:backgroundTint="@color/upgradeBlack"
 
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"/>

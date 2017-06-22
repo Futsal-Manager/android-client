@@ -12,4 +12,5 @@
     <color name="dirtyWhite">#f9f9f9</color>
     <color name="whiteGray">#99ffffff</color>
     <color name="dirtyRed">#f16742</color>
+    <color name="upgradeBlack">#222222</color>
 </resources>
