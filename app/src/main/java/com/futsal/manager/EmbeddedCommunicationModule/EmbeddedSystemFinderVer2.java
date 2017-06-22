@@ -89,7 +89,7 @@ public class EmbeddedSystemFinderVer2 extends Dialog {
 
     void InitLayout() {
 
-        txtBluetoothStatus = (TextView)findViewById(R.id.txtBluetoothStatus);
+        //txtBluetoothStatus = (TextView)findViewById(R.id.txtBluetoothStatus);
         listOfBluetoothDevices = (ListView) findViewById(R.id.listOfBluetoothDevices);
 
         embeddedSystemFinderProcesserVer2 = new EmbeddedSystemFinderProcesserVer2(makeNewMemoryManager, bluetoothDeviceFinderLayoutHandler);
