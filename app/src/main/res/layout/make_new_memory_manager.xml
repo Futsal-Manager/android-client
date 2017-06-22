@@ -69,9 +69,8 @@
 
         <ListView
             android:id="@+id/listOfCameraResolution"
-            android:layout_marginLeft="21.5dp"
-            android:layout_marginTop="70dp"
-            android:layout_width="80dp"
+            android:layout_marginTop="57.5dp"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
             >
 

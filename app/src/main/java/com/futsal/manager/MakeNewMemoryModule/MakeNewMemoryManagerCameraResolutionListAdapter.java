@@ -136,5 +136,7 @@ public class MakeNewMemoryManagerCameraResolutionListAdapter extends BaseAdapter
 
         makeNewMemoryManagerCameraResolutionListItem.SetAvailableCameraVideoRecordResolution(availableCameraVideoRecordResolution);
         makeNewMemoryManagerCameraResolutionListItem.SetIsSelected(isSelected);
+
+        cameraResolutionList.add(makeNewMemoryManagerCameraResolutionListItem);
     }
 }

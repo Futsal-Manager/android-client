@@ -124,6 +124,27 @@ public class MakeNewMemoryManagerProcesser extends Thread implements SurfaceHold
         return listOfScreenResolution;
     }
 
+    public List<MakeNewMemoryManagerCameraResolutionListItem> GetAvailableCameraResolutionVer2() {
+        List<MakeNewMemoryManagerCameraResolutionListItem> listOfScreenResolution = new ArrayList<MakeNewMemoryManagerCameraResolutionListItem>();
+        if(phoneDeviceCameraParameters != null) {
+            cameraAvailableVideoResolution = phoneDeviceCameraParameters.getSupportedVideoSizes();
+            for(Camera.Size indexOfPictureSize : cameraAvailableVideoResolution) {
+                LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "Available size: " + indexOfPictureSize.width + " X " + indexOfPictureSize.height, LOG_LEVEL_INFO);
+                MakeNewMemoryManagerCameraResolutionListItem indexOfCameraSize;
+                indexOfCameraSize = new MakeNewMemoryManagerCameraResolutionListItem();
+
+                indexOfCameraSize.SetAvailableCameraVideoRecordResolution(indexOfPictureSize);
+                indexOfCameraSize.SetIsSelected(false);
+
+                listOfScreenResolution.add(indexOfCameraSize);
+            }
+        }
+        else {
+            LogManager.PrintLog("MakeNewMemoryManagerProcesser", "GetAvailableCameraResolution", "Phone parameters null", LOG_LEVEL_WARN);
+        }
+        return listOfScreenResolution;
+    }
+
     public void SetIsRecording(boolean isRecording) {
         this.isRecording = isRecording;
     }

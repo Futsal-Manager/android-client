@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -56,10 +57,12 @@ public class MakeNewMemoryManager extends Activity {
     RelativeLayout layoutCameraSetting;
     ListView listOfCameraResolution;
     List<String> listOfAvailableCameraResolution;
+    List<MakeNewMemoryManagerCameraResolutionListItem> listOfAvailableCameraResolutionVer2;
     ArrayAdapter<String> cameraResolutionListAdapter;
     View layoutCameraSettingView;
     EmbeddedSystemFinderVer2 embeddedSystemFinderVer2;
     Activity makeNewMemoryManager;
+    MakeNewMemoryManagerCameraResolutionListAdapter cameraResolutionListAdapterVer2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,6 +145,13 @@ public class MakeNewMemoryManager extends Activity {
 
             }
         });
+
+        listOfCameraResolution.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+            }
+        });
     }
 
     void CloseSettingMenuChecker() {
@@ -186,12 +196,20 @@ public class MakeNewMemoryManager extends Activity {
 
         makeNewMemoryManagerProcesser = new MakeNewMemoryManagerProcesser(this, surfaceRecordVideo, txtRecordingTime);
         makeNewMemorySettingManager = new MakeNewMemorySettingManager(this, btnImageSetting, this);
-        listOfAvailableCameraResolution = new ArrayList<String>();
+        listOfAvailableCameraResolutionVer2 = new ArrayList<MakeNewMemoryManagerCameraResolutionListItem>();
+        //listOfAvailableCameraResolution = new ArrayList<String>();
+        listOfAvailableCameraResolutionVer2 = makeNewMemoryManagerProcesser.GetAvailableCameraResolutionVer2();
+        //listOfAvailableCameraResolution = makeNewMemoryManagerProcesser.GetAvailableCameraResolution();
 
-        listOfAvailableCameraResolution = makeNewMemoryManagerProcesser.GetAvailableCameraResolution();
 
-        cameraResolutionListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listOfAvailableCameraResolution);
-        listOfCameraResolution.setAdapter(cameraResolutionListAdapter);
+        cameraResolutionListAdapterVer2 = new MakeNewMemoryManagerCameraResolutionListAdapter();
+        for(MakeNewMemoryManagerCameraResolutionListItem indexOfCameraResolution : listOfAvailableCameraResolutionVer2) {
+            cameraResolutionListAdapterVer2.AddItem(indexOfCameraResolution.GetAvailableCameraVideoRecordResolution(), false);
+        }
+
+        //cameraResolutionListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, listOfAvailableCameraResolution);
+        listOfCameraResolution.setAdapter(cameraResolutionListAdapterVer2);
+        //listOfCameraResolution.setAdapter(cameraResolutionListAdapter);
     }
 
     @Override
