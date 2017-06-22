@@ -10,7 +10,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import com.futsal.manager.DefineManager;
 import com.futsal.manager.LogModule.LogManager;
@@ -32,7 +32,7 @@ public class PermissionManager extends AppCompatActivity implements Animation.An
     String[] needPermissionList;
     PermissionManagerProcesser permissionManagerProcesser;
     Animation loadingScreenFadeOut;
-    LinearLayout loadingScreen;
+    RelativeLayout loadingScreen;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class PermissionManager extends AppCompatActivity implements Animation.An
         loadingScreenFadeOut = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_out);
         loadingScreenFadeOut.setAnimationListener(this);
 
-        loadingScreen = (LinearLayout) findViewById(R.id.loadingScreen);
+        loadingScreen = (RelativeLayout) findViewById(R.id.loadingScreen);
 
         if(Build.VERSION.SDK_INT >= ANDROID_VERSION_OF_MARSHMALLOW) {
             needPermissionList = new String[] {

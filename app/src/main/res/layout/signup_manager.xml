@@ -14,6 +14,13 @@
         />
 
     <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:scaleType="fitXY"
+        android:background="#b2000000"
+        />
+
+    <ImageView
         android:layout_marginTop="146dp"
         android:layout_centerHorizontal="true"
         android:layout_width="199.5dp"
