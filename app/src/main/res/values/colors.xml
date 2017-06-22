@@ -10,4 +10,6 @@
     <color name="red">#ff4e2b</color>
     <color name="darkGray">#333333</color>
     <color name="dirtyWhite">#f9f9f9</color>
+    <color name="whiteGray">#99ffffff</color>
+    <color name="dirtyRed">#f16742</color>
 </resources>
