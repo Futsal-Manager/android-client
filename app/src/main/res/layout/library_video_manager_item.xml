@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
+    android:layout_width="165dp"
+    android:layout_height="165dp"
     >
 
     <RelativeLayout
-        android:layout_width="160dp"
-        android:layout_height="160dp">
+        android:layout_width="165dp"
+        android:layout_height="165dp">
 
         <ImageView
             android:id="@+id/imgVideoThumbnail"
-            android:layout_width="160dp"
-            android:layout_height="160dp"
+            android:layout_width="165dp"
+            android:layout_height="165dp"
             android:scaleType="fitXY"
             android:src="@mipmap/ic_launcher"
             >
         </ImageView>
 
         <ImageView
-            android:layout_width="160dp"
+            android:layout_width="165dp"
             android:layout_height="160dp"
             android:scaleType="fitXY"
             android:background="#4c000000"
