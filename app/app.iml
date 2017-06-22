@@ -62,13 +62,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/armv7a/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armv7a/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/armv7a/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/assets" type="java-test-resource" />
@@ -76,6 +69,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/androidTestArmv7a/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/testArmv7a/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/res" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/resources" type="java-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/debug/assets" type="java-resource" />
