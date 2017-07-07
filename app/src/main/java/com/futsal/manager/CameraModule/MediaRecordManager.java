@@ -28,6 +28,8 @@ public class MediaRecordManager extends Activity implements SurfaceHolder.Callba
     MediaRecorder mediaRecording;
 
     @Override
+
+    // Todo: 퍼포먼스 개선은 paging
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.record_media_surface);
